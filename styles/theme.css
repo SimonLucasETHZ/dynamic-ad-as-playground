@@ -1,0 +1,405 @@
+/* ==========================================================================
+   DAS-DAD · Theme layer  ("Ink & Ochre")
+   Loaded AFTER bootstrap + econ.department.css so it has the final word.
+   Goal: a calmer, more scholarly look + styling for the new teaching content
+   (intro, learning goals, references, glossary, callouts, scenario presets,
+   impulse-response stats and the adjustment animation controls).
+   All colours flow from the CSS custom properties defined here.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --accent:        #4338ca;
+    --accent-2:      #7c5cff;
+    --accent-soft:   #ecebfb;
+    --dad-blue:      #1d4ed8;
+    --dad-blue-light:#7da2e6;
+    --das-ochre:     #c0531c;
+    --das-ochre-light:#f0b486;
+    --gold:          #d4a017;
+    --emerald:       #15915b;
+    --ink:           #1b2230;
+    --ink-soft:      #34405a;
+    --muted:         #5b6577;
+    --paper:         #fbfaf7;
+    --panel:         #f4f3fb;
+    --panel-2:       #fbf6ee;     /* warm panel for supply-side notes */
+    --hairline:      #e4e2ec;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans:  "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- Base typography ------------------------------------------------ */
+body { font-family: var(--sans); color: var(--ink); }
+
+h1, h2, h3, .header-title-text h1 { font-family: var(--serif); letter-spacing: -0.01em; }
+.header-title-text h1 { font-weight: 700; }
+.content h2, .content2 h2, .left-content h2,
+.variables-intro-container h3, .question-box h3 { color: var(--ink); }
+
+p, li { line-height: 1.6; }
+
+/* ---------- Header: deep ink gradient -------------------------------------- */
+.header {
+    background: linear-gradient(115deg, #16243a 0%, #1f3252 55%, #2a3f63 100%) !important;
+    box-shadow: inset 0 -3px 0 rgba(124,92,255,0.55);
+}
+
+/* ---------- Navigation tabs ------------------------------------------------ */
+.bg-green, .unit-navbar.bg-green, nav.bg-green {
+    background: var(--paper) !important;
+    border-bottom: 1px solid var(--hairline);
+}
+.unit-navbar { padding-top: 6px; padding-bottom: 0; }
+
+.options-button {
+    font-family: var(--sans);
+    font-weight: 600;
+    color: var(--muted) !important;
+    border-radius: 8px 8px 0 0 !important;
+    border-bottom: 3px solid transparent !important;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.options-button:hover {
+    background: var(--panel) !important;
+    color: var(--accent) !important;
+    box-shadow: none !important;
+    border-color: var(--hairline) !important;
+}
+.options-button.active {
+    color: var(--accent) !important;
+    border-bottom: 3px solid var(--accent) !important;
+    background: transparent !important;
+}
+
+/* ---------- Buttons (generic accent) --------------------------------------- */
+.menu-button { background-color: var(--accent); }
+.menu-button:hover { background-color: var(--accent-2); }
+
+.modern-button, .modern-button1 {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 16px;
+    font-family: var(--sans);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .08s ease, background .15s ease, box-shadow .15s ease;
+    box-shadow: 0 2px 6px rgba(67,56,202,0.25);
+}
+.modern-button:hover, .modern-button1:hover { background: var(--accent-2); transform: translateY(-1px); }
+.modern-button:active, .modern-button1:active { transform: translateY(0); }
+
+.options-button1, .options-button2 {
+    background: var(--accent-soft);
+    color: var(--accent) !important;
+    border: 1px solid #d8d5f4;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-weight: 600;
+    font-family: var(--sans);
+    cursor: pointer;
+}
+.options-button1:hover, .options-button2:hover { background: #e1def8; }
+
+/* ---------- Start circle on the pre-menu ----------------------------------- */
+.circle-button { transition: transform .2s ease, box-shadow .2s ease; }
+.circle-button:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(67,56,202,0.30); }
+
+/* ---------- Equation highlight + interactive variables --------------------- */
+.equation-highlight, .intro-highlight {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+}
+.interactive-variable, .interactive-variablefilter { transition: color .12s ease; }
+.interactive-variable:hover, .interactive-variablefilter:hover { color: var(--accent) !important; }
+
+/* ==========================================================================
+   NEW pedagogical components
+   ========================================================================== */
+
+/* Lead / intro text */
+.dd-lead {
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+}
+.dd-section { margin: 26px 0; }
+.dd-section > h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent-soft);
+}
+.dd-kicker {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+/* Learning-goals card */
+.dd-goals {
+    background: linear-gradient(180deg, var(--panel) 0%, #fff 100%);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin: 18px 0;
+}
+.dd-goals h3 { margin-top: 0; font-size: 1.1rem; }
+.dd-goals ul { list-style: none; padding-left: 0; margin-bottom: 0; }
+.dd-goals li { position: relative; padding-left: 30px; margin: 9px 0; }
+.dd-goals li::before {
+    content: "✓";
+    position: absolute; left: 0; top: 0;
+    width: 20px; height: 20px; line-height: 20px; text-align: center;
+    border-radius: 50%;
+    background: var(--accent); color: #fff; font-size: .72rem; font-weight: 700;
+}
+
+/* Callout boxes: intuition / note / supply (warm) */
+.dd-callout {
+    border-radius: 12px;
+    padding: 14px 18px 14px 48px;
+    margin: 16px 0;
+    position: relative;
+    border: 1px solid var(--hairline);
+    background: var(--panel);
+}
+.dd-callout::before {
+    position: absolute; left: 16px; top: 14px; font-size: 1.15rem;
+}
+.dd-callout .dd-callout-title { font-weight: 700; display: block; margin-bottom: 3px; color: var(--ink); }
+.dd-callout.intuition { background: var(--accent-soft); border-color: #d8d5f4; }
+.dd-callout.intuition::before { content: "💡"; }
+.dd-callout.supply { background: var(--panel-2); border-color: #ecd9c4; }
+.dd-callout.supply::before { content: "⚙️"; }
+.dd-callout.history { background: #f1f5f1; border-color: #d9e4d9; }
+.dd-callout.history::before { content: "📜"; }
+.dd-callout.demand { background: #eef3fd; border-color: #cfe0fb; }
+.dd-callout.demand::before { content: "📈"; }
+
+/* Model-at-a-glance chips */
+.dd-glance { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+.dd-chip {
+    background: #fff; border: 1px solid var(--hairline); border-radius: 999px;
+    padding: 6px 14px; font-size: .9rem; color: var(--ink-soft);
+    box-shadow: 0 1px 2px rgba(20,30,50,0.04);
+}
+.dd-chip b { color: var(--accent); }
+
+/* References list */
+.dd-refs { counter-reset: ref; padding-left: 0; list-style: none; }
+.dd-refs li {
+    counter-increment: ref;
+    position: relative;
+    padding: 10px 12px 10px 46px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: .94rem;
+    line-height: 1.5;
+}
+.dd-refs li:last-child { border-bottom: none; }
+.dd-refs li::before {
+    content: "[" counter(ref) "]";
+    position: absolute; left: 0; top: 10px;
+    font-family: var(--sans); font-weight: 700; color: var(--accent);
+    font-size: .82rem; width: 40px; text-align: right;
+}
+.dd-refs .ref-tag {
+    display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--muted);
+    border: 1px solid var(--hairline); border-radius: 5px; padding: 1px 6px; margin-left: 6px;
+}
+sup.dd-cite { color: var(--accent); font-weight: 700; cursor: help; }
+
+/* Glossary */
+.dd-glossary { margin: 8px 0; }
+.dd-glossary dt { font-weight: 700; color: var(--ink); margin-top: 12px; font-family: var(--serif); }
+.dd-glossary dd { margin: 2px 0 0 0; color: var(--ink-soft); font-size: .94rem; }
+
+/* Refined details/summary used across the app */
+details { border: 1px solid var(--hairline); border-radius: 10px; margin: 8px 0; background: #fff; overflow: hidden; }
+details > summary {
+    cursor: pointer; padding: 11px 14px; font-weight: 600; color: var(--ink);
+    list-style: none; background: var(--panel); transition: background .12s ease;
+}
+details > summary:hover { background: var(--accent-soft); }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: "▸ "; color: var(--accent); font-weight: 700; }
+details[open] > summary::before { content: "▾ "; }
+details .collapsible-content, details > p, details > ul { padding: 4px 16px 14px; }
+
+/* ---------- Scenario presets + animation controls (graph view) ------------- */
+.dd-scenario {
+    margin: 16px 0 6px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hairline);
+}
+.dd-scenario .dd-scenario-title {
+    font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 700; color: var(--muted); margin-bottom: 8px;
+}
+.dd-scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dd-preset {
+    border: 1px solid var(--hairline); background: #fff; border-radius: 9px;
+    padding: 9px 8px; font-size: .8rem; font-weight: 600; color: var(--ink-soft);
+    cursor: pointer; text-align: center; transition: all .12s ease; line-height: 1.22;
+}
+.dd-preset small { display: block; font-weight: 400; color: var(--muted); font-size: .68rem; margin-top: 2px; }
+.dd-preset:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 2px 8px rgba(67,56,202,0.12); }
+.dd-preset.demand:hover { border-color: var(--dad-blue); color: var(--dad-blue); }
+.dd-preset.supply:hover { border-color: var(--das-ochre); color: var(--das-ochre); }
+
+/* Currently selected / playing scenario */
+.dd-preset.dd-active,
+.dd-preset.dd-active:hover {
+    background: linear-gradient(120deg, #ecebfb 0%, #f3eafb 100%);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(67,56,202,0.22), 0 4px 14px rgba(124,92,255,0.22);
+}
+.dd-preset.dd-active small { color: var(--accent-2); }
+
+.dd-play {
+    position: absolute;             /* overlay in the plot's top-right corner */
+    top: 14px; right: 16px;
+    z-index: 6;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    color: #fff; border: none; border-radius: 9px; padding: 8px 14px;
+    font-weight: 700; font-family: var(--sans); font-size: .85rem; cursor: pointer;
+    box-shadow: 0 3px 10px rgba(67,56,202,0.30);
+}
+.dd-play:hover { filter: brightness(1.05); }
+.dd-play:disabled { opacity: .6; cursor: default; }
+
+/* ---------- Impulse-response stats strip ----------------------------------- */
+.dd-irf-stats {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin: 6px 0 14px;
+}
+.dd-irf-stat {
+    flex: 1 1 120px;
+    background: #fff; border: 1px solid var(--hairline); border-radius: 10px;
+    padding: 10px 12px;
+}
+.dd-irf-stat .lbl { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.dd-irf-stat .val { font-family: var(--serif); font-size: 1.32rem; font-weight: 700; color: var(--accent); }
+.dd-irf-stat .sub { font-size: .74rem; color: var(--muted); }
+.dd-irf-stat.supply .val { color: var(--das-ochre); }
+.dd-irf-stat.demand .val { color: var(--dad-blue); }
+
+.dd-irf-caption {
+    font-size: .9rem; color: var(--ink-soft); background: var(--panel);
+    border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0;
+    padding: 8px 12px; margin: 4px 0 14px;
+}
+
+/* Misc polish */
+hr.question-separator { border-top: 1px solid var(--hairline); }
+.disclaimer { color: var(--muted); }
+.excel-table th { background: var(--panel) !important; color: var(--ink) !important; }
+.modern-slider, .shock-slider { accent-color: var(--accent); }
+
+@media (max-width: 720px) {
+    .dd-scenario-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Revision 2 fixes
+   ========================================================================== */
+
+/* Keep the side panel padding inside its width so nothing spills out */
+.filter-menu { box-sizing: border-box; }
+
+/* --- Equation box was too cramped: give it room to breathe -------------- */
+.filter-menu .equation-highlight.intro-highlight,
+.filter-menu #equation-highlight {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px 10px 12px;
+    margin: 10px 0 20px;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+}
+.filter-menu .equation-highlight .latex-equation {
+    margin: 12px 0 14px;
+    padding: 0;
+    font-size: 15px;           /* down from 20px so the full equation fits the panel */
+    text-align: center;
+    overflow: hidden;          /* never scroll; the smaller size fits */
+}
+/* MathJax sometimes adds its own scrollable wrapper – keep it from scrolling */
+.filter-menu .equation-highlight .latex-equation mjx-container {
+    max-width: 100%;
+    overflow: hidden !important;
+}
+.filter-menu .equation-highlight .latex-equation:last-of-type { margin-bottom: 8px; }
+.filter-menu .switch-label-info {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--hairline);
+    font-size: .82rem;
+    line-height: 1.45;
+    color: var(--muted);
+}
+
+/* --- Scenario box was overflowing the panel: contain it ----------------- */
+.dd-scenario, .dd-scenario * { box-sizing: border-box; }
+.dd-scenario { width: 100%; max-width: 100%; }
+.dd-scenario-grid > .dd-preset { min-width: 0; width: 100%; white-space: normal; }
+
+/* The DAS-DAD plot is the positioning context for the overlaid play button */
+#plot1-container { position: relative; }
+
+/* ==========================================================================
+   The LEFT settings panel is absolutely positioned inside the (content-sized)
+   graph content-box, so it fills from the top down to the disclaimer
+   ("All rights reserved …") and scrolls INTERNALLY beyond that. Because it is
+   out of normal flow, revealing more sliders can never grow the page.
+   ========================================================================== */
+.graph-layout { position: relative; }
+.graph-layout > .filter-menu {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 300px;
+    margin-top: 0;              /* override the base -10px so it starts at the top */
+    overflow-y: auto;           /* vertical scrollbar appears only when needed */
+    overflow-x: hidden;         /* never a horizontal scrollbar */
+    padding-bottom: 24px;       /* breathing room so the last control isn't clipped */
+    scrollbar-width: thin;      /* Firefox */
+    scrollbar-color: var(--accent) transparent;
+}
+.graph-layout > .content { margin-left: 300px; }   /* keep content clear of the panel */
+/* Slim, themed scrollbar (WebKit/Chromium) */
+.filter-menu::-webkit-scrollbar { width: 9px; }
+.filter-menu::-webkit-scrollbar-track { background: transparent; }
+.filter-menu::-webkit-scrollbar-thumb {
+    background: #c9c5ef;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+.filter-menu::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: content-box; }
+
+/* When the quiz used to collapse the panel it set width:0; that rule still
+   applies via .collapsed and is unaffected. Ensure scroll context is clean. */
+.filter-menu.collapsed { overflow: hidden; }
+
+/* ==========================================================================
+   COVID scenario button now uses the standard preset styling (no special shine);
+   it is highlighted only via .dd-active when selected/playing.
+   ========================================================================== */
