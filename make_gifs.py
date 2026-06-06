@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-Generate animated GIFs of every DAS-DAD scenario for the README.
+Generate animated GIFs of every DAS-DAD scenario.
 
-Each GIF has two panels that mirror the live tool:
   * left  – the DAS-DAD diagram (DAD & DAS curves + the equilibrium that walks
             period-by-period back toward the centred (Ȳ, π*) cross),
   * right – the time paths of output Y and inflation π.
 
-The model and shock values are identical to the in-app scenarios.
+The model and shock values are actually identical to the in-app scenarios.
 """
 import os
 import numpy as np
@@ -157,7 +156,7 @@ def make_gif(slug, title, e, v, outdir):
     plt.close(fig)
     print("wrote", path, f"(troughY={y.min():.2f}, peakPi={pi.max():.2f})")
 
-
+# main exectuable
 def main():
     outdir = os.path.join(os.path.dirname(__file__),
                           "media")
