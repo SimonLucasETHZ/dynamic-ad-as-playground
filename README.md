@@ -1,4 +1,4 @@
-# Dynamic AD–AS Explorer
+# Dynamic AD–AS
 
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
 Demand and Aggregate Supply (DAS–DAD)**, following Mankiw's *Macroeconomics*
