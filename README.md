@@ -207,6 +207,7 @@ python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
 
 The model and interactive tool are an educational implementation of the textbook
 DAS–DAD framework. Original interactive tool by **Lucas Simon & Juri Ezzaini**;
-UI icons from [flaticon.com](https://www.flaticon.com), imagery from
+This tool was originally developed in Excel in 2023 and development continued
+until 2026. UI icons from [flaticon.com](https://www.flaticon.com), imagery from
 [pixabay.com](https://pixabay.com). Please add a `LICENSE` file (e.g. MIT) before
-publishing if you intend others to reuse the code.
+publishing if you intend others to reuse the code.-
