@@ -403,3 +403,15 @@ hr.question-separator { border-top: 1px solid var(--hairline); }
    COVID scenario button now uses the standard preset styling (no special shine);
    it is highlighted only via .dd-active when selected/playing.
    ========================================================================== */
+
+/* ===== language switcher on the start menu ===== */
+.lang-switch {
+    margin: 14px auto 0; display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--sans); font-size: .9rem; color: var(--ink-soft);
+}
+.lang-switch select {
+    font-family: var(--sans); font-size: .9rem; padding: 6px 10px;
+    border: 1px solid var(--hairline); border-radius: 8px; background: #fff;
+    color: var(--ink); cursor: pointer;
+}
+.lang-switch select:hover { border-color: var(--accent); }

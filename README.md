@@ -1,4 +1,4 @@
-# Dynamic AD–AS
+# Dynamic AD–AS Explorer
 
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
 Demand and Aggregate Supply (DAS–DAD)**, following Mankiw's *Macroeconomics*
@@ -58,6 +58,9 @@ A deep, persistent demand collapse with a slow recovery.
 
 ## Features
 
+- **English / German interface** — switch language from the dropdown on the
+  start screen (the model is authored in German and rendered in English by
+  default).
 - **Interactive DAS–DAD diagram** built with Plotly. The equilibrium cross
   (Ȳ, π\*) always stays centred, and the window auto-fits so every period's
   equilibrium — and its π / Y labels — stay on screen.
@@ -178,6 +181,31 @@ pip install matplotlib pillow numpy
 python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
 ```
 
+### Make your own GIF for a talk or slide
+
+`make_gifs.py` also exposes a one-call helper, `custom_gif(...)`, so you can drop
+a tailored shock into a GIF in a few lines. Set `gamma`, `phi`, the shock
+period(s) and size(s), and a title — everything you leave out keeps the model's
+default:
+
+```python
+from make_gifs import custom_gif
+
+custom_gif(
+    gamma=0.5,            # how hard policy/demand leans against inflation
+    phi=0.5,              # slope of the Phillips curve
+    demand={1: 4},        # period -> demand-shock size  (period 1 == t)
+    supply={3: 2},        # period -> supply-shock size
+    title="My custom shock",
+    out="media/my_shock.gif",
+)
+```
+
+`demand` and `supply` are dictionaries mapping a shock **period** to a shock
+**size** (positive or negative). Use one entry for a one-off shock, or several
+periods for a drawn-out one — e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
+boom. The call writes the GIF to `out` and returns its path.
+
 ---
 
 ## Built with
@@ -207,7 +235,6 @@ python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
 
 The model and interactive tool are an educational implementation of the textbook
 DAS–DAD framework. Original interactive tool by **Lucas Simon & Juri Ezzaini**;
-This tool was originally developed in Excel in 2023 and development continued
-until 2026. UI icons from [flaticon.com](https://www.flaticon.com), imagery from
+UI icons from [flaticon.com](https://www.flaticon.com), imagery from
 [pixabay.com](https://pixabay.com). Please add a `LICENSE` file (e.g. MIT) before
-publishing if you intend others to reuse the code.-
+publishing if you intend others to reuse the code.
