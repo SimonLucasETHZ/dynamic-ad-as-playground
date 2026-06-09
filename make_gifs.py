@@ -177,7 +177,7 @@ SCENARIOS = [
     ("oil_crisis_1970s",       "Oil Crisis 1970s (Persistent Stagflation)",     {},                   {1: 4, 2: 2, 3: 2}),
     ("fiscal_expansion",       "Fiscal Expansion (Sustained Boom)",             {1: 4, 2: 2, 3: 2},   {}),
     ("financial_crisis_2008",  "Financial Crisis 2008 (Deep Recession)",        {1: -4, 2: -4, 3: -2},{}),
-    ("covid_19",               "COVID-19 (Collapse, Recovery & Inflation Wave)",{1: -4, 2: -2},       {3: 2}),
+    ("covid_19",               "COVID-19 (Collapse, Recovery & Inflation Wave)",{1: -4, 2: -2, 3: 2},       {3: 2}),
 ]
 
 
