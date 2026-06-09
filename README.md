@@ -18,7 +18,8 @@ no build step, no server required. Open the file and it runs.
 Each animation below shows the same two views you get in the app: the **DAS–DAD
 diagram** on the left (the demand and supply curves shifting, with the
 equilibrium walking back toward the centred Ȳ / π\* cross) and the **time paths**
-of output `Y` and inflation `π` on the right.
+of output `Y` and inflation `π` on the right. For shock configurations see 
+make_gifs.py or the .html itself.
 
 ### COVID-19 — collapse, recovery & inflation wave
 A sharp demand collapse that lingers, followed by a supply-driven inflation wave.
