@@ -204,7 +204,10 @@ custom_gif(
 `demand` and `supply` are dictionaries mapping a shock **period** to a shock
 **size** (positive or negative). Use one entry for a one-off shock, or several
 periods for a drawn-out one — e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
-boom. The call writes the GIF to `out` and returns its path.
+boom. The call writes the GIF to `out` and returns its path.**Alternatively** 
+you can just click on the GIF button within the tool. However, visuals here 
+are worse as a GIF direclty on Plotly within HTML somehow squeezes the GIF, so
+for proper visualization use the Python command as explained.
 
 ---
 
