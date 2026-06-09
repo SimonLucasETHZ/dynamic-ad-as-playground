@@ -239,6 +239,7 @@ for proper visualization use the Python command as explained.
 
 The model and interactive tool are an educational implementation of the textbook
 DAS–DAD framework. Original interactive tool by **Lucas Simon & Juri Ezzaini**;
+The tool was originally developed in Excel in 2023.
 UI icons from [flaticon.com](https://www.flaticon.com), imagery from
 [pixabay.com](https://pixabay.com). Please add a `LICENSE` file (e.g. MIT) before
 publishing if you intend others to reuse the code.
