@@ -207,7 +207,7 @@ custom_gif(
 periods for a drawn-out one — e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
 boom. The call writes the GIF to `out` and returns its path. **Alternatively** 
 you can just click on the GIF button within the tool. However, visuals here 
-are worse as a GIF direclty on Plotly within HTML somehow squeezes the GIF, so
+are worse as a GIF directly on Plotly within HTML somehow squeezes the GIF, so
 for proper visualization use the Python command as explained.
 
 ---
