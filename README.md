@@ -9,7 +9,7 @@ as **time paths** of output and inflation.
 The whole thing is a single self-contained `index.html` (plus two stylesheets) —
 no build step, no server required. Open the file and it runs.
 
-> The interface is in German.
+> The interface is in English and German.
 
 ---
 
