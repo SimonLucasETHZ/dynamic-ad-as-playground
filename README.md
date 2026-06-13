@@ -3,10 +3,10 @@
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
 Demand and Aggregate Supply (DAS–DAD)**, following Mankiw's *Macroeconomics*
 (Ch. 15). Move the sliders, fire demand and supply shocks, and watch the economy
-trace its way back to long-run equilibrium — both in the **DAS–DAD diagram** and
+trace its way back to long-run equilibrium, both in the **DAS–DAD diagram** and
 as **time paths** of output and inflation.
 
-The whole thing is a single self-contained `index.html` (plus two stylesheets) —
+The whole thing is a single self-contained `index.html` (plus two stylesheets) and
 no build step, no server required. Open the file and it runs.
 
 > The interface is in English and German.
@@ -21,36 +21,36 @@ equilibrium walking back toward the centred Ȳ / π\* cross) and the **time path
 of output `Y` and inflation `π` on the right. For shock configurations see 
 make_gifs.py or the .html itself.
 
-### COVID-19 — collapse, recovery & inflation wave
+### COVID-19 collapse, recovery & inflation wave
 A sharp demand collapse that lingers, followed by a supply-driven inflation wave.
 Output drops, recovers to roughly three-quarters of the loss, then climbs
-gradually back to potential — while inflation first dips, then surges, then eases.
+gradually back to potential while inflation first dips, then surges, then eases.
 
 ![COVID-19 scenario](media/covid_19.gif)
 
-### Positive demand shock — boom & inflation
+### Positive demand shock: boom & inflation
 ![Positive demand shock](media/demand_shock_positive.gif)
 
-### Negative demand shock — recession
+### Negative demand shock: recession
 ![Negative demand shock](media/demand_shock_negative.gif)
 
-### Adverse supply shock — stagflation
+### Adverse supply shock: stagflation
 Inflation up, output down at the same time.
 
 ![Adverse supply shock](media/supply_shock_adverse.gif)
 
-### Favourable supply shock — cheaper oil
+### Favourable supply shock: cheaper oil
 ![Favourable supply shock](media/supply_shock_favourable.gif)
 
-### Oil crisis of the 1970s — persistent stagflation
+### Oil crisis of the 1970s persistent stagflation
 A sequence of adverse supply shocks keeps inflation elevated for several periods.
 
 ![Oil crisis 1970s](media/oil_crisis_1970s.gif)
 
-### Fiscal expansion — sustained boom
+### Fiscal expansion: sustained boom
 ![Fiscal expansion](media/fiscal_expansion.gif)
 
-### Financial crisis 2008 — deep recession
+### Financial crisis 2008: deep recession
 A deep, persistent demand collapse with a slow recovery.
 
 ![Financial crisis 2008](media/financial_crisis_2008.gif)
@@ -59,17 +59,17 @@ A deep, persistent demand collapse with a slow recovery.
 
 ## Features
 
-- **English / German interface** — switch language from the dropdown on the
+- **English / German interface** switch language from the dropdown on the
   start screen (the model is authored in German and rendered in English by
   default).
 - **Interactive DAS–DAD diagram** built with Plotly. The equilibrium cross
   (Ȳ, π\*) always stays centred, and the window auto-fits so every period's
-  equilibrium — and its π / Y labels — stay on screen.
+  equilibrium and its π / Y labels stay on screen.
 - **Demand and supply shocks** at the impact period and up to four periods ahead
   (εₜ … εₜ₊₄ and νₜ … νₜ₊₄).
 - **One-click scenarios** for the classic teaching cases (see the GIFs above),
   with the active scenario highlighted.
-- **Animated adjustment** — step the economy forward period by period and watch
+- **Animated adjustment** step the economy forward period by period and watch
   it converge.
 - **Two views**: the DAS–DAD diagram and the impulse-response time paths of
   output (in levels, starting from Ȳ) and inflation.
@@ -126,7 +126,7 @@ inflation has inertia, the economy can pass *through* potential on the way back
 (when inflation is below target, the implied policy stance is loose, which lifts
 output above Ȳ for a while). That is why the **COVID-19** scenario uses a demand
 collapse that *lingers* (a smaller second-period drag) together with a single
-positive supply shock — this reproduces the realistic picture of a deep drop, a
+positive supply shock this reproduces the realistic picture of a deep drop, a
 partial (~70–75%) recovery, and then a gradual climb back to potential **without**
 an artificial overshoot, while still generating the later inflation wave. A
 **supply-driven** inflation surge necessarily pushes output the other way
@@ -138,7 +138,7 @@ the stagflationary trade-off.
 
 ## Running it
 
-It's a static site — pick whichever is easiest:
+It's a static site pick whichever is easiest:
 
 **Just open it.** Double-click `index.html`. (Most things work from `file://`;
 a couple of browsers are stricter about loading the local stylesheets, in which
@@ -184,7 +184,7 @@ python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
 
 `make_gifs.py` also exposes a one-call helper, `custom_gif(...)`, so you can drop
 a tailored shock into a GIF in a few lines. Set `gamma`, `phi`, the shock
-period(s) and size(s), and a title — everything you leave out keeps the model's
+period(s) and size(s), and a title everything you leave out keeps the model's
 default:
 
 ```python
@@ -202,7 +202,7 @@ custom_gif(
 
 `demand` and `supply` are dictionaries mapping a shock **period** to a shock
 **size** (positive or negative). Use one entry for a one-off shock, or several
-periods for a drawn-out one — e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
+periods for a drawn-out one e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
 boom. The call writes the GIF to `out` and returns its path. **Alternatively** 
 you can just click on the GIF button within the tool. However, visuals here 
 are worse as a GIF directly on Plotly within HTML somehow squeezes the GIF, so
@@ -212,15 +212,15 @@ for proper visualization use the Python command as explained.
 
 ## Built with
 
-- [Plotly.js](https://plotly.com/javascript/) — interactive charts
-- [MathJax](https://www.mathjax.org/) — LaTeX equation rendering
-- Vanilla HTML / CSS / JavaScript — no framework, no build step
+- [Plotly.js](https://plotly.com/javascript/) interactive charts
+- [MathJax](https://www.mathjax.org/) LaTeX equation rendering
+- Vanilla HTML / CSS / JavaScript no framework, no build step
 
 ---
 
 ## References
 
-- Mankiw, N. G. *Macroeconomics* — *A Dynamic Model of Aggregate Demand and
+- Mankiw, N. G. *Macroeconomics* *A Dynamic Model of Aggregate Demand and
   Aggregate Supply* (Ch. 15).
 - Phillips, A. W. (1958). "The Relation between Unemployment and the Rate of
   Change of Money Wage Rates." *Economica*.
