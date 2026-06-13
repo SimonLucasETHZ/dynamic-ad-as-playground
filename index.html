@@ -3188,18 +3188,18 @@ details[open] summary::before {
 
         <!-- Ȳ Slider -->
         <div class="slider-group1 hidden variable-ybar">
-            <label for="amount-inputybar"><span id="latex-ybar">\(\bar{Y}\)</span></label>
+            <label for="amount-inputybar"><span id="latex-ybar">\(\bar{Y}_{1}\)</span></label>
             <div class="slider-container"> 
-            <input type="range" id="amount-inputybar" class="modern-slider" value="5" min="0" max="10" step="1">
+            <input type="range" id="amount-inputybar" class="modern-slider" value="5" min="3" max="7" step="1">
             <span class="slider-value" id="amount-ybar-value">5</span>
             </div>
         </div>                
 
         <!-- π* Slider -->
         <div class="slider-group1 hidden variable-pistar">
-            <label for="amount-inputpistar"><span id="latex-pistar">\(\pi^{\star}\)</span></label>
+            <label for="amount-inputpistar"><span id="latex-pistar">\(\pi^{\star}_{1}\)</span></label>
             <div class="slider-container"> 
-            <input type="range" id="amount-inputpistar" class="modern-slider" value="5" min="1" max="11" step="1">
+            <input type="range" id="amount-inputpistar" class="modern-slider" value="5" min="3" max="7" step="1">
             <span class="slider-value" id="amount-pistar-value">5</span>
             </div>
         </div>  
@@ -3762,7 +3762,7 @@ details[open] summary::before {
                 color: '#d4a017',
                 width: 2,
             },
-            name: 'Y_bar',
+            name: 'GG₀',
             showlegend: false,
             hoverinfo: 'name' // Only show the name on hover
             
@@ -3827,8 +3827,9 @@ var layoutPlot2 = {
   xaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Time</span>' }, showticklabels: true },
   yaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Inflation (%)</span>' }, showticklabels: true },
   height: 500,
-  margin: { l: 50, r: 50, b: 50, t: 100, pad: 4 },
-  showlegend: false,
+  margin: { l: 50, r: 50, b: 70, t: 100, pad: 4 },
+  showlegend: true,
+  legend: { orientation: 'h', x: 0.5, y: -0.18, xanchor: 'center', yanchor: 'top' },
   paper_bgcolor: 'rgb(249, 249, 249)',
   plot_bgcolor: 'rgb(249, 249, 249)'
 };
@@ -3854,8 +3855,9 @@ var layoutPlot3 = {
   xaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Time</span>' }, showticklabels: true },
   yaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Output</span>' }, showticklabels: true },
   height: 500,
-  margin: { l: 50, r: 50, b: 50, t: 100, pad: 4 },
-  showlegend: false,
+  margin: { l: 50, r: 50, b: 70, t: 100, pad: 4 },
+  showlegend: true,
+  legend: { orientation: 'h', x: 0.5, y: -0.18, xanchor: 'center', yanchor: 'top' },
   paper_bgcolor: 'rgb(249, 249, 249)',
   plot_bgcolor: 'rgb(249, 249, 249)'
   
@@ -3897,9 +3899,14 @@ previousAmountInputShockte1 = 0;
         
 
        
-            var ybar = parseInt(document.getElementById('amount-inputybar').value);
+            // Two-regime equilibrium setup:
+            // GG₀ and π*₀ are fixed initial-equilibrium references. The sliders
+            // control GG₁ and π*₁, which apply from the first period onward.
+            var baselineY = 5;
+            var baselinePi = 5;
+            var ybar1 = parseFloat(document.getElementById('amount-inputybar').value);
             var phi = parseFloat(document.getElementById('amount-inputphi').value);
-            var pistar = parseInt(document.getElementById('amount-inputpistar').value);
+            var pistar1 = parseFloat(document.getElementById('amount-inputpistar').value);
             var gamma = parseFloat(document.getElementById('amount-inputgamma').value);
             var kappa = parseFloat(document.getElementById('amount-inputkappa').value);          
             var shockte = parseFloat(document.getElementById('amount-inputshockte').value) || 0;
@@ -3935,8 +3942,10 @@ previousAmountInputShockte1 = 0;
             // Keeps EXACT SAME variable names so nothing else must change.
             // ============================================================
             
-            // Keep your existing "artifical_t_plus_1" exactly as before (if you use it later):
-            var artifical_t_plus_1 = pistar + phi * ((1 / (1 + gamma * phi)) * (ybar + gamma * phi * ybar + kappa * shockte) - ybar);
+            // The inflation recursion is independent of the level of natural output:
+            // the output-gap terms cancel after substitution. GG₁ enters the output
+            // path, while π*₁ enters the post-equilibrium inflation recursion. GG₀
+            // and π*₀ remain fixed visual and statistical reference points.
             
             // Number of forward steps you previously hard-coded (you go up to t+11)
             var T = 15;
@@ -3946,7 +3955,7 @@ previousAmountInputShockte1 = 0;
             
             // Coefficients for the linear law of motion for inflation (pi)
             var a  = 1 - (phi * gamma) / D;            // coefficient on previous pi
-            var b  = ((phi * gamma) / D) * pistar;     // constant term involving pistar
+            var b  = ((phi * gamma) / D) * pistar1;    // constant term involving post-equilibrium π*₁
             var ce = (phi * kappa) / D;                // coefficient on demand shock (shockte)
             var cv = 1 - (phi * gamma) / D;            // coefficient on supply/inflation shock (shocktv)  (same as a)
             
@@ -3978,11 +3987,12 @@ previousAmountInputShockte1 = 0;
             var piPath = new Array(T + 1).fill(0);
             var yPath  = new Array(T + 1).fill(0);
             
-            // Initial conditions (match your original implicit starting point)
-            piPath[0] = pistar;
-            yPath[0]  = ybar;
+            // Initial equilibrium: GG₀ and π*₀ are fixed at 5 before any change occurs.
+            piPath[0] = baselinePi;
+            yPath[0]  = baselineY;
             
-            // Iterate forward (fast, maintainable, extendable)
+            // Iterate forward. From t onward, output is anchored at GG₁ and the
+            // inflation target is π*₁.
             for (var t = 0; t < T; t++) {
                 var eNext = eSeq[t + 1] || 0;
                 var vNext = vSeq[t + 1] || 0;
@@ -3990,8 +4000,8 @@ previousAmountInputShockte1 = 0;
                 // Inflation recursion (this is the linear “matrix” update)
                 piPath[t + 1] = a * piPath[t] + b + ce * eNext + cv * vNext;
             
-                // Output from your existing equation
-                yPath[t + 1]  = ybar - gamma * (piPath[t + 1] - pistar) + kappa * eNext;
+                // Output equation with the post-equilibrium natural-output anchor.
+                yPath[t + 1]  = ybar1 - gamma * (piPath[t + 1] - pistar1) + kappa * eNext;
             }
             
             // Now assign back to your ORIGINAL variable names (so the rest of your code remains unchanged)
@@ -4032,17 +4042,20 @@ previousAmountInputShockte1 = 0;
             // END REPLACEMENT BLOCK
             // ============================================================
 
-            // ---- Centered, auto-fitting axes ---------------------------------
-            // Keep the equilibrium cross (Ȳ, π*) exactly in the middle of the
-            // DAS-DAD diagram, and widen the window enough to contain every
-            // equilibrium so each period's π and Y label stays on-screen.
-            var __halfX = 5.5, __halfY = 5.5;
+            // ---- Fixed-baseline, auto-fitting axes ----------------------------
+            // Keep GG₀ and π*₀ at stable positions. The plot widens only if GG₁,
+            // π*₁, or a simulated path would otherwise fall outside the window.
+            var __halfX = Math.max(5.5, Math.abs(ybar1 - baselineY) * 1.25);
+            var __halfY = Math.max(5.5, Math.abs(pistar1 - baselinePi) * 1.25);
             for (var __k = 0; __k <= Math.min(T, 11); __k++) {
-                __halfX = Math.max(__halfX, Math.abs(yPath[__k]  - ybar)   * 1.25);
-                __halfY = Math.max(__halfY, Math.abs(piPath[__k] - pistar) * 1.25);
+                __halfX = Math.max(__halfX, Math.abs(yPath[__k]  - baselineY)  * 1.25);
+                __halfY = Math.max(__halfY, Math.abs(piPath[__k] - baselinePi) * 1.25);
             }
-            var xRangePlot1 = [ybar   - __halfX, ybar   + __halfX];
-            var yRangePlot1 = [pistar - __halfY, pistar + __halfY];
+            var xRangePlot1 = [baselineY - __halfX, baselineY + __halfX];
+            var yRangePlot1 = [baselinePi - __halfY, baselinePi + __halfY];
+            var hasYbarShift = Math.abs(ybar1 - baselineY) > 1e-9;
+            var hasPiStarShift = Math.abs(pistar1 - baselinePi) > 1e-9;
+            var hasStructuralShift = hasYbarShift || hasPiStarShift;
             // line-clipping band (slightly beyond the visible window)
             var __yClipLo = yRangePlot1[0] - 1;
             var __yClipHi = yRangePlot1[1] + 1;
@@ -4089,9 +4102,10 @@ function adjustAnnotationPositions(annotations, minSpacing) {
 // Define minimum spacing between annotations on the y-axis
 const minVerticalSpacing = 0.25; // Adjust this value as needed
 
-// Define and adjust pistar series annotations
+// Define and adjust inflation-target / period annotations
 let pistarAnnotations = [
-    { y: pistar, text: '&#960;<sup>*</sup>' },
+    { y: baselinePi, text: hasPiStarShift ? '&#960;<sup>*</sup><sub>0</sub>' : '&#960;<sup>*</sup>' },
+    ...(hasPiStarShift ? [{ y: pistar1, text: '&#960;<sup>*</sup><sub>1</sub>' }] : []),
     { y: pistar_t_plus_1, text: '&#960;<sub>t</sub>' },
     { y: pistar_t_plus_2, text: '&#960;<sub>t+1</sub>' },
     { y: pistar_t_plus_3, text: '&#960;<sub>t+2</sub>' },
@@ -4195,8 +4209,8 @@ var adjustedGammaArrow = {
 
             
     var horizontalLineTrace = {
-        x: [0, ybar], // From y-axis to intersection x-coordinate (ybar)
-        y: [pistar, pistar], // Constant y-coordinate (pistar)
+        x: [0, baselineY], // Initial equilibrium cross: π*₀ to fixed GG₀
+        y: [baselinePi, baselinePi], // Constant y-coordinate (π*₀)
         type: 'scatter',
         mode: 'lines',
         line: {
@@ -4352,62 +4366,65 @@ var adjustedGammaArrow = {
 
 
             // Update plot 1
+            // Pre-change curves are anchored at GG₀ / π*₀. Post-equilibrium
+            // DAD curves are anchored at GG₁ / π*₁, alongside period shocks.
             var updatedY1Plot1 = xValues.map(function(x) {
-                var y = pistar + phi * (x - 5);
+                var y = baselinePi + phi * (x - baselineY);
                 return y;
             });
             var updatedY2Plot1 = xValues.map(function(x) {
-                var y = pistar - (1/gamma) * (x - (kappa*0) - 5)
+                var y = baselinePi - (1/gamma) * (x - (kappa*0) - baselineY)
                 return y; 
             });
             var updatedY3Plot1 = xValues.map(function(x) {
-                var y = pistar - (1/gamma) * (x - (kappa*shockte) - ybar)
+                var y = pistar1 - (1/gamma) * (x - (kappa*shockte) - ybar1)
                 return y; 
             });
             var updatedY4Plot1 = xValues.map(function(x) {
-                var y = pistar - (1/gamma) * (x - (kappa*shockte1) - ybar)
+                var y = pistar1 - (1/gamma) * (x - (kappa*shockte1) - ybar1)
                 return y; 
             });
             // DAD curves for t+2 … t+4 (shift with their own demand shock)
             var updatedY5Plot1 = xValues.map(function(x) {
-                return pistar - (1/gamma) * (x - (kappa*shockte2) - ybar);
+                return pistar1 - (1/gamma) * (x - (kappa*shockte2) - ybar1);
             });
             var updatedY6Plot1 = xValues.map(function(x) {
-                return pistar - (1/gamma) * (x - (kappa*shockte3) - ybar);
+                return pistar1 - (1/gamma) * (x - (kappa*shockte3) - ybar1);
             });
             var updatedY7Plot1 = xValues.map(function(x) {
-                return pistar - (1/gamma) * (x - (kappa*shockte4) - ybar);
+                return pistar1 - (1/gamma) * (x - (kappa*shockte4) - ybar1);
             });
             
 
             var updatedY3SPlot1 = xValues.map(function(x) {
-                var y = pistar_t_plus_1 + phi*(x - ybar) + shocktv1
-                /*artifical_t_plus_1*/  
+                var y = pistar_t_plus_1 + phi*(x - ybar1) + shocktv1
                 return y; 
             });
             var updatedY4SPlot1 = xValues.map(function(x) {
-                var y = pistar_t_plus_2 + phi*(x - ybar) + shocktv2
+                var y = pistar_t_plus_2 + phi*(x - ybar1) + shocktv2
                 return y; 
             });
 
             var updatedY5SPlot1 = xValues.map(function(x) {
-                var y = pistar_t_plus_3 + phi*(x - ybar) + shocktv3
+                var y = pistar_t_plus_3 + phi*(x - ybar1) + shocktv3
                 return y; 
             });
 
             // DAS curve for t+4
             var updatedY7SPlot1 = xValues.map(function(x) {
-                var y = pistar_t_plus_4 + phi*(x - ybar) + shocktv4
+                var y = pistar_t_plus_4 + phi*(x - ybar1) + shocktv4
                 return y;
             });
             
             var updatedY6SPlot1 = xValues.map(function(x) {
-                var y = pistar + phi * (x - 5) + shocktv
+                var y = baselinePi + phi * (x - ybar1) + shocktv
                 return y; 
             });
                        
-            
-            var verticalLineXPlot1 = [ybar, ybar];
+            var baselineVerticalLineXPlot1 = [baselineY, baselineY];
+            var shiftedVerticalLineXPlot1  = [ybar1, ybar1];
+            var baselineHorizontalLineYPlot1 = [baselinePi, baselinePi];
+            var shiftedHorizontalLineYPlot1  = [pistar1, pistar1];
             var dataPlot1 = [
                 {
                     x: xValues,
@@ -4547,34 +4564,52 @@ var adjustedGammaArrow = {
                 },
                                 
                 {
-                    x: verticalLineXPlot1,
+                    x: baselineVerticalLineXPlot1,
                     y: yRangePlot1,
                     type: 'lines',
                     mode: 'lines',
-                    hoverinfo: 'name', // Only show the name on hover
+                    hoverinfo: 'name',
                     line: {
                         color: '#F1B404',
-                        width: 2,
+                        width: 2
                     },
-        showlegend: false,
-                            name: ''
-
+                    showlegend: false,
+                    name: 'GG₀'
                 },
+                ...(hasYbarShift ? [{
+                    x: shiftedVerticalLineXPlot1,
+                    y: yRangePlot1,
+                    type: 'lines',
+                    mode: 'lines',
+                    hoverinfo: 'name',
+                    line: {
+                        color: '#7c3aed',
+                        width: 2,
+                        dash: 'dash'
+                    },
+                    showlegend: false,
+                    name: 'GG₁'
+                }] : []),
                 {
-                    x: [ybar, ybar],
-                    y: yRangePlot1,
+                    x: xRangePlot1,
+                    y: baselineHorizontalLineYPlot1,
                     type: 'lines',
                     mode: 'lines',
-                    hoverinfo: 'name', // Only show the name on hover
-                    line: {
-                        color: '#F1B404',
-                        width: 2,
-                    },
-        showlegend: false,
-
-                    
-                    name: 'Gleichgewichter Output'
+                    hoverinfo: 'name',
+                    line: { color: '#b77900', width: 2 },
+                    showlegend: false,
+                    name: '&#960;<sup>*</sup><sub>0</sub>'
                 },
+                ...(hasPiStarShift ? [{
+                    x: xRangePlot1,
+                    y: shiftedHorizontalLineYPlot1,
+                    type: 'lines',
+                    mode: 'lines',
+                    hoverinfo: 'name',
+                    line: { color: '#7c3aed', width: 2, dash: 'dash' },
+                    showlegend: false,
+                    name: '&#960;<sup>*</sup><sub>1</sub>'
+                }] : []),
                 
                 horizontalLineTrace,
                 horizontalLineTrace_pit_1,
@@ -4694,17 +4729,29 @@ var adjustedGammaArrow = {
     },
 
     {
-        x: ybar,            // equilibrium output position (data)
+        x: baselineY,       // fixed initial equilibrium output (GG₀)
         y: -0.02,           // bottom margin (paper coords → never clipped)
         xref: 'x',
         yref: 'paper',
         yanchor: 'top',
-        text: 'GG',
+        text: hasYbarShift ? 'GG<sub>0</sub>' : 'GG',
         showarrow: false,
         font: {
-            color: 'orange'
+            color: '#b77900'
         }
     },
+    ...(hasYbarShift ? [{
+        x: ybar1,           // post-equilibrium natural output (GG₁)
+        y: -0.02,
+        xref: 'x',
+        yref: 'paper',
+        yanchor: 'top',
+        text: 'GG<sub>1</sub>',
+        showarrow: false,
+        font: {
+            color: '#7c3aed'
+        }
+    }] : []),
     
     ...adjustedPistarAnnotations,
     ...adjustedYtAnnotations,
@@ -4715,17 +4762,17 @@ var adjustedGammaArrow = {
 
 if (amountInputShockte > 0) {
     // Choose a y-coordinate (inflation level) for the arrow
-    var arrowY = pistar; // Using the equilibrium inflation rate
+    var arrowY = pistar1; // Using post-equilibrium π*₁
 
     // Calculate x-coordinate on the old DAD line at arrowY
-    // Old DAD: y = pistar - (1/gamma)*(x - ybar)
+    // Reference DAD around GG₁ / π*₁: y = pistar1 - (1/gamma)*(x - ybar1)
     // Solving for x_old:
-    var x_old = ybar + gamma * (pistar - arrowY);
+    var x_old = ybar1 + gamma * (pistar1 - arrowY);
 
     // Calculate x-coordinate on the new DAD line at arrowY
-    // New DAD with shock: y = pistar - (1/gamma)*(x - kappa * amountInputShockte - ybar)
+    // Shifted DAD with shock: y = pistar1 - (1/gamma)*(x - kappa * amountInputShockte - ybar1)
     // Solving for x_new:
-    var x_new = ybar + kappa * amountInputShockte + gamma * (pistar - arrowY);
+    var x_new = ybar1 + kappa * amountInputShockte + gamma * (pistar1 - arrowY);
 
     // Create the arrow annotation
     var arrowAnnotation = {
@@ -4781,17 +4828,17 @@ if (amountInputShockte > 0) {
 
 if (amountInputShockte < 0) {
     // Choose a y-coordinate (inflation level) for the arrow
-    var arrowY = pistar; // Using the equilibrium inflation rate
+    var arrowY = pistar1; // Using post-equilibrium π*₁
 
     // Calculate x-coordinate on the old DAD line at arrowY
-    // Old DAD: y = pistar - (1/gamma)*(x - ybar)
+    // Reference DAD around GG₁ / π*₁: y = pistar1 - (1/gamma)*(x - ybar1)
     // Solving for x_old:
-    var x_old = ybar + gamma * (pistar - arrowY);
+    var x_old = ybar1 + gamma * (pistar1 - arrowY);
 
     // Calculate x-coordinate on the new DAD line at arrowY
-    // New DAD with shock: y = pistar - (1/gamma)*(x - kappa * amountInputShockte - ybar)
+    // Shifted DAD with shock: y = pistar1 - (1/gamma)*(x - kappa * amountInputShockte - ybar1)
     // Solving for x_new:
-    var x_new = ybar + kappa * amountInputShockte + gamma * (pistar - arrowY);
+    var x_new = ybar1 + kappa * amountInputShockte + gamma * (pistar1 - arrowY);
 
     // Create the arrow annotation
     var arrowAnnotation = {
@@ -4847,15 +4894,15 @@ if (shocktv > 0) {
     // or "improves" supply, it typically lowers inflation or moves curve in a certain direction).
     // You can pick your own coordinates for x/y, or compute them from the curves.
     
-    var arrowYv = pistar; // Using the equilibrium inflation rate
-    var x_oldV = ybar + gamma * (pistar - arrowYv);
+    var arrowYv = baselinePi; // DAS_t inherits the initial π*₀ inflation rate
+    var x_oldV = ybar1 + gamma * (pistar1 - arrowYv);
 
 
     const arrowSupplyPos = {
       x: x_oldV,          // x-coordinate where arrow ends
       y: arrowYv+shocktv,          // y-coordinate where arrow ends
       ax: x_oldV,         // x-coordinate for arrow tail
-      ay: pistar,         // y-coordinate for arrow tail (less than y => arrow points up)
+      ay: baselinePi,      // y-coordinate for arrow tail (less than y => arrow points up)
       xref: 'x',
       yref: 'y',
       axref: 'x',
@@ -4874,7 +4921,7 @@ if (shocktv > 0) {
     annotations.push(arrowSupplyPos);
     
    var midXV = x_oldV;  // midpoint
-   var midYV = (shocktv)/2+pistar;
+   var midYV = (shocktv)/2+baselinePi;
    
    // The label annotation (no arrow)
    var arrowLabelV = {
@@ -4899,15 +4946,15 @@ if (shocktv > 0) {
 
 if (shocktv < 0) {
     // Example: an arrow going *down* for a negative supply shock
-    var arrowYv = pistar; // Using the equilibrium inflation rate
-    var x_oldV = ybar + gamma * (pistar - arrowYv);
+    var arrowYv = baselinePi; // DAS_t inherits the initial π*₀ inflation rate
+    var x_oldV = ybar1 + gamma * (pistar1 - arrowYv);
     
     
     const arrowSupplyNeg = {
       x: x_oldV,
       y: arrowYv+shocktv,
       ax: x_oldV,
-      ay: pistar,         // bigger than y => arrow points down
+      ay: baselinePi,      // bigger than y => arrow points down
       xref: 'x',
       yref: 'y',
       axref: 'x',
@@ -4928,7 +4975,7 @@ if (shocktv < 0) {
     
     
    var midXV = x_oldV;  // midpoint
-   var midYV = (shocktv)/2+pistar;
+   var midYV = (shocktv)/2+baselinePi;
    
    // The label annotation (no arrow)
    var arrowLabelV = {
@@ -4953,7 +5000,7 @@ if (shocktv < 0) {
 }
                    
             
- if (shockte === 0 && shockte1 === 0 && shocktv === 0 && shocktv1 === 0) {
+ if (!hasStructuralShift && shockte === 0 && shockte1 === 0 && shocktv === 0 && shocktv1 === 0) {
         // Update annotations for DAS_t-1 and DAD_t-1
         annotations.forEach(function(annotation) {
 
@@ -4971,10 +5018,9 @@ if (shocktv < 0) {
                 annotation.text = '&#960;<sup>*</sup>'; // Keep y-axis indication for pi_star
                 annotation.visible = true; // Show this annotation     
                 
-            } else if (annotation.text === 'GG') {
+            } else if (annotation.text === 'GG' || annotation.text === 'GG<sub>0</sub>' || annotation.text === 'GG<sub>1</sub>') {
       
-                annotation.text = 'GG'; // Keep y-axis indication for GG
-                annotation.visible = true; // Show this annotation                     
+                annotation.visible = true; // Keep equilibrium-output indications visible
 
             } else {
 
@@ -5019,7 +5065,7 @@ if (shocktv < 0) {
 
 layoutPlot1.annotations = annotations;
 
-            // Centered, auto-fitting ranges so the (Ȳ, π*) cross stays in the middle
+            // Fixed-baseline, auto-fitting ranges so GG₀ and π*₀ stay stable
             layoutPlot1.xaxis.range = xRangePlot1;
             layoutPlot1.yaxis.range = yRangePlot1;
             layoutPlot1.xaxis.autorange = false;
@@ -5050,15 +5096,10 @@ layoutPlot1.annotations = annotations;
                 var inflationData = piPath.slice(0, T + 1);
                 
                 // Output series: show levels from t+0 ... t+T
-                // IMPORTANT: your old outputData started with "5" (a hardcoded baseline).
-                // To preserve that behavior, keep yPath[0] = 5 (or ybar) earlier in the code.
-                // Here we just use the simulated path:
+                // The output series starts at fixed GG₀ and then follows GG₁ plus shocks.
                 var outputData = yPath.slice(0, T + 1);
                 
-                // Convergence / deviation table (keep your logic, but make it dynamic)
-                // Your previous version had: 5, 5, (y_t_plus_1-5)/5, ...
-                // It looks like you want deviations from baseline 5 (or ybar).
-                var baselineY = 5; // keep 5 to match your existing display; change to ybar if you prefer
+                // Convergence / deviation table relative to the fixed initial equilibrium.
                 
                 var dataTableConvergence = new Array(T + 1);
                 for (var t = 0; t <= T; t++) {
@@ -5078,7 +5119,7 @@ layoutPlot1.annotations = annotations;
                 for (var t = 0; t <= T; t++) {
                   varDeviationData[t] = {
                     t: t,
-                    inflationDev: inflationData[t] - pistar,
+                    inflationDev: inflationData[t] - baselinePi,
                     outputDev: outputData[t] - baselineY
                   };
                 }
@@ -5095,8 +5136,7 @@ layoutPlot1.annotations = annotations;
 var inflationData = piPath.slice(0, T + 1);
 var outputData    = yPath.slice(0, T + 1);
 
-// Baseline (keep 5 if that is your steady state; otherwise use ybar)
-var baselineY = 5;
+// baselineY is the fixed initial equilibrium GG₀ declared at the top of updatePlots().
 
 // Populate tables
 updateDataTable(
@@ -5115,24 +5155,40 @@ updateDataTable(
 // ============================================================
 var xIRF = Array.from({ length: inflationData.length }, (_, i) => i); // 0..T
 
-var irfInfl = inflationData.map(v => v - pistar);
-var irfOut  = outputData.slice();           // output as LEVELS (starts at Ȳ), not deviations
+var irfInfl = inflationData.slice();    // inflation as LEVELS (starts at π*₀)
+var irfOut  = outputData.slice();           // output as LEVELS (starts at GG₀)
 
-var zeroLineInfl = xIRF.map(() => 0);
-var zeroLineOut  = xIRF.map(() => ybar);     // equilibrium reference line at Ȳ
+var pi0LineInfl = xIRF.map(() => baselinePi);                  // fixed initial π*₀
+var pi1LineInfl = xIRF.map((_, i) => i === 0 ? null : pistar1); // π*₁ applies after equilibrium
+var gg0LineOut = xIRF.map(() => baselineY);                     // fixed initial GG₀
+var gg1LineOut = xIRF.map((_, i) => i === 0 ? null : ybar1);    // GG₁ applies after equilibrium
 
 // IMPORTANT: plot into your chart divs
-Plotly.react('plot2-chart', [
-  { x: xIRF, y: irfInfl, type: 'scatter', mode: 'lines', name: 'IRF' },
-  { x: xIRF, y: zeroLineInfl, type: 'scatter', mode: 'lines', name: 'GG',
+var inflationIRFTraces = [
+  { x: xIRF, y: irfInfl, type: 'scatter', mode: 'lines', name: 'Inflation' },
+  { x: xIRF, y: pi0LineInfl, type: 'scatter', mode: 'lines', name: 'π*₀',
     line: { color: '#c0c2c1', width: 2, dash: 'dash' } }
-], layoutPlot2, configIRF);
+];
+if (hasPiStarShift) {
+  inflationIRFTraces.push({
+    x: xIRF, y: pi1LineInfl, type: 'scatter', mode: 'lines', name: 'π*₁',
+    line: { color: '#7c3aed', width: 2, dash: 'dot' }
+  });
+}
+Plotly.react('plot2-chart', inflationIRFTraces, layoutPlot2, configIRF);
 
-Plotly.react('plot3-chart', [
-  { x: xIRF, y: irfOut, type: 'scatter', mode: 'lines', name: 'IRF' },
-  { x: xIRF, y: zeroLineOut, type: 'scatter', mode: 'lines', name: 'GG',
+var outputIRFTraces = [
+  { x: xIRF, y: irfOut, type: 'scatter', mode: 'lines', name: 'Output' },
+  { x: xIRF, y: gg0LineOut, type: 'scatter', mode: 'lines', name: 'GG₀',
     line: { color: '#c0c2c1', width: 2, dash: 'dash' } }
-], layoutPlot3, configIRF);
+];
+if (hasYbarShift) {
+  outputIRFTraces.push({
+    x: xIRF, y: gg1LineOut, type: 'scatter', mode: 'lines', name: 'GG₁',
+    line: { color: '#7c3aed', width: 2, dash: 'dot' }
+  });
+}
+Plotly.react('plot3-chart', outputIRFTraces, layoutPlot3, configIRF);
 
 // OPTIONAL: expose globally if your toggle buttons need them
 window.inflationData = inflationData;
@@ -5142,8 +5198,13 @@ window.outputData = outputData;
 window.__ddSim = {
   piPath: piPath.slice(0, T + 1),
   yPath: yPath.slice(0, T + 1),
-  pistar: pistar,
-  ybar: ybar,
+  pistar0: baselinePi,
+  pistar1: pistar1,
+  pistar: pistar1,       // compatibility alias for older helper code
+  baselinePi: baselinePi,
+  ybar0: baselineY,
+  ybar1: ybar1,
+  ybar: ybar1,          // compatibility alias for older helper code
   baselineY: baselineY,
   a: a,                 // decay rate = 1/(1+gamma*phi)
   T: T,
@@ -5219,10 +5280,7 @@ if (typeof ddUpdateIRFStats === 'function') {
         }
     
         
-        document.getElementById('amount-inputybar').addEventListener('input', function() {
-    barY = parseFloat(this.value);
-    /* showPlot1(); */
-});
+        // The GG₁ and π*₁ sliders are read directly inside updatePlots().
 
 document.getElementById('amount-inputphi').addEventListener('input', function() {
     phi = parseFloat(this.value);
@@ -6773,7 +6831,7 @@ window.onload = function() {
   window.ddUpdateIRFStats = function (sim) {
     if (!sim) return;
     var pi = sim.piPath, y = sim.yPath;
-    var piStar = sim.pistar, base = (sim.ybar != null ? sim.ybar : sim.baselineY);
+    var piStar = (sim.pistar0 !== undefined ? sim.pistar0 : sim.pistar), base = sim.baselineY;
     if (!pi || !y) return;
 
     var piDev = pi.map(function (v) { return v - piStar; });
@@ -6846,7 +6904,7 @@ window.onload = function() {
     removeAnimTraces(gd);
 
     var N = Math.min(sim.T || 11, 11);
-    var xs = [sim.ybar], ys = [sim.pistar];
+    var xs = [sim.baselineY], ys = [(sim.pistar0 !== undefined ? sim.pistar0 : sim.pistar)];
     for (var k = 1; k <= N; k++) { xs.push(sim.yPath[k]); ys.push(sim.piPath[k]); }
 
     Plotly.addTraces(gd, [
@@ -6924,7 +6982,7 @@ window.onload = function() {
     removeAnimTraces(gd);
 
     var N = Math.min(sim.T || 11, 11);   // trace the adjustment path through t+10
-    var xs = [sim.ybar], ys = [sim.pistar];
+    var xs = [sim.baselineY], ys = [(sim.pistar0 !== undefined ? sim.pistar0 : sim.pistar)];
     for (var k = 1; k <= N; k++) {
       xs.push(sim.yPath[k]);
       ys.push(sim.piPath[k]);
