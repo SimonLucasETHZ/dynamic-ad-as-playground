@@ -1,10 +1,7 @@
 /* ==========================================================================
-   DAS-DAD · Theme layer  ("Ink & Ochre")
-   Loaded AFTER bootstrap + econ.department.css so it has the final word.
-   Goal: a calmer, more scholarly look + styling for the new teaching content
-   (intro, learning goals, references, glossary, callouts, scenario presets,
-   impulse-response stats and the adjustment animation controls).
-   All colours flow from the CSS custom properties defined here.
+   DAS-DAD · Theme layer ("Ink & Ochre")
+   Loaded after Bootstrap and core.css. This file contains the visual theme for
+   the application views, teaching content, scenarios and IRF controls.
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap');
@@ -14,11 +11,7 @@
     --accent-2:      #7c5cff;
     --accent-soft:   #ecebfb;
     --dad-blue:      #1d4ed8;
-    --dad-blue-light:#7da2e6;
     --das-ochre:     #c0531c;
-    --das-ochre-light:#f0b486;
-    --gold:          #d4a017;
-    --emerald:       #15915b;
     --ink:           #1b2230;
     --ink-soft:      #34405a;
     --muted:         #5b6577;
@@ -33,10 +26,9 @@
 /* ---------- Base typography ------------------------------------------------ */
 body { font-family: var(--sans); color: var(--ink); }
 
-h1, h2, h3, .header-title-text h1 { font-family: var(--serif); letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--serif); letter-spacing: -0.01em; }
 .header-title-text h1 { font-weight: 700; }
-.content h2, .content2 h2, .left-content h2,
-.variables-intro-container h3, .question-box h3 { color: var(--ink); }
+.content h2, .content2 h2, .left-content h2 { color: var(--ink); }
 
 p, li { line-height: 1.6; }
 
@@ -74,9 +66,6 @@ p, li { line-height: 1.6; }
 }
 
 /* ---------- Buttons (generic accent) --------------------------------------- */
-.menu-button { background-color: var(--accent); }
-.menu-button:hover { background-color: var(--accent-2); }
-
 .modern-button, .modern-button1 {
     background: var(--accent);
     color: #fff;
@@ -92,7 +81,7 @@ p, li { line-height: 1.6; }
 .modern-button:hover, .modern-button1:hover { background: var(--accent-2); transform: translateY(-1px); }
 .modern-button:active, .modern-button1:active { transform: translateY(0); }
 
-.options-button1, .options-button2 {
+.options-button2 {
     background: var(--accent-soft);
     color: var(--accent) !important;
     border: 1px solid #d8d5f4;
@@ -102,7 +91,7 @@ p, li { line-height: 1.6; }
     font-family: var(--sans);
     cursor: pointer;
 }
-.options-button1:hover, .options-button2:hover { background: #e1def8; }
+.options-button2:hover { background: #e1def8; }
 
 /* ---------- Start circle on the pre-menu ----------------------------------- */
 .circle-button { transition: transform .2s ease, box-shadow .2s ease; }
@@ -185,8 +174,6 @@ p, li { line-height: 1.6; }
 .dd-callout.supply::before { content: "⚙️"; }
 .dd-callout.history { background: #f1f5f1; border-color: #d9e4d9; }
 .dd-callout.history::before { content: "📜"; }
-.dd-callout.demand { background: #eef3fd; border-color: #cfe0fb; }
-.dd-callout.demand::before { content: "📈"; }
 
 /* Model-at-a-glance chips */
 .dd-glance { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
