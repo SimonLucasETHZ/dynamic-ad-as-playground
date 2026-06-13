@@ -984,14 +984,6 @@ input:checked + .toggle-slide:before {
             align-items: top;
         }
 
-        /* Optional: Adjust the circle button size if needed */
-        .circle-button {
-            width: 220px;
-            height: 220px;
-            /* Other existing styles */
-        }
-
-        
         .double_box {
             display: flex;
             flex-direction: row;
@@ -2203,43 +2195,6 @@ input:checked + .toggle-slide:before {
     margin-bottom: 15px;
 }
 
-.equation-highlight {
-  /* We'll ensure it displays as an inline-block or block
-     so that it has a well-defined size for the pseudo-element. */
-  display: inline-block; 
-  position: relative; /* needed for the ::after to position absolutely */
-}
-
-/* The pulsing highlight is done via a pseudo-element: */
-.equation-highlight.intro-highlight::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  top: -3px;
-  left: -8px;
-  right: -8px;
-  bottom: -3px;
-  border-radius: 8px;           /* adjust corners as needed */
-  border: 3px solid #4338ca;    /* base color */
-  box-shadow: 0 0 10px #4338ca; /* glow */
-  animation: pulseGlow 1.5s ease-in-out infinite;
-}
-
-/* The pulsing @keyframes: cycles color/box-shadow over 1.5s repeatedly. */
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 10px #4338ca;
-    border-color: #4338ca;
-  }
-  50% {
-    box-shadow: 0 0 20px #7c5cff;
-    border-color: #7c5cff;
-  }
-  100% {
-    box-shadow: 0 0 10px #4338ca;
-    border-color: #4338ca;
-  }
-}
 .draggable-option {
     padding: 10px;
     margin: 10px;
@@ -2469,49 +2424,6 @@ input:checked + .toggle-slide:before {
 .equation-overlay:hover {
     background-color: rgba(255, 255, 0, 0.3); /* Highlight on hover */
 }
-
- .circle-button {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%; /* Makes it a circle */
-            position: relative;
-            margin: 50px auto; /* Centers the circle and adds top margin */
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-        }
-
-        .circle-button .button-icon,
-        .circle-button .button-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color:  var(--main-blue);
-            text-align: center;
-        }
-
-        .circle-button .button-icon {
-            width: 220px;
-            height: 220px;
-        }
-
-        .circle-button .button-text {
-            font-size: 30px;
-            display: none;
-            width: 80%;
-        }
-
-        .circle-button:hover .button-icon {
-            display: none;
-
-        }
-
-        .circle-button:hover .button-text {
-            display: block;
-        }
-        
 
         
         .interactive-variable {
@@ -2960,7 +2872,7 @@ details[open] summary::before {
                 <div class="content2">
                     <!-- Pre-menu content -->
                     <h2 id="i18n-welcome">Welcome to the DAS-DAD Model</h2>
-                    <p id="i18n-startp">Click the circle to launch the model.</p>
+                    <p id="i18n-startp">Select the Start button to launch the model.</p>
                     <div class="lang-switch">
                         <label for="lang-select">Language / Sprache:</label>
                         <select id="lang-select">
@@ -2968,16 +2880,16 @@ details[open] summary::before {
                             <option value="de">Deutsch</option>
                         </select>
                     </div>
-                    <div id="start-button" class="circle-button">
-                        <img src="cover.png" alt="Icon" class="button-icon">
+                    <button id="start-button" class="circle-button" type="button" aria-label="Start DAS-DAD model">
                         <span class="button-text">Start</span>
-                    </div>
+                        <span class="button-subtext" aria-hidden="true">DAS&ndash;DAD</span>
+                    </button>
                 </div>
             </div>
             
             <div class="disclaimer">
                 &#9400; Lucas Simon & Juri Ezzaini<br>All rights
-                reserved. Icons from www.flaticon.com. Pictures from www.pixabay.com.
+                reserved. Icons from www.flaticon.com.
             </div>
              <div class="disclaimer">
                  <span id="i18n-subjchange">Subject to change.</span>
@@ -3063,7 +2975,7 @@ details[open] summary::before {
                             </div>
 
                             <h2 id="i18n-eqh">Equations</h2>
-                            <p id="i18n-eqp">Here is a short introduction and the derivation of the model. Click on any variable for more detail.</p>
+                            <p id="i18n-eqp">Select a symbol in either equation for a brief explanation.</p>
   <div class="latex-equation" id="main-equation">
     \[
     \class{interactive-variable variable-Y_t}{Y_t} = \class{interactive-variable variable-ybar}{\bar{Y}} - \class{interactive-variable variable-gamma}{\gamma} \left( \class{interactive-variable variable-pit}{\pi_t} - \class{interactive-variable variable-pistsar}{\pi^\star} \right) + \class{interactive-variable variable-kappa}{\kappa} \class{interactive-variable variable-\epsilon_t}{\epsilon_t}
@@ -3171,7 +3083,7 @@ details[open] summary::before {
             <!-- Disclaimer -->
             <div class="disclaimer">
                 &#9400; Lucas Simon & Juri Ezzaini<br>All rights
-                reserved. Icons from www.flaticon.com. Pictures from www.pixabay.com.
+                reserved. Icons from www.flaticon.com.
             </div>
         </div>
     </div>
@@ -3233,7 +3145,7 @@ details[open] summary::before {
         </div>
         
         
-<div class="equation-highlight intro-highlight" id="equation-highlight">
+<div class="equation-highlight" id="equation-highlight">
 <div class="latex-equation">
     \[
     \class{variable-Y_t}{Y_t} = \class{interactive-variablefilter variable-ybar}{\bar{Y}} - \class{interactive-variablefilter variable-gamma}{\gamma} \left( \class{variable-pit}{\pi_t} - \class{interactive-variablefilter variable-pistar}{\pi^\star} \right) + \class{interactive-variablefilter variable-kappa}{\kappa} \class{interactive-variablefilter variable-epsilon_t}{\epsilon_t}
@@ -3742,7 +3654,7 @@ details[open] summary::before {
 
                 <div class="disclaimer">
                     &#9400; Lucas Simon & Juri Ezzaini<br>All rights
-                    reserved. Icons from www.flaticon.com. Pictures from www.pixabay.com.
+                    reserved. Icons from www.flaticon.com.
                 </div>
             </div>
             
@@ -5596,372 +5508,193 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Explanations for variables
+    // Concise, bilingual explanations for the clickable equation symbols.
+    // The numbered citations point to the source list in the Variables & Equations tab.
     const variableExplanations = {
-    "Y_t": `
-        <!-- Point 6 -->
-        <details>
-            <summary>Ausgangspunkt</summary>
-            <div class="collapsible-content">
-                <p>
-                    IS-Kurve. Wir beginnen mit der IS-Kurve, die das Gleichgewicht auf dem Gütermarkt beschreibt:
-                </p>
-                \\[
-                Y_t = \\bar{Y} - \\alpha (r_t - r^*) + \\varepsilon_t,
-                \\]
-                <p>
-                <p>Die Variablen sind wie folgt definiert:</p>
-
-        <ul class="aligned-list">
-            <li>\\( Y_t \\): Das reale Outputniveau zum Zeitpunkt \\( t \\).</li>
-            <li>\\( \\bar{Y} \\): Das natürliche Outputniveau.</li>
-            <li>\\( \\alpha > 0 \\): Zinselastizität der Nachfrage.</li>
-            <li>\\( r_t \\): Realzinssatz zum Zeitpunkt \\( t \\).</li>
-            <li>\\( r^* \\): Natürlicher Realzins.</li>
-            <li>\\( \\varepsilon_t \\): Nachfrage-Schock.</li>
-        </ul>
-        
-                </p>
-            </div>
-        </details>
-    `,
-        "\\bar{Y}": "Das natürliche Outputniveau.",
-         "\\gamma": `
-
-        <!-- Point 1 -->
-       
-        <details>
-            <summary>1. Ausgangspunkt: IS-Kurve</summary>
-            <p>
-                Die IS-Kurve repräsentiert das Gleichgewicht auf dem Gütermarkt und zeigt die Beziehung zwischen dem Realzins und dem Output:
-            </p>
-            \\[
-            Y_t = \\bar{Y} - \\alpha (r_t - r^*) + \\varepsilon_t
-            \\]
-            <p>Wobei:</p>
-            <ul class="aligned-list">
-                <li><span class="variable-name">\\( Y_t \\):</span> Reales Outputniveau zum Zeitpunkt \\( t \\).</li>
-                <li><span class="variable-name">\\( \\bar{Y} \\):</span> Natürliches Outputniveau.</li>
-                <li><span class="variable-name">\\( \\alpha > 0 \\):</span> Sensitivität des Outputs gegenüber dem Realzins.</li>
-                <li><span class="variable-name">\\( r_t \\):</span> Realzinssatz zum Zeitpunkt \\( t \\).</li>
-                <li><span class="variable-name">\\( r^* \\):</span> Natürlicher Realzins.</li>
-                <li><span class="variable-name">\\( \\varepsilon_t \\):</span> Nachfrage-Schock.</li>
-            </ul>
-        </details>
-
-
-        <!-- Point 2 -->
-        <details>
-            <summary>2. Geldpolitische Regel</summary>
-            <p>
-                Die Zentralbank setzt den Nominalzins gemäß einer Taylor-Regel:
-            </p>
-            \\[
-            i_t = \\pi_t + r^* + \\theta_\\pi (\\pi_t - \\pi^*) + \\theta_Y (Y_t - \\bar{Y})
-            \\]
-            <p>Wobei:</p>
-            <ul class="aligned-list">
-                <li><span class="variable-name">\\( i_t \\):</span> Nominalzinssatz zum Zeitpunkt \\( t \\)</li>
-                <li><span class="variable-name">\\( \\pi_t \\):</span> Inflationsrate zum Zeitpunkt \\( t \\)</li>
-                <li><span class="variable-name">\\( \\pi^* \\):</span> Inflationsziel der Zentralbank</li>
-                <li><span class="variable-name">\\( \\theta_\\pi > 0 \\):</span> Reaktionskoeffizient auf Inflationsabweichungen</li>
-                <li><span class="variable-name">\\( \\theta_Y > 0 \\):</span> Reaktionskoeffizient auf Outputlücke</li>
-            </ul>
-        </details>
-
-        <!-- Point 3 -->
-        <details>
-            <summary>3. Realzins</summary>
-            <p>
-                Der Realzins ergibt sich aus der Differenz zwischen Nominalzins und Inflation:
-            </p>
-            \\[
-            r_t = i_t - \\pi_t
-            \\]
-        </details>
-
-        <!-- Point 4 -->
-        <details>
-            <summary>4. Einsetzen der geldpolitischen Regel in den Realzins</summary>
-            \\[
-            \\begin{aligned}
-            r_t &= [\\pi_t + r^* + \\theta_\\pi (\\pi_t - \\pi^*) + \\theta_Y (Y_t - \\bar{Y})] - \\pi_t \\\\
-            &= r^* + \\theta_\\pi (\\pi_t - \\pi^*) + \\theta_Y (Y_t - \\bar{Y})
-            \\end{aligned}
-            \\]
-        </details>
-
-        <!-- Point 5 -->
-        <details>
-            <summary>5. Realzinslücke</summary>
-            <p>
-                Die Differenz zwischen aktuellem Realzins und natürlichem Realzins ist:
-            </p>
-            \\[
-            r_t - r^* = \\theta_\\pi (\\pi_t - \\pi^*) + \\theta_Y (Y_t - \\bar{Y})
-            \\]
-        </details>
-
-        <!-- Point 6 -->
-        <details>
-            <summary>6. Substitution in die IS-Kurve</summary>
-            <p>
-                Setzen wir die Realzinslücke in die IS-Kurve ein:
-            </p>
-            \\[
-            Y_t = \\bar{Y} - \\alpha [\\theta_\\pi (\\pi_t - \\pi^*) + \\theta_Y (Y_t - \\bar{Y})] + \\varepsilon_t
-            \\]
-        </details>
-
-        <!-- Point 7 -->
-        <details>
-            <summary>7. Auflösen</summary>
-            <p>
-                Wir beginnen, indem wir alle \\( Y_t \\) Terme auf die linke Seite nehmen:
-            </p>
-            \\[
-            Y_t + \\alpha \\theta_Y (Y_t - \\bar{Y}) = \\bar{Y} - \\alpha \\theta_\\pi (\\pi_t - \\pi^*) + \\varepsilon_t
-            \\]
-            <p>
-                \\( Y_t \\) ausmultiplizieren 
-            </p>
-            \\[
-            Y_t + \\alpha \\theta_Y Y_t - \\alpha \\theta_Y \\bar{Y} = \\bar{Y} - \\alpha \\theta_\\pi (\\pi_t - \\pi^*) + \\varepsilon_t
-            \\]
-            <p>
-                Zusammenfassen der \\( Y_t \\)-Terme:
-            </p>
-            \\[
-            (1 + \\alpha \\theta_Y) Y_t = \\bar{Y} (1 + \\alpha \\theta_Y) - \\alpha \\theta_\\pi (\\pi_t - \\pi^*) + \\varepsilon_t
-            \\]
-        </details>
-
-        <!-- Point 8 -->
-        <details>
-            <summary>8. Lösung</summary>
-            <p>
-                Wir isolieren \\( Y_t \\):
-            </p>
-            \\[
-            Y_t = \\bar{Y} - \\frac{ \\alpha \\theta_\\pi }{ 1 + \\alpha \\theta_Y } (\\pi_t - \\pi^*) + \\frac{ 1 }{ 1 + \\alpha \\theta_Y } \\varepsilon_t
-            \\]
-            <p>
-                Beachten wir, dass der erste Term oft zu \\( \\bar{Y} \\) vereinfacht wird, wenn wir annehmen, dass \\( \\bar{Y} \\) konstant ist:
-            </p>
-            \\[
-            Y_t = \\bar{Y} - \\gamma (\\pi_t - \\pi^*) + \\kappa \\varepsilon_t
-            \\]
-            <p>Wobei:</p>
-            \\[
-            \\gamma = \\frac{ \\alpha \\theta_\\pi }{ 1 + \\alpha \\theta_Y }, \\quad \\kappa = \\frac{ 1 }{ 1 + \\alpha \\theta_Y }
-            \\]
-        </details>
-
-        <!-- Point 9 -->
-        <details>
-            <summary>9. Interpretation</summary>
-            <p>
-                Der Parameter \\( \\gamma \\) misst die Empfindlichkeit der Outputlücke gegenüber Abweichungen der Inflation vom Zielwert. Ein höheres \\( \\gamma \\) bedeutet, dass kleine Abweichungen der Inflation vom Ziel zu größeren Veränderungen in der Outputlücke führen.
-            </p>
-            <p>
-                \\( \\gamma \\) hängt ab von:
-            </p>
-            <ul class="aligned-list">
-                <li><strong>\\( \\alpha \\):</strong> Höheres \\( \\alpha \\) erhöht \\( \\gamma \\), da das Outputniveau empfindlicher auf Zinsänderungen reagiert</li>
-                <li><strong>\\( \\theta_\\pi \\):</strong> Ein höheres \\( \\theta_\\pi \\) bedeutet, dass die Zentralbank stärker auf Inflationsabweichungen reagiert, was zu größeren Realzinsänderungen und somit zu größeren Auswirkungen auf das Outputniveau führt</li>
-                <li><strong>\\( \\theta_Y \\):</strong> Höheres \\( \\theta_Y \\) verringert \\( \\gamma \\), da die Zentralbank auch auf die Outputlücke reagiert und somit die Auswirkungen auf das Outputniveau abschwächt</li>
-            </ul>
-        </details>
-
-        <!-- Point 10 -->
-        <details>
-            <summary>10. Zusammenfassung</summary>
-            <p>
-                \\( \\gamma \\) ist ein zentraler Parameter, der zeigt, wie das Outputniveau auf Abweichungen der Inflation vom Zielwert reagiert, unter Berücksichtigung der Reaktionen der Geldpolitik. Es verbindet die Nachfrageempfindlichkeit gegenüber dem Realzins mit der geldpolitischen Strategie der Zentralbank.
-            </p>
-        </details>
-    `,
-        "\\pi_t": "Inflationsrate zum Zeitpunkt \\( t \\).",
-        "\\pi^\\star": "Inflationsziel der Zentralbank.",
-            "\\kappa": `
-
-        <!-- Point 1 -->
-        <details>
-            <summary>1. Ausgangspunkt: IS-Kurve mit Geldpolitik</summary>
-            <div class="collapsible-content">
-                <p>
-                    Die IS-Kurve beschreibt das Gleichgewicht auf dem Gütermarkt und beinhaltet die Auswirkungen der Geldpolitik über den Zinssatz auf das Outputniveau:
-                </p>
-                \\[
-                Y_t = \\bar{Y} - \\alpha (r_t - r^*) + \\varepsilon_t
-                \\]
-                <p>Wobei:</p>
-                <ul class="aligned-list">
-                    <li><span class="variable-name">\\( Y_t \\):</span> Reales Outputniveau zum Zeitpunkt \\( t \\)</li>
-                    <li><span class="variable-name">\\( \\bar{Y} \\):</span> Natürliches Outputniveau</li>
-                    <li><span class="variable-name">\\( \\alpha > 0 \\):</span> Sensitivität des Outputs gegenüber dem Realzins</li>
-                    <li><span class="variable-name">\\( r_t \\):</span> Realzinssatz zum Zeitpunkt \\( t \\)</li>
-                    <li><span class="variable-name">\\( r^* \\):</span> Natürlicher Realzins</li>
-                    <li><span class="variable-name">\\( \\varepsilon_t \\):</span> Nachfrage-Schock zum Zeitpunkt \\( t \\)</li>
-                </ul>
-            </div>
-        </details>
-
-        <!-- Point 2 -->
-        <details>
-            <summary>2. Geldpolitische Reaktion auf Nachfrage-Schocks</summary>
-            <div class="collapsible-content">
-                <p>
-                    Die Zentralbank reagiert auf Nachfrage-Schocks, um die Wirtschaft zu stabilisieren. Dies erfolgt über die Anpassung des Zinssatzes in Reaktion auf Veränderungen in der Outputlücke und der Inflation.
-                </p>
-                <p>
-                    Allerdings kann die Geldpolitik nicht alle Nachfrage-Schocks vollständig ausgleichen, insbesondere wenn es Verzögerungen oder Unsicherheiten gibt.
-                </p>
-            </div>
-        </details>
-        <!-- Point 4 -->
-        <!-- Point 5 -->
-        <details>
-            <summary>3. Einflussfaktoren</summary>
-            <div class="collapsible-content">
-                <p>
-                    Der Wert von \\( \\kappa \\) hängt von mehreren Faktoren ab:
-                </p>
-                <ul class="aligned-list">
-                    <li><strong>Reaktionsgeschwindigkeit der Geldpolitik:</strong> Eine schnellere Reaktion der Zentralbank reduziert \\( \\kappa \\)</li>
-                    <li><strong>Präzision der Schockschätzung:</strong> Wenn die Zentralbank den Schock genauer messen kann, kann sie effektiver reagieren, was zu einem niedrigeren \\( \\kappa \\) führt</li>
-                    <li><strong>Geldpolitische Instrumente:</strong> Die Verfügbarkeit und Wirksamkeit von geldpolitischen Instrumenten beeinflussen \\( \\kappa \\)</li>
-                    <li><strong>Glaubwürdigkeit der Zentralbank:</strong> Hohe Glaubwürdigkeit kann die Effektivität der Geldpolitik erhöhen und \\( \\kappa \\) verringern</li>
-                </ul>
-            </div>
-        </details>
-
-        <!-- Point 6 -->
-        <details>
-            <summary>4. Zusammenhang mit der DAD-Kurve</summary>
-            <div class="collapsible-content">
-                <p>
-                    In der Dynamischen Aggregierten Nachfrage (DAD)-Kurve spiegelt \\( \\kappa \\) den gedämpften Effekt von Nachfrage-Schocks wider:
-                </p>
-                \\[
-                Y_t - \\bar{Y} = - \\gamma (\\pi_t - \\pi^*) + \\kappa \\varepsilon_t
-                \\]
-                <p>
-                    Hier zeigt sich, dass nur der Teil \\( \\kappa \\varepsilon_t \\) des Schocks die Outputlücke beeinflusst.
-                </p>
-            </div>
-        </details>
-        <!-- Point 8 -->
-        <details>
-            <summary>5. Zusammenfassung</summary>
-            <div class="collapsible-content">
-                <p>
-                    Der Parameter \\( \\kappa \\) quantifiziert den Anteil eines Nachfrage-Schocks, der nicht durch die Geldpolitik ausgeglichen wird. Er ist ein Maß für die Effektivität der Geldpolitik in der Stabilisierung der Wirtschaft gegenüber Nachfrage-Schocks.
-                </p>
-                <p>
-                    Ein geringes \\( \\kappa \\) ist wünschenswert, da es bedeutet, dass die Zentralbank in der Lage ist, die Auswirkungen von Schocks auf das Outputniveau zu minimieren.
-                </p>
-            </div>
-        </details>
-    `,
-        "\\epsilon_t": "Nachfrage-Schock zum Zeitpunkt \\( t \\).",
-        "\\pi_{t-1}": "Inflationsrate zum Zeitpunkt \\( t-1 \\).",
-            "\\phi": `
-
-
-        <!-- Point 1 -->
-        <details>
-            <summary>1. Ausgangspunkt: Phillips-Kurve</summary>
-            <div class="collapsible-content">
-                <p>
-                    Die Phillips-Kurve beschreibt die Beziehung zwischen der Inflation und Arbeitslosigkeit. 
-                    In Kombination mit dem Okun'schen Gesetz ergibt sich:
-                </p>
-                \\[
-                \\pi_t = \\pi_{t-1} + \\phi (Y_t - \\bar{Y}) + \\nu_t
-                \\]
-                <p>Wobei:</p>
-                <ul class="aligned-list">
-                    <li><span class="variable-name">\\( \\pi_t \\):</span> Inflationsrate zum Zeitpunkt \\( t \\)</li>
-                    <li><span class="variable-name">\\( \\pi_{t-1} \\):</span> Inflationsrate zum Zeitpunkt \\( t-1 \\)</li>
-                    <li><span class="variable-name">\\( \\phi > 0 \\):</span> Sensitivität der Inflation gegenüber der Outputlücke</li>
-                    <li><span class="variable-name">\\( Y_t \\):</span> Tatsächliches Outputniveau zum Zeitpunkt \\( t \\)</li>
-                    <li><span class="variable-name">\\( \\bar{Y} \\):</span> Natürliches Outputniveau</li>
-                    <li><span class="variable-name">\\( \\nu_t \\):</span> Angebotsschock zum Zeitpunkt \\( t \\)</li>
-                </ul>
-            </div>
-        </details>
-
-        <!-- Point 2 -->
-        <details>
-            <summary>2. Adaptive Erwartungen</summary>
-            <div class="collapsible-content">
-                <p>
-                    Wir nehmen an, dass die erwartete Inflation auf adaptiven Erwartungen basiert, d.h., die Wirtschaftssubjekte erwarten, dass die zukünftige Inflation der vergangenen Inflation entspricht:
-                </p>
-                \\[
-                E_{t-1} \\pi_t = \\pi_{t-1}
-                \\]
-                <p>
-                    Somit erhalten wir für die Beziehung von Inflationsrate und Outputgap:
-                </p>
-                \\[
-                \\pi_t = E_{t-1} \\pi_t + \\phi (Y_t - \\bar{Y}) + \\nu_t
-                \\]
-            </div>
-        </details>
-
-        <!-- Point 3 -->
-
-        <!-- Point 4 -->
-        <details>
-            <summary>3. Interpretation</summary>
-            <div class="collapsible-content">
-                <p>
-                    Der Parameter \\( \\phi \\) misst, wie empfindlich die Inflation auf die Outputlücke reagiert. Ein höheres \\( \\phi \\) bedeutet, dass eine gegebene Outputlücke zu einer stärkeren Veränderung der Inflation führt.
-                </p>
-                <p>
-                    Faktoren, die \\( \\phi \\) beeinflussen:
-                </p>
-                <ul class="aligned-list">
-                    <li><strong>Preisflexibilität:</strong> In Volkswirtschaften mit flexibleren Preisen reagiert die Inflation stärker auf Änderungen in der Nachfrage, was zu einem höheren \\( \\phi \\) führt</li>
-                    <li><strong>Lohnverhandlungen:</strong> Wenn Löhne schneller an Nachfrageänderungen angepasst werden, erhöht dies \\( \\phi \\)</li>
-                    <li><strong>Kapazitätsauslastung:</strong> Bei hoher Auslastung der Produktionskapazitäten kann eine zusätzliche Nachfrage zu stärkeren Preiserhöhungen führen, was \\( \\phi \\) erhöht</li>
-                </ul>
-            </div>
-        </details>
-
-        <!-- Point 5 -->
-       
-
-        <!-- Point 6 -->
-        <details>
-            <summary>4. Bedeutung für die Geldpolitik</summary>
-            <div class="collapsible-content">
-                <p>
-                    Ein höheres \\( \\phi \\) bedeutet, dass die Zentralbank bei einer gegebenen Outputlücke mit größeren Veränderungen der Inflation rechnen muss. Dies beeinflusst die geldpolitische Reaktion auf Nachfrageschocks.
-                </p>
-                <p>
-                    Beispielsweise erfordert eine hohe \\( \\phi \\), dass die Zentralbank aggressiver auf Inflation reagiert, um Preisstabilität zu gewährleisten.
-                </p>
-            </div>
-        </details>
-
-        <!-- Point 7 -->
-        <details>
-            <summary>5. Zusammenfassung</summary>
-            <div class="collapsible-content">
-                <p>
-                    Der Parameter \\( \\phi \\) ist entscheidend für das Verständnis der Dynamik zwischen Outputlücke und Inflation.
-                </p>
-
-            </div>
-        </details>
-    `,
-        "\\nu_t": "Angebots-Schock zum Zeitpunkt \\( t \\)."
+        "Y_t": `
+            <p><strong>Aktueller Output:</strong> \\(Y_t\\) ist die reale Produktion in Periode \\(t\\). Im Modell zählt vor allem die Abweichung von \\(\\bar{Y}\\): die Outputlücke \\(Y_t-\\bar{Y}\\). <sup class="dd-cite" title="Mankiw, Macroeconomics; Okun (1962)">[1][10]</sup></p>
+            <details>
+                <summary>Rolle im Modell</summary>
+                <p>Die DAD-Gleichung bestimmt den Output aus Inflationslücke und Nachfrageschock:</p>
+                \\[Y_t=\\bar{Y}-\\gamma(\\pi_t-\\pi^\\star)+\\kappa\\epsilon_t.\\]
+                <p>Liegt \\(Y_t\\) über \\(\\bar{Y}\\), erhöht die positive Outputlücke über die DAS-Gleichung den Inflationsdruck.</p>
+            </details>
+        `,
+        "\\bar{Y}": `
+            <p><strong>Natürliches Outputniveau:</strong> \\(\\bar{Y}\\) ist der langfristige Referenzwert der Produktion. Es dient als Anker für die Outputlücke \\(Y_t-\\bar{Y}\\). <sup class="dd-cite" title="Mankiw, Macroeconomics; Okun (1962)">[1][10]</sup></p>
+            <details>
+                <summary>Wie ist der Wert zu lesen?</summary>
+                <p>Bei \\(Y_t=\\bar{Y}\\) gibt es keine Outputlücke. Werte darüber stehen für eine Hochkonjunktur, Werte darunter für eine Unterauslastung.</p>
+            </details>
+        `,
+        "\\gamma": `
+            <p><strong>Reaktion der Nachfrage auf die Inflationslücke:</strong> \\(\\gamma\\) zeigt, wie stark der Output fällt, wenn die Inflation über dem Ziel liegt. Der Parameter fasst Zinskanal und geldpolitische Reaktion in einer Zahl zusammen. <sup class="dd-cite" title="Taylor (1993); Romer (2000); Mankiw, Macroeconomics">[4][5][1]</sup></p>
+            <details>
+                <summary>Woher kommt \\(\\gamma\\)?</summary>
+                <p>Aus IS-Kurve, Fisher-Zusammenhang und einer Taylor-artigen Zinsregel ergibt sich:</p>
+                \\[\\gamma=\\frac{\\alpha\\theta_\\pi}{1+\\alpha\\theta_Y}.\\]
+                <p>Damit wird die geldpolitische Reaktion direkt in die DAD-Kurve eingebaut. <sup class="dd-cite" title="Fisher (1930); Taylor (1993); Romer (2000)">[9][4][5]</sup></p>
+            </details>
+            <details>
+                <summary>Intuition</summary>
+                <p>Ein höheres \\(\\gamma\\) macht die DAD-Kurve steiler: Inflationsabweichungen lösen stärkere Outputbewegungen aus. Zusammen mit \\(\\phi\\) beschleunigt das die Rückkehr zum Gleichgewicht.</p>
+            </details>
+        `,
+        "\\pi_t": `
+            <p><strong>Aktuelle Inflation:</strong> \\(\\pi_t\\) ist die Inflationsrate in Periode \\(t\\). Sie wird im Modell endogen durch vergangene Inflation, Outputlücke und Angebotsschock bestimmt. <sup class="dd-cite" title="Phillips (1958); Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[2][3][1]</sup></p>
+            <details>
+                <summary>Rolle in der DAS-Gleichung</summary>
+                \\[\\pi_t=\\pi_{t-1}+\\phi(Y_t-\\bar{Y})+\\nu_t.\\]
+                <p>Eine positive Outputlücke oder ein positiver Angebotsschock erhöht die Inflation gegenüber der Vorperiode.</p>
+            </details>
+        `,
+        "\\pi^\\star": `
+            <p><strong>Inflationsziel:</strong> \\(\\pi^\\star\\) ist der Zielwert der Zentralbank. Die Inflationslücke \\(\\pi_t-\\pi^\\star\\) bestimmt, wie stark die Nachfrage durch die geldpolitische Reaktion gedämpft oder gestützt wird. <sup class="dd-cite" title="Taylor (1993); Mankiw, Macroeconomics">[4][1]</sup></p>
+            <details>
+                <summary>Rolle als Anker</summary>
+                <p>Ohne neue Schocks bewegt sich die Inflation im stabilen Modell schrittweise zurück zu \\(\\pi^\\star\\). Das Ziel ist deshalb der langfristige Inflationsanker.</p>
+            </details>
+        `,
+        "\\kappa": `
+            <p><strong>Durchleitung eines Nachfrageschocks:</strong> \\(\\kappa\\) gibt an, welcher Anteil von \\(\\epsilon_t\\) unmittelbar in den Output eingeht. <sup class="dd-cite" title="Mankiw, Macroeconomics; Romer (2000)">[1][5]</sup></p>
+            <details>
+                <summary>Definition</summary>
+                <p>Nach dem Auflösen der IS-Kurve mit geldpolitischer Reaktion gilt:</p>
+                \\[\\kappa=\\frac{1}{1+\\alpha\\theta_Y}.\\]
+                <p>In der DAD-Gleichung erscheint der Schock als \\(\\kappa\\epsilon_t\\).</p>
+            </details>
+            <details>
+                <summary>Intuition</summary>
+                <p>Je größer \\(\\kappa\\), desto stärker verschiebt ein gegebener Nachfrageschock den Output. Ein kleinerer Wert bedeutet eine stärkere Dämpfung innerhalb der Modellstruktur.</p>
+            </details>
+        `,
+        "\\epsilon_t": `
+            <p><strong>Nachfrageschock:</strong> \\(\\epsilon_t\\) ist eine exogene Verschiebung der gesamtwirtschaftlichen Nachfrage, etwa durch Fiskalpolitik, Stimmung oder Auslandsnachfrage. <sup class="dd-cite" title="Mankiw, Macroeconomics">[1]</sup></p>
+            <details>
+                <summary>Wirkung</summary>
+                <p>Der Schock verschiebt die DAD-Kurve. Ein positiver Wert erhöht zunächst den Output um \\(\\kappa\\epsilon_t\\) und kann anschließend über die Phillips-Kurve die Inflation anheben.</p>
+            </details>
+        `,
+        "\\pi_{t-1}": `
+            <p><strong>Inflation der Vorperiode:</strong> \\(\\pi_{t-1}\\) ist zu Beginn von Periode \\(t\\) bereits gegeben. In dieser vereinfachten DAS-Gleichung bildet sie den Ausgangspunkt für die aktuelle Inflation. <sup class="dd-cite" title="Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[3][1]</sup></p>
+            <details>
+                <summary>Warum steht sie in der Gleichung?</summary>
+                <p>Das Modell verwendet eine einfache adaptive Erwartungsbildung: Die zuletzt beobachtete Inflation prägt die nächste Periode. Dadurch reagiert Inflation nicht nur sofort, sondern entwickelt sich dynamisch über die Zeit.</p>
+            </details>
+        `,
+        "\\phi": `
+            <p><strong>Steigung der Phillips-Kurve:</strong> \\(\\phi\\) misst, wie stark Inflation auf die Outputlücke reagiert. <sup class="dd-cite" title="Phillips (1958); Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[2][3][1]</sup></p>
+            <details>
+                <summary>In der DAS-Gleichung</summary>
+                \\[\\pi_t=\\pi_{t-1}+\\phi(Y_t-\\bar{Y})+\\nu_t.\\]
+                <p>Ein höheres \\(\\phi\\) bedeutet: Dieselbe Outputlücke verändert die Inflation stärker.</p>
+            </details>
+            <details>
+                <summary>Warum ist \\(\\phi\\) wichtig?</summary>
+                <p>Gemeinsam mit \\(\\gamma\\) bestimmt \\(\\phi\\), wie rasch Abweichungen abklingen. Im Modell lautet der Persistenzfaktor \\(a=1/(1+\\gamma\\phi)\\).</p>
+            </details>
+        `,
+        "\\nu_t": `
+            <p><strong>Angebotsschock:</strong> \\(\\nu_t\\) ist eine exogene Veränderung der Inflation bei gegebener Outputlücke, etwa durch höhere Energiepreise. <sup class="dd-cite" title="Mankiw, Macroeconomics">[1]</sup></p>
+            <details>
+                <summary>Wirkung</summary>
+                <p>Der Schock verschiebt die DAS-Kurve. Ein positiver Wert erhöht direkt die Inflation. Reagiert die Geldpolitik darauf mit Dämpfung der Nachfrage, entsteht der typische Zielkonflikt: höhere Inflation bei schwächerem Output.</p>
+            </details>
+        `
     };
-    var variableExplanationsEN = {"Y_t": "<!-- Point 6 --> <details> <summary>Starting point</summary> <div class=\"collapsible-content\"> <p> IS curve. We start with the IS curve, which describes equilibrium in the goods market: </p> \[ Y_t = \bar{Y} - \alpha (r_t - r^*) + \varepsilon_t, \] <p> <p>The variables are defined as follows:</p> <ul class=\"aligned-list\"> <li>\( Y_t \): the real level of output at time \( t \).</li> <li>\( \bar{Y} \): The natural level of output.</li> <li>\( \alpha > 0 \): interest elasticity of demand.</li> <li>\( r_t \): real interest rate at time \( t \).</li> <li>\( r^* \): Natural real interest rate.</li> <li>\( \varepsilon_t \): Demand shock.</li> </ul> </p> </div> </details>", "\bar{Y}": "The natural level of output.", "\gamma": "<!-- Point 1 --> <details> <summary>1. Starting point: IS curve</summary> <p> The IS curve represents equilibrium in the goods market and shows the relationship between the real interest rate and output: </p> \[ Y_t = \bar{Y} - \alpha (r_t - r^*) + \varepsilon_t \] <p>where:</p> <ul class=\"aligned-list\"> <li><span class=\"variable-name\">\( Y_t \):</span> Real level of output at time \( t \).</li> <li><span class=\"variable-name\">\( \bar{Y} \):</span> Natural level of output.</li> <li><span class=\"variable-name\">\( \alpha > 0 \):</span> Sensitivity of output to the real interest rate.</li> <li><span class=\"variable-name\">\( r_t \):</span> real interest rate at time \( t \).</li> <li><span class=\"variable-name\">\( r^* \):</span> Natural real interest rate.</li> <li><span class=\"variable-name\">\( \varepsilon_t \):</span> Demand shock.</li> </ul> </details> <!-- Point 2 --> <details> <summary>2. Geldpolitische Regel</summary> <p> The central bank sets the nominal interest rate according to a Taylor rule: </p> \[ i_t = \pi_t + r^* + \theta_\pi (\pi_t - \pi^*) + \theta_Y (Y_t - \bar{Y}) \] <p>where:</p> <ul class=\"aligned-list\"> <li><span class=\"variable-name\">\( i_t \):</span> nominal interest rate at time \( t \)</li> <li><span class=\"variable-name\">\( \pi_t \):</span> Inflation rate at time \( t \)</li> <li><span class=\"variable-name\">\( \pi^* \):</span> Central bank's inflation target</li> <li><span class=\"variable-name\">\( \theta_\pi > 0 \):</span> Response coefficient to inflation deviations</li> <li><span class=\"variable-name\">\( \theta_Y > 0 \):</span> Response coefficient to the output gap</li> </ul> </details> <!-- Point 3 --> <details> <summary>3. real interest rate</summary> <p> The real interest rate is the difference between the nominal rate and inflation: </p> \[ r_t = i_t - \pi_t \] </details> <!-- Point 4 --> <details> <summary>4. Substituting the monetary-policy rule into the real interest rate</summary> \[ \begin{aligned} r_t &= [\pi_t + r^* + \theta_\pi (\pi_t - \pi^*) + \theta_Y (Y_t - \bar{Y})] - \pi_t \\ &= r^* + \theta_\pi (\pi_t - \pi^*) + \theta_Y (Y_t - \bar{Y}) \end{aligned} \] </details> <!-- Point 5 --> <details> <summary>5. Real interest rate gap</summary> <p> The difference between the current real rate and the natural real rate is: </p> \[ r_t - r^* = \theta_\pi (\pi_t - \pi^*) + \theta_Y (Y_t - \bar{Y}) \] </details> <!-- Point 6 --> <details> <summary>6. Substitution into the IS curve</summary> <p> Substituting the real interest rate gap into the IS curve: </p> \[ Y_t = \bar{Y} - \alpha [\theta_\pi (\pi_t - \pi^*) + \theta_Y (Y_t - \bar{Y})] + \varepsilon_t \] </details> <!-- Point 7 --> <details> <summary>7. Solving</summary> <p> We start by moving all \( Y_t \) terms to the left-hand side: </p> \[ Y_t + \alpha \theta_Y (Y_t - \bar{Y}) = \bar{Y} - \alpha \theta_\pi (\pi_t - \pi^*) + \varepsilon_t \] <p> \( Y_t \) ausmultiplizieren </p> \[ Y_t + \alpha \theta_Y Y_t - \alpha \theta_Y \bar{Y} = \bar{Y} - \alpha \theta_\pi (\pi_t - \pi^*) + \varepsilon_t \] <p> Collecting the \( Y_t \) terms: </p> \[ (1 + \alpha \theta_Y) Y_t = \bar{Y} (1 + \alpha \theta_Y) - \alpha \theta_\pi (\pi_t - \pi^*) + \varepsilon_t \] </details> <!-- Point 8 --> <details> <summary>8. Solution</summary> <p> We isolate \( Y_t \): </p> \[ Y_t = \bar{Y} - \frac{ \alpha \theta_\pi }{ 1 + \alpha \theta_Y } (\pi_t - \pi^*) + \frac{ 1 }{ 1 + \alpha \theta_Y } \varepsilon_t \] <p> Note that the first term often simplifies to \( \bar{Y} \) if we assume that \( \bar{Y} \) is constant: </p> \[ Y_t = \bar{Y} - \gamma (\pi_t - \pi^*) + \kappa \varepsilon_t \] <p>where:</p> \[ \gamma = \frac{ \alpha \theta_\pi }{ 1 + \alpha \theta_Y }, \quad \kappa = \frac{ 1 }{ 1 + \alpha \theta_Y } \] </details> <!-- Point 9 --> <details> <summary>9. Interpretation</summary> <p> The parameter \( \gamma \) measures the sensitivity of the output gap to deviations of inflation from target. A higher \( \gamma \) means that small deviations of inflation from target lead to larger changes in the output gap. </p> <p> \( \gamma \) depends on: </p> <ul class=\"aligned-list\"> <li><strong>\( \alpha \):</strong> A higher \( \alpha \) increases \( \gamma \), because output reacts more sensitively to interest-rate changes</li> <li><strong>\( \theta_\pi \):</strong> A higher \( \theta_\pi \) means the central bank reacts more strongly to inflation deviations, leading to larger real-rate changes and hence larger effects on output</li> <li><strong>\( \theta_Y \):</strong> A higher \( \theta_Y \) reduces \( \gamma \), because the central bank also reacts to the output gap and thus dampens the effect on output</li> </ul> </details> <!-- Point 10 --> <details> <summary>10. Zusammenfassung</summary> <p> \( \gamma \) is a central parameter showing how output responds to deviations of inflation from target, taking the monetary-policy response into account. It links the sensitivity of demand to the real interest rate with the central bank's policy strategy. </p> </details>", "\pi_t": "Inflation rate at time \( t \).", "\pi^\star": "Central bank's inflation target.", "\kappa": "<!-- Point 1 --> <details> <summary>1. Starting point: IS curve with monetary policy</summary> <div class=\"collapsible-content\"> <p> The IS curve describes equilibrium in the goods market and incorporates the effect of monetary policy on output via the interest rate: </p> \[ Y_t = \bar{Y} - \alpha (r_t - r^*) + \varepsilon_t \] <p>where:</p> <ul class=\"aligned-list\"> <li><span class=\"variable-name\">\( Y_t \):</span> Real level of output at time \( t \)</li> <li><span class=\"variable-name\">\( \bar{Y} \):</span> Natural level of output</li> <li><span class=\"variable-name\">\( \alpha > 0 \):</span> Sensitivity of output to the real interest rate</li> <li><span class=\"variable-name\">\( r_t \):</span> real interest rate at time \( t \)</li> <li><span class=\"variable-name\">\( r^* \):</span> Natural real interest rate</li> <li><span class=\"variable-name\">\( \varepsilon_t \):</span> Demand shock at time \( t \)</li> </ul> </div> </details> <!-- Point 2 --> <details> <summary>2. Monetary-policy response to demand shocks</summary> <div class=\"collapsible-content\"> <p> The central bank responds to demand shocks to stabilise the economy, by adjusting the interest rate in reaction to changes in the output gap and inflation. </p> <p> However, monetary policy cannot fully offset all demand shocks, especially when there are lags or uncertainty. </p> </div> </details> <!-- Point 4 --> <!-- Point 5 --> <details> <summary>3. Einflussfaktoren</summary> <div class=\"collapsible-content\"> <p> The value of \( \kappa \) depends on several factors: </p> <ul class=\"aligned-list\"> <li><strong>Speed of the monetary-policy response:</strong> A faster central-bank response reduces \( \kappa \)</li> <li><strong>Precision of the shock estimate:</strong> If the central bank can measure the shock more accurately, it can respond more effectively, leading to a lower \( \kappa \)</li> <li><strong>Geldpolitische Instrumente:</strong> The availability and effectiveness of monetary-policy instruments affect \( \kappa \)</li> <li><strong>Credibility of the central bank:</strong> High credibility can increase the effectiveness of monetary policy and reduce \( \kappa \)</li> </ul> </div> </details> <!-- Point 6 --> <details> <summary>4. Relation to the DAD curve</summary> <div class=\"collapsible-content\"> <p> In the Dynamic Aggregate Demand (DAD) curve, \( \kappa \) reflects the dampened effect of demand shocks: </p> \[ Y_t - \bar{Y} = - \gamma (\pi_t - \pi^*) + \kappa \varepsilon_t \] <p> This shows that only the part \( \kappa \varepsilon_t \) of the shock affects the output gap. </p> </div> </details> <!-- Point 8 --> <details> <summary>5. Zusammenfassung</summary> <div class=\"collapsible-content\"> <p> The parameter \( \kappa \) quantifies the share of a demand shock that is not offset by monetary policy. It is a measure of how effectively monetary policy stabilises the economy against demand shocks. </p> <p> A low \( \kappa \) is desirable, as it means the central bank is able to minimise the effect of shocks on output. </p> </div> </details>", "\epsilon_t": "Demand shock at time \( t \).", "\pi_{t-1}": "Inflation rate at time \( t-1 \).", "\phi": "<!-- Point 1 --> <details> <summary>1. Starting point: Phillips curve</summary> <div class=\"collapsible-content\"> <p> The Phillips curve describes the relationship between inflation and unemployment. Combined with Okun's law, it gives: </p> \[ \pi_t = \pi_{t-1} + \phi (Y_t - \bar{Y}) + \nu_t \] <p>where:</p> <ul class=\"aligned-list\"> <li><span class=\"variable-name\">\( \pi_t \):</span> Inflation rate at time \( t \)</li> <li><span class=\"variable-name\">\( \pi_{t-1} \):</span> Inflation rate at time \( t-1 \)</li> <li><span class=\"variable-name\">\( \phi > 0 \):</span> Sensitivity of inflation to the output gap</li> <li><span class=\"variable-name\">\( Y_t \):</span> Actual level of output at time \( t \)</li> <li><span class=\"variable-name\">\( \bar{Y} \):</span> Natural level of output</li> <li><span class=\"variable-name\">\( \nu_t \):</span> Supply shock at time \( t \)</li> </ul> </div> </details> <!-- Point 2 --> <details> <summary>2. Adaptive expectations</summary> <div class=\"collapsible-content\"> <p> We assume expected inflation is based on adaptive expectations, i.e. agents expect future inflation to equal past inflation: </p> \[ E_{t-1} \pi_t = \pi_{t-1} \] <p> This gives the following relationship between the inflation rate and the output gap: </p> \[ \pi_t = E_{t-1} \pi_t + \phi (Y_t - \bar{Y}) + \nu_t \] </div> </details> <!-- Point 3 --> <!-- Point 4 --> <details> <summary>3. Interpretation</summary> <div class=\"collapsible-content\"> <p> The parameter \( \phi \) measures how sensitively inflation reacts to the output gap. A higher \( \phi \) means a given output gap leads to a larger change in inflation. </p> <p> Factors that affect \( \phi \): </p> <ul class=\"aligned-list\"> <li><strong>Price flexibility:</strong> In economies with more flexible prices, inflation reacts more strongly to changes in demand, leading to a higher \( \phi \)</li> <li><strong>Lohnverhandlungen:</strong> If wages adjust more quickly to changes in demand, this raises \( \phi \)</li> <li><strong>Capacity utilisation:</strong> When productive capacity is highly utilised, extra demand can lead to stronger price increases, which raises \( \phi \)</li> </ul> </div> </details> <!-- Point 5 --> <!-- Point 6 --> <details> <summary>4. Implications for monetary policy</summary> <div class=\"collapsible-content\"> <p> A higher \( \phi \) means the central bank must expect larger changes in inflation for a given output gap. This shapes the monetary-policy response to demand shocks. </p> <p> For example, a high \( \phi \) requires the central bank to react more aggressively to inflation in order to ensure price stability. </p> </div> </details> <!-- Point 7 --> <details> <summary>5. Zusammenfassung</summary> <div class=\"collapsible-content\"> <p> The parameter \( \phi \) is crucial for understanding the dynamics between the output gap and inflation. </p> </div> </details>", "\nu_t": "supply shock at time \( t \)."};
 
+    const variableExplanationsEN = {
+        "Y_t": `
+            <p><strong>Current output:</strong> \\(Y_t\\) is real production in period \\(t\\). The key comparison is with \\(\\bar{Y}\\): the output gap \\(Y_t-\\bar{Y}\\). <sup class="dd-cite" title="Mankiw, Macroeconomics; Okun (1962)">[1][10]</sup></p>
+            <details>
+                <summary>Role in the model</summary>
+                <p>The DAD equation determines output from the inflation gap and the demand shock:</p>
+                \\[Y_t=\\bar{Y}-\\gamma(\\pi_t-\\pi^\\star)+\\kappa\\epsilon_t.\\]
+                <p>When \\(Y_t\\) exceeds \\(\\bar{Y}\\), the positive output gap adds inflation pressure through the DAS equation.</p>
+            </details>
+        `,
+        "\\bar{Y}": `
+            <p><strong>Natural level of output:</strong> \\(\\bar{Y}\\) is the long-run reference level of production. It anchors the output gap \\(Y_t-\\bar{Y}\\). <sup class="dd-cite" title="Mankiw, Macroeconomics; Okun (1962)">[1][10]</sup></p>
+            <details>
+                <summary>How should it be read?</summary>
+                <p>At \\(Y_t=\\bar{Y}\\), there is no output gap. Values above it indicate a boom; values below it indicate slack.</p>
+            </details>
+        `,
+        "\\gamma": `
+            <p><strong>Demand response to the inflation gap:</strong> \\(\\gamma\\) shows how strongly output falls when inflation rises above target. It compresses the interest-rate channel and the policy response into one parameter. <sup class="dd-cite" title="Taylor (1993); Romer (2000); Mankiw, Macroeconomics">[4][5][1]</sup></p>
+            <details>
+                <summary>Where does \\(\\gamma\\) come from?</summary>
+                <p>Combining the IS curve, the Fisher relation and a Taylor-style interest-rate rule gives:</p>
+                \\[\\gamma=\\frac{\\alpha\\theta_\\pi}{1+\\alpha\\theta_Y}.\\]
+                <p>This embeds the monetary-policy response directly in the DAD curve. <sup class="dd-cite" title="Fisher (1930); Taylor (1993); Romer (2000)">[9][4][5]</sup></p>
+            </details>
+            <details>
+                <summary>Intuition</summary>
+                <p>A larger \\(\\gamma\\) makes the DAD curve steeper: inflation gaps cause larger output movements. Together with \\(\\phi\\), it speeds up the return to equilibrium.</p>
+            </details>
+        `,
+        "\\pi_t": `
+            <p><strong>Current inflation:</strong> \\(\\pi_t\\) is the inflation rate in period \\(t\\). In the model it is endogenous: past inflation, the output gap and the supply shock determine it. <sup class="dd-cite" title="Phillips (1958); Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[2][3][1]</sup></p>
+            <details>
+                <summary>Role in the DAS equation</summary>
+                \\[\\pi_t=\\pi_{t-1}+\\phi(Y_t-\\bar{Y})+\\nu_t.\\]
+                <p>A positive output gap or a positive supply shock raises inflation relative to the previous period.</p>
+            </details>
+        `,
+        "\\pi^\\star": `
+            <p><strong>Inflation target:</strong> \\(\\pi^\\star\\) is the central bank's target. The inflation gap \\(\\pi_t-\\pi^\\star\\) determines how strongly the policy response restrains or supports demand. <sup class="dd-cite" title="Taylor (1993); Mankiw, Macroeconomics">[4][1]</sup></p>
+            <details>
+                <summary>Role as an anchor</summary>
+                <p>With no new shocks, inflation in the stable model gradually returns to \\(\\pi^\\star\\). The target is therefore the long-run inflation anchor.</p>
+            </details>
+        `,
+        "\\kappa": `
+            <p><strong>Demand-shock pass-through:</strong> \\(\\kappa\\) states how much of \\(\\epsilon_t\\) enters output immediately. <sup class="dd-cite" title="Mankiw, Macroeconomics; Romer (2000)">[1][5]</sup></p>
+            <details>
+                <summary>Definition</summary>
+                <p>Solving the IS curve with the policy response gives:</p>
+                \\[\\kappa=\\frac{1}{1+\\alpha\\theta_Y}.\\]
+                <p>The DAD equation therefore contains the shock as \\(\\kappa\\epsilon_t\\).</p>
+            </details>
+            <details>
+                <summary>Intuition</summary>
+                <p>The larger \\(\\kappa\\), the more strongly a given demand shock moves output. A smaller value means more damping within the model structure.</p>
+            </details>
+        `,
+        "\\epsilon_t": `
+            <p><strong>Demand shock:</strong> \\(\\epsilon_t\\) is an exogenous shift in aggregate demand, for example from fiscal policy, sentiment or foreign demand. <sup class="dd-cite" title="Mankiw, Macroeconomics">[1]</sup></p>
+            <details>
+                <summary>Effect</summary>
+                <p>The shock shifts the DAD curve. A positive value initially raises output by \\(\\kappa\\epsilon_t\\) and can then raise inflation through the Phillips curve.</p>
+            </details>
+        `,
+        "\\pi_{t-1}": `
+            <p><strong>Previous-period inflation:</strong> \\(\\pi_{t-1}\\) is already known at the start of period \\(t\\). In this simplified DAS equation it is the starting point for current inflation. <sup class="dd-cite" title="Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[3][1]</sup></p>
+            <details>
+                <summary>Why is it in the equation?</summary>
+                <p>The model uses a simple adaptive-expectations mechanism: the most recently observed inflation rate shapes the next period. Inflation therefore evolves dynamically rather than resetting immediately.</p>
+            </details>
+        `,
+        "\\phi": `
+            <p><strong>Slope of the Phillips curve:</strong> \\(\\phi\\) measures how strongly inflation responds to the output gap. <sup class="dd-cite" title="Phillips (1958); Friedman (1968); Phelps (1967); Mankiw, Macroeconomics">[2][3][1]</sup></p>
+            <details>
+                <summary>In the DAS equation</summary>
+                \\[\\pi_t=\\pi_{t-1}+\\phi(Y_t-\\bar{Y})+\\nu_t.\\]
+                <p>A larger \\(\\phi\\) means that the same output gap changes inflation more strongly.</p>
+            </details>
+            <details>
+                <summary>Why does \\(\\phi\\) matter?</summary>
+                <p>Together with \\(\\gamma\\), \\(\\phi\\) determines how quickly deviations decay. In the model the persistence factor is \\(a=1/(1+\\gamma\\phi)\\).</p>
+            </details>
+        `,
+        "\\nu_t": `
+            <p><strong>Supply shock:</strong> \\(\\nu_t\\) is an exogenous change in inflation at a given output gap, for example from higher energy prices. <sup class="dd-cite" title="Mankiw, Macroeconomics">[1]</sup></p>
+            <details>
+                <summary>Effect</summary>
+                <p>The shock shifts the DAS curve. A positive value raises inflation directly. If policy responds by restraining demand, the familiar trade-off appears: higher inflation alongside weaker output.</p>
+            </details>
+        `
+    };
 
     // Map variable names to class names for quick lookup
     const classToVariableNameMap = {
@@ -6220,17 +5953,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-      const eq = document.getElementById('main-equation');
-      
-      // eq already has "intro-highlight" in the HTML
-      // so we only remove it on first hover:
-      eq.addEventListener('mouseover', function removeGlow() {
-        eq.classList.remove('intro-highlight');
-        eq.removeEventListener('mouseover', removeGlow);
-      });
-    });
-
-document.addEventListener('DOMContentLoaded', function() {
     var plotToggle = document.getElementById('plotToggle');
     var graphButton = document.getElementById('graph-button');
     var backToMenuButton = document.getElementById('backtomenu-button');
@@ -6395,18 +6117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  const eqContainer = document.getElementById('equation-highlight');
-
-  // eqContainer already has class="equation-highlight intro-highlight" in HTML
-  // so it's glowing from the start.
-
-  eqContainer.addEventListener('mouseover', function removeGlow() {
-    eqContainer.classList.remove('intro-highlight');
-    eqContainer.removeEventListener('mouseover', removeGlow);
-  });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -7325,8 +7035,8 @@ window.onload = function() {
 
   // ===================== i18n: hand-written EN (default) / original DE =======
   window.LANG = "en";
-  var DE_BLOCKS = {"i18n-intro": "\n                                <span class=\"dd-kicker\">Intermediate Macroeconomics</span>\n                                <h2>Das dynamische AD-AS-Modell</h2>\n                                <p class=\"dd-lead\">\n                                    Das <strong>DAS-DAD-Modell</strong> (Dynamic Aggregate Supply – Dynamic Aggregate\n                                    Demand) beschreibt, wie sich Output und Inflation einer Volkswirtschaft\n                                    <em>über die Zeit</em> entwickeln, nachdem sie von einem Schock getroffen wurde.\n                                    Anders als das statische AD-AS-Diagramm enthält es eine explizite Geldpolitik\n                                    (Taylor-Regel), eine erwartungsbasierte Phillips-Kurve und eine\n                                    Differenzengleichung, die das System Periode für Periode zurück ins\n                                    Gleichgewicht trägt.\n                                </p>\n                            ", "i18n-glance": "\n                                <span class=\"dd-chip\">Zeit: <b>diskret</b> (\\(t,\\,t{+}1,\\dots\\))</span>\n                                <span class=\"dd-chip\">Endogen: <b>\\(Y_t,\\ \\pi_t\\)</b></span>\n                                <span class=\"dd-chip\">Politik: <b>Taylor-Regel</b></span>\n                                <span class=\"dd-chip\">Stabilität wenn <b>\\(\\gamma\\phi>0\\)</b></span>\n                                <span class=\"dd-chip\">Lehrbuch: <b>Mankiw, Kap. 15</b><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics – Kapitel 'A Dynamic Model of Economic Fluctuations'\">[1]</sup></span>\n                            ", "i18n-goals": "\n                                <h3>Lernziele</h3>\n                                <ul>\n                                    <li>Die beiden Kerngleichungen (DAD &amp; DAS) <strong>herleiten</strong> und ökonomisch interpretieren.</li>\n                                    <li>Zwischen <strong>endogenen, exogenen und vorherbestimmten</strong> Variablen unterscheiden.</li>\n                                    <li>Die Wirkung eines <strong>Nachfrage-</strong> bzw. <strong>Angebotsschocks</strong> auf \\(Y_t\\) und \\(\\pi_t\\) vorhersagen.</li>\n                                    <li>Den <strong>Anpassungspfad</strong> zurück zum Gleichgewicht als geometrisches Abklingen mit Rate \\(a=\\tfrac{1}{1+\\gamma\\phi}\\) verstehen.</li>\n                                    <li>Eine <strong>Impulse-Response-Funktion</strong> lesen: Spitzenreaktion, Halbwertszeit und kumulierter Verlust.</li>\n                                    <li>Den <strong>Trade-off</strong> der Geldpolitik bei Angebotsschocks (Output vs. Inflation) erklären.</li>\n                                </ul>\n                            ", "i18n-history": "\n                                <span class=\"dd-callout-title\">Woher kommen diese Ideen?</span>\n                                Die Phillips-Kurve geht auf <strong>A. W. Phillips (1958)</strong> zurück<sup class=\"dd-cite\" title=\"Phillips (1958), Economica\">[2]</sup>;\n                                <strong>Friedman (1968)</strong> und <strong>Phelps (1967)</strong> fügten Erwartungen und die\n                                natürliche Arbeitslosenquote hinzu<sup class=\"dd-cite\" title=\"Friedman (1968), AER; Phelps (1967)\">[3]</sup>.\n                                Die geldpolitische Reaktionsfunktion formalisierte <strong>Taylor (1993)</strong><sup class=\"dd-cite\" title=\"Taylor (1993), Carnegie-Rochester\">[4]</sup>.\n                                Die hier verwendete lehrbuchartige Synthese ohne LM-Kurve folgt <strong>Romer (2000)</strong><sup class=\"dd-cite\" title=\"Romer (2000), JEP – Keynesian Macro without the LM Curve\">[5]</sup>\n                                und <strong>Mankiw</strong><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics\">[1]</sup>; die moderne mikrofundierte Variante ist die\n                                New-Keynesian-Synthese von <strong>Clarida, Galí &amp; Gertler (1999)</strong><sup class=\"dd-cite\" title=\"Clarida, Galí & Gertler (1999), JEL\">[6]</sup>.\n                                Die vollständige Literaturliste finden Sie unten.\n                            ", "i18n-eqh": "Gleichungen", "i18n-eqp": "Hier finden Sie eine kurze Einleitung und die Herleitung des Modells. Klicken Sie auf die Variablen um genauere Informationen zu erhalten.", "i18n-stability": "\n                                <span class=\"dd-kicker\">Mechanik</span>\n                                <h2>Gleichgewicht, Dynamik &amp; Stabilität</h2>\n                                <p>\n                                    Setzt man die DAD- in die DAS-Gleichung ein, erhält man eine lineare\n                                    <strong>Differenzengleichung erster Ordnung</strong> für die Inflation:\n                                </p>\n                                \\[\n                                    \\pi_t-\\pi^\\star=\\underbrace{\\frac{1}{1+\\gamma\\phi}}_{\\textstyle a}\\,(\\pi_{t-1}-\\pi^\\star)\n                                    \\;+\\;\\frac{\\phi\\kappa}{1+\\gamma\\phi}\\,\\epsilon_t\\;+\\;\\frac{1}{1+\\gamma\\phi}\\,\\nu_t .\n                                \\]\n                                <p>\n                                    Nach einem einmaligen Schock klingt die Abweichung vom Ziel geometrisch ab:\n                                    \\(\\pi_{t+k}-\\pi^\\star=a^{\\,k}(\\pi_t-\\pi^\\star)\\). Das System ist <strong>stabil</strong>,\n                                    solange \\(|a|<1\\), also \\(\\gamma\\phi>0\\) — die Zentralbank (\\(\\gamma\\)) und die\n                                    Phillips-Kurve (\\(\\phi\\)) ziehen die Wirtschaft gemeinsam zurück ins Gleichgewicht.\n                                </p>\n\n                                <div class=\"dd-callout intuition\">\n                                    <span class=\"dd-callout-title\">Intuition: Warum verschwinden Schocks?</span>\n                                    Steigt die Inflation über das Ziel, reagiert die Zentralbank mit höheren Realzinsen\n                                    (über die Taylor-Regel), die Nachfrage und damit den Output dämpfen. Die entstehende\n                                    negative Outputlücke senkt über die Phillips-Kurve wiederum die Inflation. Je\n                                    energischer die Geldpolitik (\\(\\gamma\\)) und je steiler die Phillips-Kurve (\\(\\phi\\)),\n                                    desto schneller das Abklingen — die <em>Halbwertszeit</em> beträgt \\(\\ln 0.5/\\ln a\\) Perioden.\n                                </div>\n\n                                <div class=\"dd-callout supply\">\n                                    <span class=\"dd-callout-title\">Der geldpolitische Trade-off</span>\n                                    Ein <strong>Nachfrageschock</strong> bewegt Output und Inflation in dieselbe Richtung —\n                                    die Politik kann beide Ziele gleichzeitig stabilisieren. Ein <strong>Angebotsschock</strong>\n                                    bewegt sie gegenläufig (Stagflation): Inflationsbekämpfung verschärft die Rezession.\n                                    Genau dieser Konflikt macht Angebotsschocks für Zentralbanken so unangenehm.\n                                </div>\n                            ", "literatur": "\n                                <span class=\"dd-kicker\">Vertiefung</span>\n                                <h2>Weiterführende Literatur &amp; Quellen</h2>\n                                <p>Die nummerierten Verweise <sup class=\"dd-cite\">[n]</sup> im Text beziehen sich auf diese Liste.</p>\n                                <ol class=\"dd-refs\">\n                                    <li>Mankiw, N. G. <em>Macroeconomics.</em> Worth/Macmillan — Kapitel „A Dynamic Model of Economic Fluctuations“ (Standard-Lehrbuchdarstellung des DAS-DAD-Modells). <span class=\"ref-tag\">Lehrbuch</span></li>\n                                    <li>Phillips, A. W. (1958). „The Relation between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957.“ <em>Economica</em>, 25(100), 283–299. <span class=\"ref-tag\">Phillips-Kurve</span></li>\n                                    <li>Friedman, M. (1968). „The Role of Monetary Policy.“ <em>American Economic Review</em>, 58(1), 1–17; sowie Phelps, E. S. (1967), <em>Economica</em>. <span class=\"ref-tag\">Erwartungen</span></li>\n                                    <li>Taylor, J. B. (1993). „Discretion versus Policy Rules in Practice.“ <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, 195–214. <span class=\"ref-tag\">Taylor-Regel</span></li>\n                                    <li>Romer, D. (2000). „Keynesian Macroeconomics without the LM Curve.“ <em>Journal of Economic Perspectives</em>, 14(2), 149–169. <span class=\"ref-tag\">Modellaufbau</span></li>\n                                    <li>Clarida, R., Galí, J., &amp; Gertler, M. (1999). „The Science of Monetary Policy: A New Keynesian Perspective.“ <em>Journal of Economic Literature</em>, 37(4), 1661–1707. <span class=\"ref-tag\">New Keynesian</span></li>\n                                    <li>Galí, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle.</em> 2. Aufl., Princeton University Press. <span class=\"ref-tag\">Mikrofundierung</span></li>\n                                    <li>Woodford, M. (2003). <em>Interest and Prices: Foundations of a Theory of Monetary Policy.</em> Princeton University Press. <span class=\"ref-tag\">Theorie</span></li>\n                                    <li>Fisher, I. (1930). <em>The Theory of Interest.</em> Macmillan — Grundlage der Fisher-Gleichung \\(i=r+\\pi^e\\). <span class=\"ref-tag\">Realzins</span></li>\n                                    <li>Okun, A. M. (1962). „Potential GNP: Its Measurement and Significance.“ — Hintergrund zur Outputlücke. <span class=\"ref-tag\">Outputlücke</span></li>\n                                    <li>Blanchard, O. <em>Macroeconomics.</em> Pearson — ergänzende Lehrbuchdarstellung von AD-AS-Dynamik. <span class=\"ref-tag\">Lehrbuch</span></li>\n                                </ol>\n                            ", "glossar": "\n                                <span class=\"dd-kicker\">Nachschlagen</span>\n                                <h2>Glossar</h2>\n                                <dl class=\"dd-glossary\">\n                                    <dt>Outputlücke (\\(Y_t-\\bar{Y}\\))</dt>\n                                    <dd>Abweichung des tatsächlichen Outputs vom natürlichen Niveau \\(\\bar{Y}\\). Positiv = Boom, negativ = Rezession.</dd>\n                                    <dt>Natürliches Outputniveau (\\(\\bar{Y}\\))</dt>\n                                    <dd>Produktionsniveau bei flexiblen Preisen und normaler Kapazitätsauslastung; langfristiger Ankerpunkt.</dd>\n                                    <dt>Inflationsziel (\\(\\pi^\\star\\))</dt>\n                                    <dd>Von der Zentralbank angestrebte Inflationsrate (z. B. 2 %), zu der das System langfristig zurückkehrt.</dd>\n                                    <dt>Nachfrageschock (\\(\\epsilon_t\\))</dt>\n                                    <dd>Exogene Verschiebung der gesamtwirtschaftlichen Nachfrage (z. B. Fiskalpolitik, Stimmung, Export). Verschiebt die DAD-Kurve.</dd>\n                                    <dt>Angebotsschock (\\(\\nu_t\\))</dt>\n                                    <dd>Exogene Verschiebung der Inflation bei gegebener Outputlücke (z. B. Ölpreis). Verschiebt die DAS-Kurve.</dd>\n                                    <dt>\\(\\gamma\\) — Nachfrage-Sensitivität</dt>\n                                    <dd>Wie stark der Output auf Inflationsabweichungen reagiert (enthält die Aggressivität der Geldpolitik). Höheres \\(\\gamma\\) ⇒ schnellere Stabilisierung.</dd>\n                                    <dt>\\(\\phi\\) — Steigung der Phillips-Kurve</dt>\n                                    <dd>Wie stark die Inflation auf die Outputlücke reagiert. Höheres \\(\\phi\\) ⇒ flexiblere Preise.</dd>\n                                    <dt>Impulse-Response-Funktion (IRF)</dt>\n                                    <dd>Zeitpfad der Reaktion einer Variablen auf einen einmaligen Schock — zeigt Spitzenreaktion, Persistenz und Rückkehr ins Gleichgewicht.</dd>\n                                    <dt>Halbwertszeit</dt>\n                                    <dd>Anzahl Perioden, bis die Hälfte der anfänglichen Schockwirkung abgebaut ist: \\(\\ln 0.5/\\ln a\\) mit \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</dd>\n                                </dl>\n                            ", "backtomenu-button1": "<span class=\"btn-text\">Grössen und Gleichungen</span>", "start-model-button": "<span class=\"btn-text\">Graphische Darstellung</span>", "backtomenu-button": "<span class=\"btn-text\">Grössen und Gleichungen</span>", "graph-button": "<span class=\"btn-text\">Graphische Darstellung</span>", "i18n-instr": "\n          Wählen Sie beliebige exogene Grössen aus, in dem Sie auf die entsprechende Variable klicken. \n      ", "i18n-scentitle": "Szenarien", "i18n-sc1": "Nachfrageschock<small>Boom &amp; Inflation</small>", "i18n-sc2": "Angebotsschock<small>Stagflation</small>", "i18n-sc3": "Nachfrageschock<small>Rezession</small>", "i18n-sc4": "Angebotsschock<small>Günstiger Ölpreis</small>", "i18n-sc5": "Ölkrise 1970er<small>Anhaltende Stagflation</small>", "i18n-sc6": "Fiskalexpansion<small>Anhaltender Boom</small>", "i18n-sc7": "Finanzkrise 2008<small>Tiefe Rezession</small>", "i18n-sc8": "COVID-19-Schock<small>Einbruch &amp; Inflationswelle</small>", "dd-reset-btn": "Zurücksetzen", "i18n-exvar": "Exogene Variablen \n\n    ", "i18n-gt-demand": "Nachfrageschock", "i18n-gt-supply": "Angebotsschock\n                <select id=\"time_selectS\" class=\"modern-input2 hidden\">\n                    <option value=\"t\">t</option>\n                    <option value=\"t+1\">t+1</option>\n                </select>\n            ", "i18n-expar": "Exogene Parameter\n\n    ", "dd-savegif-btn": "GIF speichern", "dd-play-label": "Anpassung animieren", "explanation-text": "Ein höheres bedeutet, dass kleine Abweichungen der Inflation vom Ziel zu größeren Veränderungen in der Outputlücke führen.", "next-explanation": "Weiter", "next-explanation1": "Zurück", "i18n-irfcap": "\n      Eine <strong>Impulse-Response-Funktion (IRF)</strong> zeigt den Zeitpfad der Abweichung\n      vom Gleichgewicht nach einem einmaligen Schock. Die Kennzahlen unten fassen die Reaktion zusammen.\n    ", "i18n-lbl1": "Spitze Inflation", "i18n-lbl2": "Spitze Output", "i18n-lbl3": "Halbwertszeit", "i18n-lbl4": "Kum. Outputverlust", "irf-peak-pi-t": "Periode –", "irf-peak-y-t": "Periode –", "i18n-sub3": "Perioden bis ½", "i18n-sub4": "Σ Abweichungen", "expl-plot2-discrete": "\n          <strong>Anpassung der Inflationsrate (Nachfrage- oder Angebotsschock)</strong>\n\n          <!-- Supply Shock Part -->\n          <p>\n            <em>Reiner Angebotsschock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <!-- Demand Shock Part -->\n          <p>\n            <em>Reiner Nachfrageschock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>Damit der Schock verschwindet, benötigen wir \\(\\gamma\\phi>0\\).</p>\n          <p>Die dargestellten Resultate in der Tabelle wurden auf zwei Nachkommastellen gerundet.</p>\n        ", "expl-plot2-matrix": "\n          <strong>Anpassung der Inflationsrate (Matrix-/Zustandsraum-Darstellung)</strong>\n\n          <p>\n            Definiere \\(D = 1 + \\gamma\\phi\\). Die Inflationsdynamik kann kompakt als lineare Rekursion geschrieben werden:\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1}.\n            \\]\n            Dabei sind die Koeffizienten:\n            \\[\n              a = 1 - \\frac{\\phi\\gamma}{D}, \\qquad\n              b = \\frac{\\phi\\gamma}{D}\\,\\pi^\\star, \\qquad\n              c_\\epsilon = \\frac{\\phi\\kappa}{D}, \\qquad\n              c_\\nu = 1 - \\frac{\\phi\\gamma}{D}.\n            \\]\n          </p>\n\n          <p>\n            In Matrixform (augmentierter Zustand) ergibt sich:\n            \\[\n              \\begin{pmatrix}\\pi_{t+1}\\\\1\\end{pmatrix}\n              =\n              \\underbrace{\\begin{pmatrix}a & b\\\\0 & 1\\end{pmatrix}}_{A}\n              \\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}\n              +\n              \\underbrace{\\begin{pmatrix}c_\\epsilon & c_\\nu\\\\0 & 0\\end{pmatrix}}_{B}\n              \\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}.\n            \\]\n            Diese Darstellung ist praktisch, weil man über viele Perioden schnell iterieren kann\n            (genau so arbeitet die effiziente Simulation im Code).\n          </p>\n\n          <p>\n            Falls nach einem einmaligen Schock keine weiteren Schocks auftreten (\\(\\epsilon=\\nu=0\\) für \\(t+k\\ge1\\)),\n            dann gilt:\n            \\[\n              \\pi_{t+k} - \\pi^\\star = a^k\\,(\\pi_t - \\pi^\\star),\n            \\]\n            d.h. geometrisches Abklingen. Stabilität entspricht \\(|a|<1\\), was hier bei \\(\\gamma\\phi>0\\) erfüllt ist.\n          </p>\n        ", "expl-plot3-discrete": "\n          <strong>Anpassung des Outputs (Angebotsschock oder Nachfrageschock)</strong>\n\n          <p>\n            <em>Reiner Nachfrageschock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;+\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>\n            <em>Reiner Angebotsschock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>Die dargestellten Resultate in der Tabelle wurden auf zwei Nachkommastellen gerundet.</p>\n        ", "expl-plot3-matrix": "\n          <strong>Anpassung des Outputs (Matrix-/Zustandsraum-Darstellung)</strong>\n\n          <p>\n            Der Output wird im Modell aus Inflation und Schocks berechnet:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma(\\pi_{t+1}-\\pi^\\star) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Kombiniert man dies mit der kompakten Inflationsrekursion\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1},\n            \\]\n            erhält man \\(Y_{t+1}\\) als lineare Funktion von \\(\\pi_t\\) und den Schocks.\n          </p>\n\n          <p>\n            In Zustandsraum-Schreibweise kann man definieren:\n            \\[\n              s_t=\\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}, \\quad\n              u_{t+1}=\\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}, \\quad\n              s_{t+1}=A s_t + B u_{t+1}.\n            \\]\n            Der Output ist dann eine lineare “Messgleichung”:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma\\left([1\\;0]\\,s_{t+1}-\\pi^\\star\\right) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Diese Form ist besonders praktisch, weil man die Entwicklung über viele Perioden effizient iterieren kann.\n          </p>\n        ", "show-latex-plot2": "Rechenschritte einblenden", "show-latex-plot3": "Rechenschritte einblenden", "i18n-view2": "<strong>Ansicht:</strong>", "i18n-view3": "<strong>Ansicht:</strong>", "i18n-disc2": "Diskret", "i18n-disc3": "Diskret", "i18n-welcome": "Willkommen zum DAS-DAD Modell", "i18n-startp": "Klicken Sie auf den Kreis, um das Modell zu starten.", "i18n-subjchange": "Änderungen vorbehalten."};
-  var EN_BLOCKS = {"i18n-intro": "\n                                <span class=\"dd-kicker\">Intermediate Macroeconomics</span>\n                                <h2>The Dynamic AD-AS Model</h2>\n                                <p class=\"dd-lead\">\n                                    The <strong>DAS-DAD model</strong> (Dynamic Aggregate Supply &ndash; Dynamic Aggregate\n                                    Demand) describes how a country's output and inflation evolve\n                                    <em>over time</em> once a shock hits. Unlike the static AD-AS diagram, it builds in\n                                    explicit monetary policy (a Taylor rule), an expectations-augmented Phillips curve,\n                                    and a difference equation that pulls the economy back to equilibrium\n                                    period by period.\n                                </p>\n                            ", "i18n-glance": "\n                                <span class=\"dd-chip\">Time: <b>discrete</b> (\\(t,\\,t{+}1,\\dots\\))</span>\n                                <span class=\"dd-chip\">Endogenous: <b>\\(Y_t,\\ \\pi_t\\)</b></span>\n                                <span class=\"dd-chip\">Policy: <b>Taylor rule</b></span>\n                                <span class=\"dd-chip\">Stable when <b>\\(\\gamma\\phi>0\\)</b></span>\n                                <span class=\"dd-chip\">Textbook: <b>Mankiw, ch. 15</b><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics - chapter 'A Dynamic Model of Economic Fluctuations'\">[1]</sup></span>\n                            ", "i18n-goals": "\n                                <h3>Learning goals</h3>\n                                <ul>\n                                    <li><strong>Derive</strong> the two core equations (DAD &amp; DAS) and interpret them economically.</li>\n                                    <li>Tell <strong>endogenous, exogenous and predetermined</strong> variables apart.</li>\n                                    <li>Predict how a <strong>demand</strong> or <strong>supply shock</strong> feeds through to \\(Y_t\\) and \\(\\pi_t\\).</li>\n                                    <li>See the <strong>adjustment path</strong> back to equilibrium as geometric decay at rate \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</li>\n                                    <li>Read an <strong>impulse-response function</strong>: peak response, half-life and cumulative loss.</li>\n                                    <li>Explain monetary policy's <strong>trade-off</strong> under supply shocks (output vs. inflation).</li>\n                                </ul>\n                            ", "i18n-history": "\n                                <span class=\"dd-callout-title\">Where do these ideas come from?</span>\n                                The Phillips curve goes back to <strong>A. W. Phillips (1958)</strong><sup class=\"dd-cite\" title=\"Phillips (1958), Economica\">[2]</sup>;\n                                <strong>Friedman (1968)</strong> and <strong>Phelps (1967)</strong> added expectations and the\n                                natural rate of unemployment<sup class=\"dd-cite\" title=\"Friedman (1968), AER; Phelps (1967)\">[3]</sup>.\n                                <strong>Taylor (1993)</strong> formalised the monetary-policy reaction function<sup class=\"dd-cite\" title=\"Taylor (1993), Carnegie-Rochester\">[4]</sup>.\n                                The textbook-style synthesis used here, without an LM curve, follows <strong>Romer (2000)</strong><sup class=\"dd-cite\" title=\"Romer (2000), JEP - Keynesian Macro without the LM Curve\">[5]</sup>\n                                and <strong>Mankiw</strong><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics\">[1]</sup>; the modern micro-founded version is the\n                                New Keynesian synthesis of <strong>Clarida, Gal&iacute; &amp; Gertler (1999)</strong><sup class=\"dd-cite\" title=\"Clarida, Gali & Gertler (1999), JEL\">[6]</sup>.\n                                The full reference list is below.\n                            ", "i18n-eqh": "Equations", "i18n-eqp": "Here is a short introduction and the derivation of the model. Click on any variable for more detail.", "i18n-stability": "\n                                <span class=\"dd-kicker\">Mechanics</span>\n                                <h2>Equilibrium, Dynamics &amp; Stability</h2>\n                                <p>\n                                    Substituting the DAD equation into the DAS equation gives a linear\n                                    <strong>first-order difference equation</strong> for inflation:\n                                </p>\n                                \\[\n                                    \\pi_t-\\pi^\\star=\\underbrace{\\frac{1}{1+\\gamma\\phi}}_{\\textstyle a}\\,(\\pi_{t-1}-\\pi^\\star)\n                                    \\;+\\;\\frac{\\phi\\kappa}{1+\\gamma\\phi}\\,\\epsilon_t\\;+\\;\\frac{1}{1+\\gamma\\phi}\\,\\nu_t .\n                                \\]\n                                <p>\n                                    After a one-off shock the gap from target decays geometrically:\n                                    \\(\\pi_{t+k}-\\pi^\\star=a^{\\,k}(\\pi_t-\\pi^\\star)\\). The system is <strong>stable</strong>\n                                    as long as \\(|a|<1\\), i.e. \\(\\gamma\\phi>0\\) &mdash; the central bank (\\(\\gamma\\)) and the\n                                    Phillips curve (\\(\\phi\\)) together pull the economy back to equilibrium.\n                                </p>\n\n                                <div class=\"dd-callout intuition\">\n                                    <span class=\"dd-callout-title\">Intuition: why do shocks fade out?</span>\n                                    When inflation runs above target, the central bank pushes real interest rates up\n                                    (through the Taylor rule), cooling demand and therefore output. The resulting\n                                    negative output gap then drags inflation back down via the Phillips curve. The more\n                                    aggressively policy reacts (\\(\\gamma\\)) and the steeper the Phillips curve (\\(\\phi\\)),\n                                    the faster the decay &mdash; the <em>half-life</em> is \\(\\ln 0.5/\\ln a\\) periods.\n                                </div>\n\n                                <div class=\"dd-callout supply\">\n                                    <span class=\"dd-callout-title\">The monetary-policy trade-off</span>\n                                    A <strong>demand shock</strong> moves output and inflation in the same direction &mdash;\n                                    policy can stabilise both at once. A <strong>supply shock</strong>\n                                    moves them in opposite directions (stagflation): fighting inflation deepens the recession.\n                                    It is precisely this conflict that makes supply shocks so awkward for central banks.\n                                </div>\n                            ", "literatur": "\n                                <span class=\"dd-kicker\">Going further</span>\n                                <h2>Further Reading &amp; Sources</h2>\n                                <p>The numbered references <sup class=\"dd-cite\">[n]</sup> in the text point to this list.</p>\n                                <ol class=\"dd-refs\">\n                                    <li>Mankiw, N. G. <em>Macroeconomics.</em> Worth/Macmillan &mdash; chapter &ldquo;A Dynamic Model of Economic Fluctuations&rdquo; (the standard textbook treatment of the DAS-DAD model). <span class=\"ref-tag\">Textbook</span></li>\n                                    <li>Phillips, A. W. (1958). &ldquo;The Relation between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861&ndash;1957.&rdquo; <em>Economica</em>, 25(100), 283&ndash;299. <span class=\"ref-tag\">Phillips curve</span></li>\n                                    <li>Friedman, M. (1968). &ldquo;The Role of Monetary Policy.&rdquo; <em>American Economic Review</em>, 58(1), 1&ndash;17; and Phelps, E. S. (1967), <em>Economica</em>. <span class=\"ref-tag\">Expectations</span></li>\n                                    <li>Taylor, J. B. (1993). &ldquo;Discretion versus Policy Rules in Practice.&rdquo; <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, 195&ndash;214. <span class=\"ref-tag\">Taylor rule</span></li>\n                                    <li>Romer, D. (2000). &ldquo;Keynesian Macroeconomics without the LM Curve.&rdquo; <em>Journal of Economic Perspectives</em>, 14(2), 149&ndash;169. <span class=\"ref-tag\">Model setup</span></li>\n                                    <li>Clarida, R., Gal&iacute;, J., &amp; Gertler, M. (1999). &ldquo;The Science of Monetary Policy: A New Keynesian Perspective.&rdquo; <em>Journal of Economic Literature</em>, 37(4), 1661&ndash;1707. <span class=\"ref-tag\">New Keynesian</span></li>\n                                    <li>Gal&iacute;, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle.</em> 2nd ed., Princeton University Press. <span class=\"ref-tag\">Micro-foundations</span></li>\n                                    <li>Woodford, M. (2003). <em>Interest and Prices: Foundations of a Theory of Monetary Policy.</em> Princeton University Press. <span class=\"ref-tag\">Theory</span></li>\n                                    <li>Fisher, I. (1930). <em>The Theory of Interest.</em> Macmillan &mdash; basis of the Fisher equation \\(i=r+\\pi^e\\). <span class=\"ref-tag\">Real interest rate</span></li>\n                                    <li>Okun, A. M. (1962). &ldquo;Potential GNP: Its Measurement and Significance.&rdquo; &mdash; background on the output gap. <span class=\"ref-tag\">Output gap</span></li>\n                                    <li>Blanchard, O. <em>Macroeconomics.</em> Pearson &mdash; a complementary textbook treatment of AD-AS dynamics. <span class=\"ref-tag\">Textbook</span></li>\n                                </ol>\n                            ", "glossar": "\n                                <span class=\"dd-kicker\">Reference</span>\n                                <h2>Glossary</h2>\n                                <dl class=\"dd-glossary\">\n                                    <dt>Output gap (\\(Y_t-\\bar{Y}\\))</dt>\n                                    <dd>How far actual output sits from its natural level \\(\\bar{Y}\\). Positive = boom, negative = recession.</dd>\n                                    <dt>Natural level of output (\\(\\bar{Y}\\))</dt>\n                                    <dd>Output at flexible prices and normal capacity use; the long-run anchor.</dd>\n                                    <dt>Inflation target (\\(\\pi^\\star\\))</dt>\n                                    <dd>The inflation rate the central bank aims for (e.g. 2%), to which the system returns in the long run.</dd>\n                                    <dt>Demand shock (\\(\\epsilon_t\\))</dt>\n                                    <dd>An exogenous shift in aggregate demand (e.g. fiscal policy, sentiment, exports). Shifts the DAD curve.</dd>\n                                    <dt>Supply shock (\\(\\nu_t\\))</dt>\n                                    <dd>An exogenous shift in inflation at a given output gap (e.g. oil prices). Shifts the DAS curve.</dd>\n                                    <dt>\\(\\gamma\\) &mdash; demand sensitivity</dt>\n                                    <dd>How strongly output responds to inflation gaps (it bakes in how aggressive policy is). Higher \\(\\gamma\\) &rArr; faster stabilisation.</dd>\n                                    <dt>\\(\\phi\\) &mdash; slope of the Phillips curve</dt>\n                                    <dd>How strongly inflation responds to the output gap. Higher \\(\\phi\\) &rArr; more flexible prices.</dd>\n                                    <dt>Impulse-response function (IRF)</dt>\n                                    <dd>The time path of a variable's response to a one-off shock &mdash; it shows the peak response, persistence and return to equilibrium.</dd>\n                                    <dt>Half-life</dt>\n                                    <dd>The number of periods until half of the initial shock has worn off: \\(\\ln 0.5/\\ln a\\) with \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</dd>\n                                </dl>\n                            ", "backtomenu-button1": "<span class=\"btn-text\">Variables &amp; Equations</span>", "start-model-button": "<span class=\"btn-text\">Interactive Diagram</span>", "backtomenu-button": "<span class=\"btn-text\">Variables &amp; Equations</span>", "graph-button": "<span class=\"btn-text\">Interactive Diagram</span>", "i18n-instr": "\n          Click any exogenous variable to select it.\n      ", "i18n-scentitle": "Scenarios", "i18n-sc1": "Demand shock<small>Boom &amp; inflation</small>", "i18n-sc2": "Supply shock<small>Stagflation</small>", "i18n-sc3": "Demand shock<small>Recession</small>", "i18n-sc4": "Supply shock<small>Cheaper oil price</small>", "i18n-sc5": "Oil crisis 1970s<small>Persistent stagflation</small>", "i18n-sc6": "Fiscal expansion<small>Sustained boom</small>", "i18n-sc7": "Financial crisis 2008<small>Deep recession</small>", "i18n-sc8": "COVID-19 shock<small>Collapse &amp; inflation wave</small>", "dd-reset-btn": "Reset", "i18n-exvar": "Exogenous variables\n\n    ", "i18n-gt-demand": "Demand shock", "i18n-gt-supply": "Supply shock\n", "i18n-expar": "Exogenous parameters\n\n    ", "dd-savegif-btn": "Save GIF", "dd-play-label": "Animate adjustment", "explanation-text": "A higher value means small deviations of inflation from target lead to larger swings in the output gap.", "next-explanation": "Next", "next-explanation1": "Back", "i18n-irfcap": "\n      An <strong>impulse-response function (IRF)</strong> traces the path of the deviation\n      from equilibrium after a one-off shock. The figures below summarise the response.\n    ", "i18n-lbl1": "Peak inflation", "i18n-lbl2": "Peak output", "i18n-lbl3": "Half-life", "i18n-lbl4": "Cum. output loss", "irf-peak-pi-t": "Period –", "irf-peak-y-t": "Period –", "i18n-sub3": "periods to ½", "i18n-sub4": "Σ of deviations", "expl-plot2-discrete": "\n          <strong>Adjustment of the inflation rate (demand or supply shock)</strong>\n\n          <!-- Supply Shock Part -->\n          <p>\n            <em>Pure supply shock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <!-- Demand Shock Part -->\n          <p>\n            <em>Pure demand shock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>For the shock to die out we need \\(\\gamma\\phi>0\\).</p>\n          <p>The figures in the table are rounded to two decimal places.</p>\n        ", "expl-plot2-matrix": "\n          <strong>Adjustment of the inflation rate (matrix / state-space form)</strong>\n\n          <p>\n            Define \\(D = 1 + \\gamma\\phi\\). the inflation dynamics can be written compactly as a linear recursion:\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1}.\n            \\]\n            with the coefficients:\n            \\[\n              a = 1 - \\frac{\\phi\\gamma}{D}, \\qquad\n              b = \\frac{\\phi\\gamma}{D}\\,\\pi^\\star, \\qquad\n              c_\\epsilon = \\frac{\\phi\\kappa}{D}, \\qquad\n              c_\\nu = 1 - \\frac{\\phi\\gamma}{D}.\n            \\]\n          </p>\n\n          <p>\n            In matrix form (augmented state) this becomes:\n            \\[\n              \\begin{pmatrix}\\pi_{t+1}\\\\1\\end{pmatrix}\n              =\n              \\underbrace{\\begin{pmatrix}a & b\\\\0 & 1\\end{pmatrix}}_{A}\n              \\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}\n              +\n              \\underbrace{\\begin{pmatrix}c_\\epsilon & c_\\nu\\\\0 & 0\\end{pmatrix}}_{B}\n              \\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}.\n            \\]\n            This form is convenient because you can iterate quickly over many periods\n            (this is exactly how the simulation in the code works).\n          </p>\n\n          <p>\n            If no further shocks occur after a one-off shock (\\(\\epsilon=\\nu=0\\) für \\(t+k\\ge1\\)),\n            then:\n            \\[\n              \\pi_{t+k} - \\pi^\\star = a^k\\,(\\pi_t - \\pi^\\star),\n            \\]\n            i.e. geometric decay. Stability requires \\(|a|<1\\), which here, with \\(\\gamma\\phi>0\\) is satisfied.\n          </p>\n        ", "expl-plot3-discrete": "\n          <strong>Adjustment of output (supply or demand shock)</strong>\n\n          <p>\n            <em>Pure demand shock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;+\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>\n            <em>Pure supply shock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>The figures in the table are rounded to two decimal places.</p>\n        ", "expl-plot3-matrix": "\n          <strong>Adjustment of output (matrix / state-space form)</strong>\n\n          <p>\n            In the model, output is computed from inflation and the shocks:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma(\\pi_{t+1}-\\pi^\\star) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Combining this with the compact inflation recursion\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1},\n            \\]\n            gives \\(Y_{t+1}\\) as a linear function of \\(\\pi_t\\) and the shocks.\n          </p>\n\n          <p>\n            In state-space notation we can define:\n            \\[\n              s_t=\\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}, \\quad\n              u_{t+1}=\\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}, \\quad\n              s_{t+1}=A s_t + B u_{t+1}.\n            \\]\n            Output is then a linear “measurement equation”:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma\\left([1\\;0]\\,s_{t+1}-\\pi^\\star\\right) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            This form is especially convenient because the dynamics can be iterated efficiently over many periods.\n          </p>\n        ", "show-latex-plot2": "Show calculation steps", "show-latex-plot3": "Show calculation steps", "i18n-view2": "<strong>View:</strong>", "i18n-view3": "<strong>View:</strong>", "i18n-disc2": "Discrete", "i18n-disc3": "Discrete", "i18n-welcome": "Welcome to the DAS-DAD Model", "i18n-startp": "Click the circle to launch the model.", "i18n-subjchange": "Subject to change."};
+  var DE_BLOCKS = {"i18n-intro": "\n                                <span class=\"dd-kicker\">Intermediate Macroeconomics</span>\n                                <h2>Das dynamische AD-AS-Modell</h2>\n                                <p class=\"dd-lead\">\n                                    Das <strong>DAS-DAD-Modell</strong> (Dynamic Aggregate Supply – Dynamic Aggregate\n                                    Demand) beschreibt, wie sich Output und Inflation einer Volkswirtschaft\n                                    <em>über die Zeit</em> entwickeln, nachdem sie von einem Schock getroffen wurde.\n                                    Anders als das statische AD-AS-Diagramm enthält es eine explizite Geldpolitik\n                                    (Taylor-Regel), eine erwartungsbasierte Phillips-Kurve und eine\n                                    Differenzengleichung, die das System Periode für Periode zurück ins\n                                    Gleichgewicht trägt.\n                                </p>\n                            ", "i18n-glance": "\n                                <span class=\"dd-chip\">Zeit: <b>diskret</b> (\\(t,\\,t{+}1,\\dots\\))</span>\n                                <span class=\"dd-chip\">Endogen: <b>\\(Y_t,\\ \\pi_t\\)</b></span>\n                                <span class=\"dd-chip\">Politik: <b>Taylor-Regel</b></span>\n                                <span class=\"dd-chip\">Stabilität wenn <b>\\(\\gamma\\phi>0\\)</b></span>\n                                <span class=\"dd-chip\">Lehrbuch: <b>Mankiw, Kap. 15</b><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics – Kapitel 'A Dynamic Model of Economic Fluctuations'\">[1]</sup></span>\n                            ", "i18n-goals": "\n                                <h3>Lernziele</h3>\n                                <ul>\n                                    <li>Die beiden Kerngleichungen (DAD &amp; DAS) <strong>herleiten</strong> und ökonomisch interpretieren.</li>\n                                    <li>Zwischen <strong>endogenen, exogenen und vorherbestimmten</strong> Variablen unterscheiden.</li>\n                                    <li>Die Wirkung eines <strong>Nachfrage-</strong> bzw. <strong>Angebotsschocks</strong> auf \\(Y_t\\) und \\(\\pi_t\\) vorhersagen.</li>\n                                    <li>Den <strong>Anpassungspfad</strong> zurück zum Gleichgewicht als geometrisches Abklingen mit Rate \\(a=\\tfrac{1}{1+\\gamma\\phi}\\) verstehen.</li>\n                                    <li>Eine <strong>Impulse-Response-Funktion</strong> lesen: Spitzenreaktion, Halbwertszeit und kumulierter Verlust.</li>\n                                    <li>Den <strong>Trade-off</strong> der Geldpolitik bei Angebotsschocks (Output vs. Inflation) erklären.</li>\n                                </ul>\n                            ", "i18n-history": "\n                                <span class=\"dd-callout-title\">Woher kommen diese Ideen?</span>\n                                Die Phillips-Kurve geht auf <strong>A. W. Phillips (1958)</strong> zurück<sup class=\"dd-cite\" title=\"Phillips (1958), Economica\">[2]</sup>;\n                                <strong>Friedman (1968)</strong> und <strong>Phelps (1967)</strong> fügten Erwartungen und die\n                                natürliche Arbeitslosenquote hinzu<sup class=\"dd-cite\" title=\"Friedman (1968), AER; Phelps (1967)\">[3]</sup>.\n                                Die geldpolitische Reaktionsfunktion formalisierte <strong>Taylor (1993)</strong><sup class=\"dd-cite\" title=\"Taylor (1993), Carnegie-Rochester\">[4]</sup>.\n                                Die hier verwendete lehrbuchartige Synthese ohne LM-Kurve folgt <strong>Romer (2000)</strong><sup class=\"dd-cite\" title=\"Romer (2000), JEP – Keynesian Macro without the LM Curve\">[5]</sup>\n                                und <strong>Mankiw</strong><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics\">[1]</sup>; die moderne mikrofundierte Variante ist die\n                                New-Keynesian-Synthese von <strong>Clarida, Galí &amp; Gertler (1999)</strong><sup class=\"dd-cite\" title=\"Clarida, Galí & Gertler (1999), JEL\">[6]</sup>.\n                                Die vollständige Literaturliste finden Sie unten.\n                            ", "i18n-eqh": "Gleichungen", "i18n-eqp": "Wählen Sie ein Symbol in einer der beiden Gleichungen für eine kurze Erklärung.", "i18n-stability": "\n                                <span class=\"dd-kicker\">Mechanik</span>\n                                <h2>Gleichgewicht, Dynamik &amp; Stabilität</h2>\n                                <p>\n                                    Setzt man die DAD- in die DAS-Gleichung ein, erhält man eine lineare\n                                    <strong>Differenzengleichung erster Ordnung</strong> für die Inflation:\n                                </p>\n                                \\[\n                                    \\pi_t-\\pi^\\star=\\underbrace{\\frac{1}{1+\\gamma\\phi}}_{\\textstyle a}\\,(\\pi_{t-1}-\\pi^\\star)\n                                    \\;+\\;\\frac{\\phi\\kappa}{1+\\gamma\\phi}\\,\\epsilon_t\\;+\\;\\frac{1}{1+\\gamma\\phi}\\,\\nu_t .\n                                \\]\n                                <p>\n                                    Nach einem einmaligen Schock klingt die Abweichung vom Ziel geometrisch ab:\n                                    \\(\\pi_{t+k}-\\pi^\\star=a^{\\,k}(\\pi_t-\\pi^\\star)\\). Das System ist <strong>stabil</strong>,\n                                    solange \\(|a|<1\\), also \\(\\gamma\\phi>0\\) — die Zentralbank (\\(\\gamma\\)) und die\n                                    Phillips-Kurve (\\(\\phi\\)) ziehen die Wirtschaft gemeinsam zurück ins Gleichgewicht.\n                                </p>\n\n                                <div class=\"dd-callout intuition\">\n                                    <span class=\"dd-callout-title\">Intuition: Warum verschwinden Schocks?</span>\n                                    Steigt die Inflation über das Ziel, reagiert die Zentralbank mit höheren Realzinsen\n                                    (über die Taylor-Regel), die Nachfrage und damit den Output dämpfen. Die entstehende\n                                    negative Outputlücke senkt über die Phillips-Kurve wiederum die Inflation. Je\n                                    energischer die Geldpolitik (\\(\\gamma\\)) und je steiler die Phillips-Kurve (\\(\\phi\\)),\n                                    desto schneller das Abklingen — die <em>Halbwertszeit</em> beträgt \\(\\ln 0.5/\\ln a\\) Perioden.\n                                </div>\n\n                                <div class=\"dd-callout supply\">\n                                    <span class=\"dd-callout-title\">Der geldpolitische Trade-off</span>\n                                    Ein <strong>Nachfrageschock</strong> bewegt Output und Inflation in dieselbe Richtung —\n                                    die Politik kann beide Ziele gleichzeitig stabilisieren. Ein <strong>Angebotsschock</strong>\n                                    bewegt sie gegenläufig (Stagflation): Inflationsbekämpfung verschärft die Rezession.\n                                    Genau dieser Konflikt macht Angebotsschocks für Zentralbanken so unangenehm.\n                                </div>\n                            ", "literatur": "\n                                <span class=\"dd-kicker\">Vertiefung</span>\n                                <h2>Weiterführende Literatur &amp; Quellen</h2>\n                                <p>Die nummerierten Verweise <sup class=\"dd-cite\">[n]</sup> im Text beziehen sich auf diese Liste.</p>\n                                <ol class=\"dd-refs\">\n                                    <li>Mankiw, N. G. <em>Macroeconomics.</em> Worth/Macmillan — Kapitel „A Dynamic Model of Economic Fluctuations“ (Standard-Lehrbuchdarstellung des DAS-DAD-Modells). <span class=\"ref-tag\">Lehrbuch</span></li>\n                                    <li>Phillips, A. W. (1958). „The Relation between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861–1957.“ <em>Economica</em>, 25(100), 283–299. <span class=\"ref-tag\">Phillips-Kurve</span></li>\n                                    <li>Friedman, M. (1968). „The Role of Monetary Policy.“ <em>American Economic Review</em>, 58(1), 1–17; sowie Phelps, E. S. (1967), <em>Economica</em>. <span class=\"ref-tag\">Erwartungen</span></li>\n                                    <li>Taylor, J. B. (1993). „Discretion versus Policy Rules in Practice.“ <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, 195–214. <span class=\"ref-tag\">Taylor-Regel</span></li>\n                                    <li>Romer, D. (2000). „Keynesian Macroeconomics without the LM Curve.“ <em>Journal of Economic Perspectives</em>, 14(2), 149–169. <span class=\"ref-tag\">Modellaufbau</span></li>\n                                    <li>Clarida, R., Galí, J., &amp; Gertler, M. (1999). „The Science of Monetary Policy: A New Keynesian Perspective.“ <em>Journal of Economic Literature</em>, 37(4), 1661–1707. <span class=\"ref-tag\">New Keynesian</span></li>\n                                    <li>Galí, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle.</em> 2. Aufl., Princeton University Press. <span class=\"ref-tag\">Mikrofundierung</span></li>\n                                    <li>Woodford, M. (2003). <em>Interest and Prices: Foundations of a Theory of Monetary Policy.</em> Princeton University Press. <span class=\"ref-tag\">Theorie</span></li>\n                                    <li>Fisher, I. (1930). <em>The Theory of Interest.</em> Macmillan — Grundlage der Fisher-Gleichung \\(i=r+\\pi^e\\). <span class=\"ref-tag\">Realzins</span></li>\n                                    <li>Okun, A. M. (1962). „Potential GNP: Its Measurement and Significance.“ — Hintergrund zur Outputlücke. <span class=\"ref-tag\">Outputlücke</span></li>\n                                    <li>Blanchard, O. <em>Macroeconomics.</em> Pearson — ergänzende Lehrbuchdarstellung von AD-AS-Dynamik. <span class=\"ref-tag\">Lehrbuch</span></li>\n                                </ol>\n                            ", "glossar": "\n                                <span class=\"dd-kicker\">Nachschlagen</span>\n                                <h2>Glossar</h2>\n                                <dl class=\"dd-glossary\">\n                                    <dt>Outputlücke (\\(Y_t-\\bar{Y}\\))</dt>\n                                    <dd>Abweichung des tatsächlichen Outputs vom natürlichen Niveau \\(\\bar{Y}\\). Positiv = Boom, negativ = Rezession.</dd>\n                                    <dt>Natürliches Outputniveau (\\(\\bar{Y}\\))</dt>\n                                    <dd>Produktionsniveau bei flexiblen Preisen und normaler Kapazitätsauslastung; langfristiger Ankerpunkt.</dd>\n                                    <dt>Inflationsziel (\\(\\pi^\\star\\))</dt>\n                                    <dd>Von der Zentralbank angestrebte Inflationsrate (z. B. 2 %), zu der das System langfristig zurückkehrt.</dd>\n                                    <dt>Nachfrageschock (\\(\\epsilon_t\\))</dt>\n                                    <dd>Exogene Verschiebung der gesamtwirtschaftlichen Nachfrage (z. B. Fiskalpolitik, Stimmung, Export). Verschiebt die DAD-Kurve.</dd>\n                                    <dt>Angebotsschock (\\(\\nu_t\\))</dt>\n                                    <dd>Exogene Verschiebung der Inflation bei gegebener Outputlücke (z. B. Ölpreis). Verschiebt die DAS-Kurve.</dd>\n                                    <dt>\\(\\gamma\\) — Nachfrage-Sensitivität</dt>\n                                    <dd>Wie stark der Output auf Inflationsabweichungen reagiert (enthält die Aggressivität der Geldpolitik). Höheres \\(\\gamma\\) ⇒ schnellere Stabilisierung.</dd>\n                                    <dt>\\(\\phi\\) — Steigung der Phillips-Kurve</dt>\n                                    <dd>Wie stark die Inflation auf die Outputlücke reagiert. Höheres \\(\\phi\\) ⇒ flexiblere Preise.</dd>\n                                    <dt>Impulse-Response-Funktion (IRF)</dt>\n                                    <dd>Zeitpfad der Reaktion einer Variablen auf einen einmaligen Schock — zeigt Spitzenreaktion, Persistenz und Rückkehr ins Gleichgewicht.</dd>\n                                    <dt>Halbwertszeit</dt>\n                                    <dd>Anzahl Perioden, bis die Hälfte der anfänglichen Schockwirkung abgebaut ist: \\(\\ln 0.5/\\ln a\\) mit \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</dd>\n                                </dl>\n                            ", "backtomenu-button1": "<span class=\"btn-text\">Grössen und Gleichungen</span>", "start-model-button": "<span class=\"btn-text\">Graphische Darstellung</span>", "backtomenu-button": "<span class=\"btn-text\">Grössen und Gleichungen</span>", "graph-button": "<span class=\"btn-text\">Graphische Darstellung</span>", "i18n-instr": "\n          Wählen Sie beliebige exogene Grössen aus, in dem Sie auf die entsprechende Variable klicken. \n      ", "i18n-scentitle": "Szenarien", "i18n-sc1": "Nachfrageschock<small>Boom &amp; Inflation</small>", "i18n-sc2": "Angebotsschock<small>Stagflation</small>", "i18n-sc3": "Nachfrageschock<small>Rezession</small>", "i18n-sc4": "Angebotsschock<small>Günstiger Ölpreis</small>", "i18n-sc5": "Ölkrise 1970er<small>Anhaltende Stagflation</small>", "i18n-sc6": "Fiskalexpansion<small>Anhaltender Boom</small>", "i18n-sc7": "Finanzkrise 2008<small>Tiefe Rezession</small>", "i18n-sc8": "COVID-19-Schock<small>Einbruch &amp; Inflationswelle</small>", "dd-reset-btn": "Zurücksetzen", "i18n-exvar": "Exogene Variablen \n\n    ", "i18n-gt-demand": "Nachfrageschock", "i18n-gt-supply": "Angebotsschock\n                <select id=\"time_selectS\" class=\"modern-input2 hidden\">\n                    <option value=\"t\">t</option>\n                    <option value=\"t+1\">t+1</option>\n                </select>\n            ", "i18n-expar": "Exogene Parameter\n\n    ", "dd-savegif-btn": "GIF speichern", "dd-play-label": "Anpassung animieren", "explanation-text": "Ein höheres bedeutet, dass kleine Abweichungen der Inflation vom Ziel zu größeren Veränderungen in der Outputlücke führen.", "next-explanation": "Weiter", "next-explanation1": "Zurück", "i18n-irfcap": "\n      Eine <strong>Impulse-Response-Funktion (IRF)</strong> zeigt den Zeitpfad der Abweichung\n      vom Gleichgewicht nach einem einmaligen Schock. Die Kennzahlen unten fassen die Reaktion zusammen.\n    ", "i18n-lbl1": "Spitze Inflation", "i18n-lbl2": "Spitze Output", "i18n-lbl3": "Halbwertszeit", "i18n-lbl4": "Kum. Outputverlust", "irf-peak-pi-t": "Periode –", "irf-peak-y-t": "Periode –", "i18n-sub3": "Perioden bis ½", "i18n-sub4": "Σ Abweichungen", "expl-plot2-discrete": "\n          <strong>Anpassung der Inflationsrate (Nachfrage- oder Angebotsschock)</strong>\n\n          <!-- Supply Shock Part -->\n          <p>\n            <em>Reiner Angebotsschock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <!-- Demand Shock Part -->\n          <p>\n            <em>Reiner Nachfrageschock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>Damit der Schock verschwindet, benötigen wir \\(\\gamma\\phi>0\\).</p>\n          <p>Die dargestellten Resultate in der Tabelle wurden auf zwei Nachkommastellen gerundet.</p>\n        ", "expl-plot2-matrix": "\n          <strong>Anpassung der Inflationsrate (Matrix-/Zustandsraum-Darstellung)</strong>\n\n          <p>\n            Definiere \\(D = 1 + \\gamma\\phi\\). Die Inflationsdynamik kann kompakt als lineare Rekursion geschrieben werden:\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1}.\n            \\]\n            Dabei sind die Koeffizienten:\n            \\[\n              a = 1 - \\frac{\\phi\\gamma}{D}, \\qquad\n              b = \\frac{\\phi\\gamma}{D}\\,\\pi^\\star, \\qquad\n              c_\\epsilon = \\frac{\\phi\\kappa}{D}, \\qquad\n              c_\\nu = 1 - \\frac{\\phi\\gamma}{D}.\n            \\]\n          </p>\n\n          <p>\n            In Matrixform (augmentierter Zustand) ergibt sich:\n            \\[\n              \\begin{pmatrix}\\pi_{t+1}\\\\1\\end{pmatrix}\n              =\n              \\underbrace{\\begin{pmatrix}a & b\\\\0 & 1\\end{pmatrix}}_{A}\n              \\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}\n              +\n              \\underbrace{\\begin{pmatrix}c_\\epsilon & c_\\nu\\\\0 & 0\\end{pmatrix}}_{B}\n              \\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}.\n            \\]\n            Diese Darstellung ist praktisch, weil man über viele Perioden schnell iterieren kann\n            (genau so arbeitet die effiziente Simulation im Code).\n          </p>\n\n          <p>\n            Falls nach einem einmaligen Schock keine weiteren Schocks auftreten (\\(\\epsilon=\\nu=0\\) für \\(t+k\\ge1\\)),\n            dann gilt:\n            \\[\n              \\pi_{t+k} - \\pi^\\star = a^k\\,(\\pi_t - \\pi^\\star),\n            \\]\n            d.h. geometrisches Abklingen. Stabilität entspricht \\(|a|<1\\), was hier bei \\(\\gamma\\phi>0\\) erfüllt ist.\n          </p>\n        ", "expl-plot3-discrete": "\n          <strong>Anpassung des Outputs (Angebotsschock oder Nachfrageschock)</strong>\n\n          <p>\n            <em>Reiner Nachfrageschock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;+\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>\n            <em>Reiner Angebotsschock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Dann ergibt sich iterativ:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>Die dargestellten Resultate in der Tabelle wurden auf zwei Nachkommastellen gerundet.</p>\n        ", "expl-plot3-matrix": "\n          <strong>Anpassung des Outputs (Matrix-/Zustandsraum-Darstellung)</strong>\n\n          <p>\n            Der Output wird im Modell aus Inflation und Schocks berechnet:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma(\\pi_{t+1}-\\pi^\\star) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Kombiniert man dies mit der kompakten Inflationsrekursion\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1},\n            \\]\n            erhält man \\(Y_{t+1}\\) als lineare Funktion von \\(\\pi_t\\) und den Schocks.\n          </p>\n\n          <p>\n            In Zustandsraum-Schreibweise kann man definieren:\n            \\[\n              s_t=\\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}, \\quad\n              u_{t+1}=\\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}, \\quad\n              s_{t+1}=A s_t + B u_{t+1}.\n            \\]\n            Der Output ist dann eine lineare “Messgleichung”:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma\\left([1\\;0]\\,s_{t+1}-\\pi^\\star\\right) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Diese Form ist besonders praktisch, weil man die Entwicklung über viele Perioden effizient iterieren kann.\n          </p>\n        ", "show-latex-plot2": "Rechenschritte einblenden", "show-latex-plot3": "Rechenschritte einblenden", "i18n-view2": "<strong>Ansicht:</strong>", "i18n-view3": "<strong>Ansicht:</strong>", "i18n-disc2": "Diskret", "i18n-disc3": "Diskret", "i18n-welcome": "Willkommen zum DAS-DAD Modell", "i18n-startp": "Wählen Sie die Start-Schaltfläche, um das Modell zu öffnen.", "i18n-subjchange": "Änderungen vorbehalten."};
+  var EN_BLOCKS = {"i18n-intro": "\n                                <span class=\"dd-kicker\">Intermediate Macroeconomics</span>\n                                <h2>The Dynamic AD-AS Model</h2>\n                                <p class=\"dd-lead\">\n                                    The <strong>DAS-DAD model</strong> (Dynamic Aggregate Supply &ndash; Dynamic Aggregate\n                                    Demand) describes how a country's output and inflation evolve\n                                    <em>over time</em> once a shock hits. Unlike the static AD-AS diagram, it builds in\n                                    explicit monetary policy (a Taylor rule), an expectations-augmented Phillips curve,\n                                    and a difference equation that pulls the economy back to equilibrium\n                                    period by period.\n                                </p>\n                            ", "i18n-glance": "\n                                <span class=\"dd-chip\">Time: <b>discrete</b> (\\(t,\\,t{+}1,\\dots\\))</span>\n                                <span class=\"dd-chip\">Endogenous: <b>\\(Y_t,\\ \\pi_t\\)</b></span>\n                                <span class=\"dd-chip\">Policy: <b>Taylor rule</b></span>\n                                <span class=\"dd-chip\">Stable when <b>\\(\\gamma\\phi>0\\)</b></span>\n                                <span class=\"dd-chip\">Textbook: <b>Mankiw, ch. 15</b><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics - chapter 'A Dynamic Model of Economic Fluctuations'\">[1]</sup></span>\n                            ", "i18n-goals": "\n                                <h3>Learning goals</h3>\n                                <ul>\n                                    <li><strong>Derive</strong> the two core equations (DAD &amp; DAS) and interpret them economically.</li>\n                                    <li>Tell <strong>endogenous, exogenous and predetermined</strong> variables apart.</li>\n                                    <li>Predict how a <strong>demand</strong> or <strong>supply shock</strong> feeds through to \\(Y_t\\) and \\(\\pi_t\\).</li>\n                                    <li>See the <strong>adjustment path</strong> back to equilibrium as geometric decay at rate \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</li>\n                                    <li>Read an <strong>impulse-response function</strong>: peak response, half-life and cumulative loss.</li>\n                                    <li>Explain monetary policy's <strong>trade-off</strong> under supply shocks (output vs. inflation).</li>\n                                </ul>\n                            ", "i18n-history": "\n                                <span class=\"dd-callout-title\">Where do these ideas come from?</span>\n                                The Phillips curve goes back to <strong>A. W. Phillips (1958)</strong><sup class=\"dd-cite\" title=\"Phillips (1958), Economica\">[2]</sup>;\n                                <strong>Friedman (1968)</strong> and <strong>Phelps (1967)</strong> added expectations and the\n                                natural rate of unemployment<sup class=\"dd-cite\" title=\"Friedman (1968), AER; Phelps (1967)\">[3]</sup>.\n                                <strong>Taylor (1993)</strong> formalised the monetary-policy reaction function<sup class=\"dd-cite\" title=\"Taylor (1993), Carnegie-Rochester\">[4]</sup>.\n                                The textbook-style synthesis used here, without an LM curve, follows <strong>Romer (2000)</strong><sup class=\"dd-cite\" title=\"Romer (2000), JEP - Keynesian Macro without the LM Curve\">[5]</sup>\n                                and <strong>Mankiw</strong><sup class=\"dd-cite\" title=\"Mankiw, Macroeconomics\">[1]</sup>; the modern micro-founded version is the\n                                New Keynesian synthesis of <strong>Clarida, Gal&iacute; &amp; Gertler (1999)</strong><sup class=\"dd-cite\" title=\"Clarida, Gali & Gertler (1999), JEL\">[6]</sup>.\n                                The full reference list is below.\n                            ", "i18n-eqh": "Equations", "i18n-eqp": "Select a symbol in either equation for a brief explanation.", "i18n-stability": "\n                                <span class=\"dd-kicker\">Mechanics</span>\n                                <h2>Equilibrium, Dynamics &amp; Stability</h2>\n                                <p>\n                                    Substituting the DAD equation into the DAS equation gives a linear\n                                    <strong>first-order difference equation</strong> for inflation:\n                                </p>\n                                \\[\n                                    \\pi_t-\\pi^\\star=\\underbrace{\\frac{1}{1+\\gamma\\phi}}_{\\textstyle a}\\,(\\pi_{t-1}-\\pi^\\star)\n                                    \\;+\\;\\frac{\\phi\\kappa}{1+\\gamma\\phi}\\,\\epsilon_t\\;+\\;\\frac{1}{1+\\gamma\\phi}\\,\\nu_t .\n                                \\]\n                                <p>\n                                    After a one-off shock the gap from target decays geometrically:\n                                    \\(\\pi_{t+k}-\\pi^\\star=a^{\\,k}(\\pi_t-\\pi^\\star)\\). The system is <strong>stable</strong>\n                                    as long as \\(|a|<1\\), i.e. \\(\\gamma\\phi>0\\) &mdash; the central bank (\\(\\gamma\\)) and the\n                                    Phillips curve (\\(\\phi\\)) together pull the economy back to equilibrium.\n                                </p>\n\n                                <div class=\"dd-callout intuition\">\n                                    <span class=\"dd-callout-title\">Intuition: why do shocks fade out?</span>\n                                    When inflation runs above target, the central bank pushes real interest rates up\n                                    (through the Taylor rule), cooling demand and therefore output. The resulting\n                                    negative output gap then drags inflation back down via the Phillips curve. The more\n                                    aggressively policy reacts (\\(\\gamma\\)) and the steeper the Phillips curve (\\(\\phi\\)),\n                                    the faster the decay &mdash; the <em>half-life</em> is \\(\\ln 0.5/\\ln a\\) periods.\n                                </div>\n\n                                <div class=\"dd-callout supply\">\n                                    <span class=\"dd-callout-title\">The monetary-policy trade-off</span>\n                                    A <strong>demand shock</strong> moves output and inflation in the same direction &mdash;\n                                    policy can stabilise both at once. A <strong>supply shock</strong>\n                                    moves them in opposite directions (stagflation): fighting inflation deepens the recession.\n                                    It is precisely this conflict that makes supply shocks so awkward for central banks.\n                                </div>\n                            ", "literatur": "\n                                <span class=\"dd-kicker\">Going further</span>\n                                <h2>Further Reading &amp; Sources</h2>\n                                <p>The numbered references <sup class=\"dd-cite\">[n]</sup> in the text point to this list.</p>\n                                <ol class=\"dd-refs\">\n                                    <li>Mankiw, N. G. <em>Macroeconomics.</em> Worth/Macmillan &mdash; chapter &ldquo;A Dynamic Model of Economic Fluctuations&rdquo; (the standard textbook treatment of the DAS-DAD model). <span class=\"ref-tag\">Textbook</span></li>\n                                    <li>Phillips, A. W. (1958). &ldquo;The Relation between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom, 1861&ndash;1957.&rdquo; <em>Economica</em>, 25(100), 283&ndash;299. <span class=\"ref-tag\">Phillips curve</span></li>\n                                    <li>Friedman, M. (1968). &ldquo;The Role of Monetary Policy.&rdquo; <em>American Economic Review</em>, 58(1), 1&ndash;17; and Phelps, E. S. (1967), <em>Economica</em>. <span class=\"ref-tag\">Expectations</span></li>\n                                    <li>Taylor, J. B. (1993). &ldquo;Discretion versus Policy Rules in Practice.&rdquo; <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, 195&ndash;214. <span class=\"ref-tag\">Taylor rule</span></li>\n                                    <li>Romer, D. (2000). &ldquo;Keynesian Macroeconomics without the LM Curve.&rdquo; <em>Journal of Economic Perspectives</em>, 14(2), 149&ndash;169. <span class=\"ref-tag\">Model setup</span></li>\n                                    <li>Clarida, R., Gal&iacute;, J., &amp; Gertler, M. (1999). &ldquo;The Science of Monetary Policy: A New Keynesian Perspective.&rdquo; <em>Journal of Economic Literature</em>, 37(4), 1661&ndash;1707. <span class=\"ref-tag\">New Keynesian</span></li>\n                                    <li>Gal&iacute;, J. (2015). <em>Monetary Policy, Inflation, and the Business Cycle.</em> 2nd ed., Princeton University Press. <span class=\"ref-tag\">Micro-foundations</span></li>\n                                    <li>Woodford, M. (2003). <em>Interest and Prices: Foundations of a Theory of Monetary Policy.</em> Princeton University Press. <span class=\"ref-tag\">Theory</span></li>\n                                    <li>Fisher, I. (1930). <em>The Theory of Interest.</em> Macmillan &mdash; basis of the Fisher equation \\(i=r+\\pi^e\\). <span class=\"ref-tag\">Real interest rate</span></li>\n                                    <li>Okun, A. M. (1962). &ldquo;Potential GNP: Its Measurement and Significance.&rdquo; &mdash; background on the output gap. <span class=\"ref-tag\">Output gap</span></li>\n                                    <li>Blanchard, O. <em>Macroeconomics.</em> Pearson &mdash; a complementary textbook treatment of AD-AS dynamics. <span class=\"ref-tag\">Textbook</span></li>\n                                </ol>\n                            ", "glossar": "\n                                <span class=\"dd-kicker\">Reference</span>\n                                <h2>Glossary</h2>\n                                <dl class=\"dd-glossary\">\n                                    <dt>Output gap (\\(Y_t-\\bar{Y}\\))</dt>\n                                    <dd>How far actual output sits from its natural level \\(\\bar{Y}\\). Positive = boom, negative = recession.</dd>\n                                    <dt>Natural level of output (\\(\\bar{Y}\\))</dt>\n                                    <dd>Output at flexible prices and normal capacity use; the long-run anchor.</dd>\n                                    <dt>Inflation target (\\(\\pi^\\star\\))</dt>\n                                    <dd>The inflation rate the central bank aims for (e.g. 2%), to which the system returns in the long run.</dd>\n                                    <dt>Demand shock (\\(\\epsilon_t\\))</dt>\n                                    <dd>An exogenous shift in aggregate demand (e.g. fiscal policy, sentiment, exports). Shifts the DAD curve.</dd>\n                                    <dt>Supply shock (\\(\\nu_t\\))</dt>\n                                    <dd>An exogenous shift in inflation at a given output gap (e.g. oil prices). Shifts the DAS curve.</dd>\n                                    <dt>\\(\\gamma\\) &mdash; demand sensitivity</dt>\n                                    <dd>How strongly output responds to inflation gaps (it bakes in how aggressive policy is). Higher \\(\\gamma\\) &rArr; faster stabilisation.</dd>\n                                    <dt>\\(\\phi\\) &mdash; slope of the Phillips curve</dt>\n                                    <dd>How strongly inflation responds to the output gap. Higher \\(\\phi\\) &rArr; more flexible prices.</dd>\n                                    <dt>Impulse-response function (IRF)</dt>\n                                    <dd>The time path of a variable's response to a one-off shock &mdash; it shows the peak response, persistence and return to equilibrium.</dd>\n                                    <dt>Half-life</dt>\n                                    <dd>The number of periods until half of the initial shock has worn off: \\(\\ln 0.5/\\ln a\\) with \\(a=\\tfrac{1}{1+\\gamma\\phi}\\).</dd>\n                                </dl>\n                            ", "backtomenu-button1": "<span class=\"btn-text\">Variables &amp; Equations</span>", "start-model-button": "<span class=\"btn-text\">Interactive Diagram</span>", "backtomenu-button": "<span class=\"btn-text\">Variables &amp; Equations</span>", "graph-button": "<span class=\"btn-text\">Interactive Diagram</span>", "i18n-instr": "\n          Click any exogenous variable to select it.\n      ", "i18n-scentitle": "Scenarios", "i18n-sc1": "Demand shock<small>Boom &amp; inflation</small>", "i18n-sc2": "Supply shock<small>Stagflation</small>", "i18n-sc3": "Demand shock<small>Recession</small>", "i18n-sc4": "Supply shock<small>Cheaper oil price</small>", "i18n-sc5": "Oil crisis 1970s<small>Persistent stagflation</small>", "i18n-sc6": "Fiscal expansion<small>Sustained boom</small>", "i18n-sc7": "Financial crisis 2008<small>Deep recession</small>", "i18n-sc8": "COVID-19 shock<small>Collapse &amp; inflation wave</small>", "dd-reset-btn": "Reset", "i18n-exvar": "Exogenous variables\n\n    ", "i18n-gt-demand": "Demand shock", "i18n-gt-supply": "Supply shock\n", "i18n-expar": "Exogenous parameters\n\n    ", "dd-savegif-btn": "Save GIF", "dd-play-label": "Animate adjustment", "explanation-text": "A higher value means small deviations of inflation from target lead to larger swings in the output gap.", "next-explanation": "Next", "next-explanation1": "Back", "i18n-irfcap": "\n      An <strong>impulse-response function (IRF)</strong> traces the path of the deviation\n      from equilibrium after a one-off shock. The figures below summarise the response.\n    ", "i18n-lbl1": "Peak inflation", "i18n-lbl2": "Peak output", "i18n-lbl3": "Half-life", "i18n-lbl4": "Cum. output loss", "irf-peak-pi-t": "Period –", "irf-peak-y-t": "Period –", "i18n-sub3": "periods to ½", "i18n-sub4": "Σ of deviations", "expl-plot2-discrete": "\n          <strong>Adjustment of the inflation rate (demand or supply shock)</strong>\n\n          <!-- Supply Shock Part -->\n          <p>\n            <em>Pure supply shock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <!-- Demand Shock Part -->\n          <p>\n            <em>Pure demand shock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              \\pi_t\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              \\pi_{t+1}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              \\pi_{t+2}\n              \\;=\\;\n              \\pi^{\\star}\n              \\;+\\;\n              \\frac{\\kappa\\,\\phi\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>For the shock to die out we need \\(\\gamma\\phi>0\\).</p>\n          <p>The figures in the table are rounded to two decimal places.</p>\n        ", "expl-plot2-matrix": "\n          <strong>Adjustment of the inflation rate (matrix / state-space form)</strong>\n\n          <p>\n            Define \\(D = 1 + \\gamma\\phi\\). the inflation dynamics can be written compactly as a linear recursion:\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1}.\n            \\]\n            with the coefficients:\n            \\[\n              a = 1 - \\frac{\\phi\\gamma}{D}, \\qquad\n              b = \\frac{\\phi\\gamma}{D}\\,\\pi^\\star, \\qquad\n              c_\\epsilon = \\frac{\\phi\\kappa}{D}, \\qquad\n              c_\\nu = 1 - \\frac{\\phi\\gamma}{D}.\n            \\]\n          </p>\n\n          <p>\n            In matrix form (augmented state) this becomes:\n            \\[\n              \\begin{pmatrix}\\pi_{t+1}\\\\1\\end{pmatrix}\n              =\n              \\underbrace{\\begin{pmatrix}a & b\\\\0 & 1\\end{pmatrix}}_{A}\n              \\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}\n              +\n              \\underbrace{\\begin{pmatrix}c_\\epsilon & c_\\nu\\\\0 & 0\\end{pmatrix}}_{B}\n              \\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}.\n            \\]\n            This form is convenient because you can iterate quickly over many periods\n            (this is exactly how the simulation in the code works).\n          </p>\n\n          <p>\n            If no further shocks occur after a one-off shock (\\(\\epsilon=\\nu=0\\) für \\(t+k\\ge1\\)),\n            then:\n            \\[\n              \\pi_{t+k} - \\pi^\\star = a^k\\,(\\pi_t - \\pi^\\star),\n            \\]\n            i.e. geometric decay. Stability requires \\(|a|<1\\), which here, with \\(\\gamma\\phi>0\\) is satisfied.\n          </p>\n        ", "expl-plot3-discrete": "\n          <strong>Adjustment of output (supply or demand shock)</strong>\n\n          <p>\n            <em>Pure demand shock</em>\n            (\\(\\epsilon_t \\neq 0\\), \\(\\nu_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;+\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\kappa\\,\\epsilon_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>\n            <em>Pure supply shock</em>\n            (\\(\\nu_t \\neq 0\\), \\(\\epsilon_t = 0\\)):\n            <br><br>\n            Iterating forward gives:\n            \\[\n              Y_t \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,1 + \\gamma\\,\\phi\\,}\n              \\qquad\n              Y_{t+1} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^2\\,}\n              \\qquad\n              Y_{t+2} \\;=\\; \\bar{Y}\n              \\;-\\;\n              \\frac{\\gamma\\,\\nu_t}{\\,(1 + \\gamma\\,\\phi)^3\\,}\n              \\quad\n            \\]\n          </p>\n\n          <p>The figures in the table are rounded to two decimal places.</p>\n        ", "expl-plot3-matrix": "\n          <strong>Adjustment of output (matrix / state-space form)</strong>\n\n          <p>\n            In the model, output is computed from inflation and the shocks:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma(\\pi_{t+1}-\\pi^\\star) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            Combining this with the compact inflation recursion\n            \\[\n              \\pi_{t+1} = a\\,\\pi_t + b + c_\\epsilon\\,\\epsilon_{t+1} + c_\\nu\\,\\nu_{t+1},\n            \\]\n            gives \\(Y_{t+1}\\) as a linear function of \\(\\pi_t\\) and the shocks.\n          </p>\n\n          <p>\n            In state-space notation we can define:\n            \\[\n              s_t=\\begin{pmatrix}\\pi_t\\\\1\\end{pmatrix}, \\quad\n              u_{t+1}=\\begin{pmatrix}\\epsilon_{t+1}\\\\\\nu_{t+1}\\end{pmatrix}, \\quad\n              s_{t+1}=A s_t + B u_{t+1}.\n            \\]\n            Output is then a linear “measurement equation”:\n            \\[\n              Y_{t+1} = \\bar{Y} - \\gamma\\left([1\\;0]\\,s_{t+1}-\\pi^\\star\\right) + \\kappa\\,\\epsilon_{t+1}.\n            \\]\n            This form is especially convenient because the dynamics can be iterated efficiently over many periods.\n          </p>\n        ", "show-latex-plot2": "Show calculation steps", "show-latex-plot3": "Show calculation steps", "i18n-view2": "<strong>View:</strong>", "i18n-view3": "<strong>View:</strong>", "i18n-disc2": "Discrete", "i18n-disc3": "Discrete", "i18n-welcome": "Welcome to the DAS-DAD Model", "i18n-startp": "Select the Start button to launch the model.", "i18n-subjchange": "Subject to change."};
   window.T2 = function (en, de) { return window.LANG === "de" ? de : en; };
   function ddSetLang(lang) {
     window.LANG = (lang === "de") ? "de" : "en";

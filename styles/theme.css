@@ -93,12 +93,105 @@ p, li { line-height: 1.6; }
 }
 .options-button2:hover { background: #e1def8; }
 
-/* ---------- Start circle on the pre-menu ----------------------------------- */
-.circle-button { transition: transform .2s ease, box-shadow .2s ease; }
-.circle-button:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(67,56,202,0.30); }
+/* ---------- Animated start button on the pre-menu -------------------------- */
+.circle-button {
+    width: 220px;
+    height: 220px;
+    display: grid;
+    place-content: center;
+    gap: 2px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    margin: 50px auto;
+    padding: 0;
+    border: 0;
+    border-radius: 46% 54% 58% 42% / 45% 52% 48% 55%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 46%, var(--dad-blue) 100%);
+    background-size: 180% 180%;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 14px 32px rgba(67,56,202,0.30), inset 0 1px 0 rgba(255,255,255,0.28);
+    font-family: var(--sans);
+    text-align: center;
+    appearance: none;
+    animation: dd-start-morph 8s ease-in-out infinite, dd-start-colour 10s ease-in-out infinite alternate;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.circle-button::before,
+.circle-button::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+.circle-button::before {
+    inset: 12px;
+    z-index: 0;
+    border: 1px solid rgba(255,255,255,0.42);
+    border-radius: inherit;
+}
+.circle-button::after {
+    width: 130px;
+    height: 130px;
+    top: -35px;
+    right: -20px;
+    z-index: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0) 70%);
+    animation: dd-start-glint 6s ease-in-out infinite alternate;
+}
+.circle-button .button-text,
+.circle-button .button-subtext {
+    position: relative;
+    z-index: 1;
+    display: block;
+    color: #fff;
+    text-shadow: 0 1px 5px rgba(22,36,58,0.28);
+}
+.circle-button .button-text {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+.circle-button .button-subtext {
+    margin-top: 2px;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .82;
+}
+.circle-button:hover {
+    transform: translateY(-4px) scale(1.035);
+    box-shadow: 0 20px 42px rgba(67,56,202,0.36), inset 0 1px 0 rgba(255,255,255,0.32);
+    filter: saturate(1.08);
+}
+.circle-button:active { transform: translateY(-1px) scale(1.01); }
+.circle-button:focus-visible {
+    outline: 4px solid rgba(67,56,202,0.22);
+    outline-offset: 6px;
+}
+@keyframes dd-start-morph {
+    0%, 100% { border-radius: 46% 54% 58% 42% / 45% 52% 48% 55%; }
+    33%      { border-radius: 58% 42% 46% 54% / 52% 43% 57% 48%; }
+    66%      { border-radius: 43% 57% 54% 46% / 58% 50% 50% 42%; }
+}
+@keyframes dd-start-colour {
+    0%   { background-position: 0% 45%; }
+    100% { background-position: 100% 55%; }
+}
+@keyframes dd-start-glint {
+    0%   { transform: translate(-6px, 8px) scale(.92); opacity: .72; }
+    100% { transform: translate(12px, -5px) scale(1.12); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .circle-button,
+    .circle-button::after { animation: none; }
+}
 
 /* ---------- Equation highlight + interactive variables --------------------- */
-.equation-highlight, .intro-highlight {
+.equation-highlight {
     background: var(--panel);
     border: 1px solid var(--hairline);
     border-left: 4px solid var(--accent);
@@ -206,7 +299,31 @@ p, li { line-height: 1.6; }
     text-transform: uppercase; color: var(--muted);
     border: 1px solid var(--hairline); border-radius: 5px; padding: 1px 6px; margin-left: 6px;
 }
-sup.dd-cite { color: var(--accent); font-weight: 700; cursor: help; }
+/* Inline source markers: compact badges avoid superscript collisions in narrow cards. */
+sup.dd-cite {
+    display: inline-block;
+    position: static;
+    vertical-align: baseline;
+    margin-inline-start: .28em;
+    padding: .08em .34em;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: var(--sans);
+    font-size: .68em;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .01em;
+    white-space: nowrap;
+    cursor: help;
+}
+
+/* Keep the first explanation paragraph visually separate from its dropdowns. */
+#variable-info-container #info-box-text > p {
+    margin: 0 0 14px;
+    line-height: 1.65;
+}
+#variable-info-container #info-box-text > p:last-child { margin-bottom: 0; }
 
 /* Glossary */
 .dd-glossary { margin: 8px 0; }
@@ -309,7 +426,6 @@ hr.question-separator { border-top: 1px solid var(--hairline); }
 .filter-menu { box-sizing: border-box; }
 
 /* --- Equation box was too cramped: give it room to breathe -------------- */
-.filter-menu .equation-highlight.intro-highlight,
 .filter-menu #equation-highlight {
     display: block;
     box-sizing: border-box;

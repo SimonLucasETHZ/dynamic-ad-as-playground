@@ -167,8 +167,6 @@ dynamic-ad-as-explorer/
 ├── styles/
 │   ├── core.css         # base layout & components
 │   └── theme.css         # colour theme / appearance layer (loaded last)
-├── images/              # small UI icons
-├── cover.png            # start-screen image
 ├── media/               # the scenario GIFs shown above
 └── README.md
 ```
@@ -240,6 +238,6 @@ for proper visualization use the Python command as explained.
 The model and interactive tool are an educational implementation of the textbook
 DAS–DAD framework. Original interactive tool by **Lucas Simon & Juri Ezzaini**;
 The tool was originally developed in Excel in 2023.
-UI icons from [flaticon.com](https://www.flaticon.com), imagery from
-[pixabay.com](https://pixabay.com). Please add a `LICENSE` file (e.g. MIT) before
+UI icons from [flaticon.com](https://www.flaticon.com). Please add a
+`LICENSE` file (e.g. MIT) before
 publishing if you intend others to reuse the code.
