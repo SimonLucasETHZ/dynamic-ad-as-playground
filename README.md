@@ -3,7 +3,7 @@
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
 Supply and Aggregate Demand (DAS-DAD)**, following Mankiw's *Macroeconomics*
 (Ch. 15). Move the sliders, fire demand and supply shocks, and watch the economy
-trace its way back to long-run equilibrium, both in the **DAS–DAD diagram** and
+trace its way back to long-run equilibrium, both in the **DAS-DAD diagram** and
 as **time paths** of output and inflation.
 
 The whole thing is a single self-contained `index.html` (plus two stylesheets) and
