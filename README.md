@@ -245,8 +245,6 @@ stated in that file.
 
 Third-party components and assets retain their own licenses and attribution
 requirements. This includes the externally loaded libraries listed above and the
-MIT-licensed `gif.js` code bundled for client-side GIF export. Where Flaticon
-icons are used, the applicable [Flaticon](https://www.flaticon.com) attribution
-requirements continue to apply. The academic sources underlying the educational
-explanations are cited in the references section above and are not relicensed by
-this repository.
+MIT-licensed `gif.js` code bundled for client-side GIF export. The academic sources 
+underlying the educational explanations are cited in the references section above 
+and are not relicensed by this repository.
