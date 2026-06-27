@@ -6,7 +6,7 @@ Two things live in here:
 
 1. The eight ready-made scenario GIFs used in the README (run `python make_gifs.py`).
 
-2. A tiny helper, `custom_gif(...)`, for making your OWN gif in a couple of
+2. Tiny helper, `custom_gif(...)`, for making your OWN gif in a couple of
    lines — handy for dropping a tailored shock into your slides. Example:
 
        from make_gifs import custom_gif
