@@ -1,7 +1,7 @@
 # Dynamic AS-AD
 
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
-Supply and Aggregate Demand (DAS–DAD)**, following Mankiw's *Macroeconomics*
+Supply and Aggregate Demand (DAS-DAD)**, following Mankiw's *Macroeconomics*
 (Ch. 15). Move the sliders, fire demand and supply shocks, and watch the economy
 trace its way back to long-run equilibrium, both in the **DAS–DAD diagram** and
 as **time paths** of output and inflation.
@@ -15,7 +15,7 @@ no build step, no server required. Open the file and it runs.
 
 ## See it in action
 
-Each animation below shows the same two views you get in the app: the **DAS–DAD
+Each animation below shows the same two views you get in the app: the **DAS-DAD
 diagram** on the left (the demand and supply curves shifting, with the
 equilibrium walking back toward the centred Ȳ / π\* cross) and the **time paths**
 of output `Y` and inflation `π` on the right. For shock configurations see 
@@ -62,7 +62,7 @@ A deep, persistent demand collapse with a slow recovery.
 - **English / German interface** switch language from the dropdown on the
   start screen (the model is authored in German and rendered in English by
   default).
-- **Interactive DAS–DAD diagram** built with Plotly. The equilibrium cross
+- **Interactive DAS-DAD diagram** built with Plotly. The equilibrium cross
   (Ȳ, π\*) always stays centred, and the window auto-fits so every period's
   equilibrium and its π / Y labels stay on screen.
 - **Demand and supply shocks** at the impact period and up to four periods ahead
@@ -127,7 +127,7 @@ inflation has inertia, the economy can pass *through* potential on the way back
 output above Ȳ for a while). That is why the **COVID-19** scenario uses a demand
 collapse that *lingers* (a smaller second-period drag) together with a single
 positive supply shock this reproduces the realistic picture of a deep drop, a
-partial (~70–75%) recovery, and then a gradual climb back to potential **without**
+partial (~70-75%) recovery, and then a gradual climb back to potential **without**
 an artificial overshoot, while still generating the later inflation wave. A
 **supply-driven** inflation surge necessarily pushes output the other way
 (stagflation), so the inflation wave here is deliberately modest to keep the
@@ -172,7 +172,7 @@ dynamic-ad-as-explorer/
 ```
 
 The GIFs are produced by a small, self-contained Python script
-(`make_gifs.py`, included at the repository root) that re-implements the exact
+(`make_gifs.py`, included at the repository root) that reimplements the exact
 model and renders each scenario with Matplotlib. To regenerate them:
 
 ```bash
@@ -236,7 +236,7 @@ for proper visualization use the Python command as explained.
 ## License & credits
 
 The model and interactive tool are an educational implementation of the textbook
-DAS–DAD framework. The original interactive tool was developed in Excel in 2023
+DAS-DAD framework. The original interactive tool was developed in Excel in 2023
 by **Lucas Simon & Juri Ezzaini**.
 
 The original project code in this repository is released under the
