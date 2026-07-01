@@ -126,7 +126,8 @@ def make_gif(slug, title, demand, supply, outdir,
         axL.set_xlabel("Output  $Y$", color=INK)
         axL.set_ylabel("Inflation  $\\pi$", color=INK)
         axL.set_title("DAS\u2013DAD Diagram", color=INK, fontsize=11, pad=6)
-        axL.tick_params(colors=MUTED, labelsize=8)
+        # Keep the axes and their titles, but hide numeric tick labels in GIFs.
+        axL.tick_params(colors=MUTED, labelsize=8, labelbottom=False, labelleft=False)
         axL.legend(loc="upper right", fontsize=8, frameon=False)
 
         axR.set_facecolor(PAPER)
@@ -141,7 +142,7 @@ def make_gif(slug, title, demand, supply, outdir,
         axR.set_xlim(0, K); axR.set_ylim(0, 10)
         axR.set_xlabel("Period", color=INK)
         axR.set_title("Time Path", color=INK, fontsize=11, pad=6)
-        axR.tick_params(colors=MUTED, labelsize=8)
+        axR.tick_params(colors=MUTED, labelsize=8, labelbottom=False, labelleft=False)
         axR.legend(loc="upper right", fontsize=8, frameon=False)
 
         lbl = "t\u22121 (equilibrium)" if frame == 0 else (
