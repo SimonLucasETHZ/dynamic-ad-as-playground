@@ -546,7 +546,7 @@ hr.question-separator { border-top: 1px solid var(--hairline); }
 }
 
 .equations-title {
-    font-size: 1.22rem !important;
+    font-size: 1.5rem !important;
     margin: 24px 0 12px !important;
     padding: 0 0 6px !important;
     border-bottom: 1px solid var(--hairline) !important;
