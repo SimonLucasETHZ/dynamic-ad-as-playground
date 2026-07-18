@@ -2,9 +2,10 @@
 
 An interactive, browser-based teaching tool for the **Dynamic Model of Aggregate
 Supply and Aggregate Demand (DAS-DAD)**, following Mankiw's *Macroeconomics*
-(Ch. 15). Move the sliders, fire demand and supply shocks, and watch the economy
-trace its way back to long-run equilibrium, both in the **DAS-DAD diagram** and
-as **time paths** of output and inflation.
+(Ch. 15) or basically any other book on intermediate-level Macroeconomics. Move the sliders, 
+add demand and supply shocks, and watch the economy trace its way back to the long-run equilibrium, 
+both in the **DAS-DAD diagram** and as **time paths** of output and inflation. You can also
+see them side-by-side when you run the included python script with proper settings.
 
 The whole thing is a single self-contained `index.html` (plus two stylesheets) and
 no build step, no server required. Open the file and it runs.
@@ -121,18 +122,18 @@ decay by 20% per period and the economy returns smoothly to (Ȳ, π\*).
 
 ### A note on the dynamics (worth knowing for teaching)
 
-In this model a **temporary demand shock** has a subtle property: because
+In this model a **temporary demand shock** has an important property: because
 inflation has inertia, the economy can pass *through* potential on the way back
 (when inflation is below target, the implied policy stance is loose, which lifts
-output above Ȳ for a while). That is why the **COVID-19** scenario uses a demand
-collapse that *lingers* (a smaller second-period drag) together with a single
+output above Ȳ for a while). That's exactly why the **COVID-19** scenario uses a demand
+collapse that somewhat *lingers* (a smaller second-period drag) together with one
 positive supply shock this reproduces the realistic picture of a deep drop, a
 partial (~70-75%) recovery, and then a gradual climb back to potential **without**
 an artificial overshoot, while still generating the later inflation wave. A
 **supply-driven** inflation surge necessarily pushes output the other way
-(stagflation), so the inflation wave here is deliberately modest to keep the
-output recovery monotone; you can always dial the supply shocks up live to see
-the stagflationary trade-off.
+(stagflation), so the inflation wave here is modest to keep the
+output recovery monotone. You can always dial the supply shocks up live to see
+the trade-off (with staglation).
 
 ---
 
@@ -171,9 +172,9 @@ dynamic-ad-as-explorer/
 └── README.md
 ```
 
-The GIFs are produced by a small, self-contained Python script
-(`make_gifs.py`, included at the repository root) that reimplements the exact
-model and renders each scenario with Matplotlib. To regenerate them:
+The GIFs are produced by the Python script in this respository
+(`make_gifs.py`, included at the repository root) that runs the
+model once again and renders each scenario with Matplotlib. To regenerate them:
 
 ```bash
 pip install matplotlib pillow numpy
@@ -182,9 +183,9 @@ python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
 
 ### Make your own GIF for a talk or slide
 
-`make_gifs.py` also exposes a one-call helper, `custom_gif(...)`, so you can drop
-a tailored shock into a GIF in a few lines. Set `gamma`, `phi`, the shock
-period(s) and size(s), and a title everything you leave out keeps the model's
+`make_gifs.py` also gives a helper, `custom_gif(...)`. You can drop
+a any shock into a GIF in a few lines. Set `gamma`, `phi`, the shock
+period(s) and size(s) and a title. Note that everything you leave out keeps the model's
 default:
 
 ```python
@@ -200,10 +201,10 @@ custom_gif(
 )
 ```
 
-`demand` and `supply` are dictionaries mapping a shock **period** to a shock
-**size** (positive or negative). Use one entry for a one-off shock, or several
-periods for a drawn-out one e.g. `demand={1: 4, 2: 2, 3: 2}` for a sustained
-boom. The call writes the GIF to `out` and returns its path. **Alternatively** 
+`demand` and `supply` map a shock **period** to a shock
+**size** (positive or negative). Use one value for a one-off shock, or multiple
+periods `demand={1: 4, 2: 2, 3: 2}` for a sustained
+boom. The call writes the GIF to output and returns its path. **Alternatively** 
 you can just click on the GIF button within the tool. However, visuals here 
 are worse as a GIF directly on Plotly within HTML somehow squeezes the GIF, so
 for proper visualization use the Python command as explained.
