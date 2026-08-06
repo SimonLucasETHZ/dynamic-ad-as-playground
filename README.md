@@ -164,21 +164,19 @@ extra configuration is needed.
 
 ```
 dynamic-ad-as-explorer/
-├── index.html          # the entire application (HTML + JS, boots the model)
+├── index.html      
 ├── styles/
-│   ├── core.css         # base layout & components
-│   └── theme.css         # colour theme / appearance layer (loaded last)
-├── media/               # the scenario GIFs shown above
+│   ├── core.css        
+│   └── theme.css       
+├── media/               
 └── README.md
 ```
 
-The GIFs are produced by the Python script in this respository
-(`make_gifs.py`, included at the repository root) that runs the
-model once again and renders each scenario with Matplotlib. To regenerate them:
+Regenerate GIFs:
 
 ```bash
 pip install matplotlib pillow numpy
-python3 make_gifs.py     # writes dynamic-ad-as-explorer/media/*.gif
+python3 make_gifs.py     # creates dynamic-ad-as-explorer/media/*.gif
 ```
 
 ### Make your own GIF for a talk or slide
