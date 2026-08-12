@@ -141,9 +141,7 @@ the trade-off (with staglation).
 
 It's a static site pick whichever is easiest:
 
-**Just open it.** Double-click `index.html`. (Most things work from `file://`;
-a couple of browsers are stricter about loading the local stylesheets, in which
-case use one of the options below.)
+**Just open it.** Double-click `index.html`.
 
 ---
 
