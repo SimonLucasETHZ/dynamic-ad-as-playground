@@ -145,19 +145,6 @@ It's a static site pick whichever is easiest:
 a couple of browsers are stricter about loading the local stylesheets, in which
 case use one of the options below.)
 
-**Local web server:**
-
-```bash
-# from the project folder
-python3 -m http.server 8000
-# then visit http://localhost:8000
-```
-
-**GitHub Pages:** push the repository, then in *Settings → Pages* choose the
-`main` branch / root. Your site will be served at
-`https://<user>.github.io/<repo>/`. Because the entry point is `index.html`, no
-extra configuration is needed.
-
 ---
 
 ## Project layout
