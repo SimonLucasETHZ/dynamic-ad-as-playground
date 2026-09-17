@@ -2836,6 +2836,161 @@ details[open] summary::before {
       width: 100%; /* fill parent's width */
       margin-bottom: 10px;
     }
+
+    /* Resizable tool window -------------------------------------------------
+       The controls keep their normal font sizes; only the available layout
+       space and Plotly canvases grow or shrink with the window. */
+    #model-content {
+      width: 100%;
+      padding: 14px;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+
+    #dd-tool-window {
+      position: relative;
+      width: min(1300px, calc(100vw - 28px));
+      height: min(900px, calc(100vh - 28px));
+      min-width: min(700px, calc(100vw - 28px));
+      min-height: min(560px, calc(100vh - 28px));
+      max-width: none;
+      padding: 0;
+      margin: 0 auto;
+      box-sizing: border-box;
+      border-radius: 14px;
+      box-shadow: none;
+      overflow: hidden;
+      background: rgb(249, 249, 249);
+    }
+
+    #dd-tool-window > .page {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+
+    #dd-tool-window .graph-layout {
+      display: grid;
+      grid-template-columns: clamp(260px, 24%, 300px) minmax(0, 1fr);
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #dd-tool-window .graph-layout > .filter-menu {
+      position: relative;
+      inset: auto;
+      grid-column: 1;
+      width: auto;
+      height: 100%;
+      min-height: 0;
+      margin: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    #dd-tool-window .graph-layout > .content {
+      grid-column: 2;
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      margin-left: 0;
+      overflow: auto;
+    }
+
+    #dd-tool-window #plot1-container {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 300px;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    #dd-tool-window #plot1,
+    #dd-tool-window #plot2-chart,
+    #dd-tool-window #plot3-chart {
+      width: 100%;
+      min-width: 0;
+      min-height: 300px;
+    }
+
+    #dd-tool-window #plot1 { height: 100%; }
+    #dd-tool-window #plot2and3-container {
+      width: 100%;
+      min-width: 0;
+      align-items: stretch;
+      overflow: visible;
+    }
+
+    /* Eight generous hit areas make every edge and corner draggable. */
+    .dd-resize-handle {
+      position: absolute;
+      z-index: 1000;
+      touch-action: none;
+      user-select: none;
+    }
+    .dd-resize-handle::after {
+      content: '';
+      position: absolute;
+      opacity: 0;
+      border-radius: 999px;
+      background: rgba(67, 56, 202, .72);
+      transition: opacity .16s ease;
+    }
+    .dd-resize-handle:hover::after,
+    #dd-tool-window.dd-is-resizing .dd-resize-handle::after { opacity: 1; }
+    .dd-resize-n, .dd-resize-s { left: 12px; right: 12px; height: 10px; cursor: ns-resize; }
+    .dd-resize-n { top: 0; }
+    .dd-resize-s { bottom: 0; }
+    .dd-resize-n::after, .dd-resize-s::after { left: 25%; right: 25%; height: 3px; }
+    .dd-resize-n::after { top: 1px; }
+    .dd-resize-s::after { bottom: 1px; }
+    .dd-resize-e, .dd-resize-w { top: 12px; bottom: 12px; width: 10px; cursor: ew-resize; }
+    .dd-resize-e { right: 0; }
+    .dd-resize-w { left: 0; }
+    .dd-resize-e::after, .dd-resize-w::after { top: 25%; bottom: 25%; width: 3px; }
+    .dd-resize-e::after { right: 1px; }
+    .dd-resize-w::after { left: 1px; }
+    .dd-resize-ne, .dd-resize-nw, .dd-resize-se, .dd-resize-sw { width: 18px; height: 18px; }
+    .dd-resize-ne { top: 0; right: 0; cursor: nesw-resize; }
+    .dd-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
+    .dd-resize-se { right: 0; bottom: 0; cursor: nwse-resize; }
+    .dd-resize-sw { left: 0; bottom: 0; cursor: nesw-resize; }
+    .dd-resize-se::after {
+      right: 4px;
+      bottom: 4px;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid rgba(67, 56, 202, .78);
+      border-bottom: 2px solid rgba(67, 56, 202, .78);
+      background: transparent;
+      border-radius: 0;
+      opacity: .55;
+    }
+
+    body.dd-resizing,
+    body.dd-resizing * { user-select: none !important; }
+
+    @media (max-width: 720px) {
+      #model-content { padding: 6px; }
+      #dd-tool-window {
+        width: calc(100vw - 12px);
+        min-width: calc(100vw - 12px);
+        height: calc(100vh - 12px);
+        min-height: 520px;
+        border-radius: 10px;
+      }
+      #dd-tool-window .graph-layout {
+        grid-template-columns: minmax(220px, 42%) minmax(0, 1fr);
+      }
+    }
     
 
     
@@ -3091,7 +3246,7 @@ details[open] summary::before {
 
 
 <div id="model-content" style="display: none;">
-<div class="animate-container">
+<div class="animate-container dd-resizable-shell" id="dd-tool-window">
   <div class="page">
       <!-- Header -->
       
@@ -3368,29 +3523,29 @@ details[open] summary::before {
 
   <div style="width:100%;">
     <div class="dd-irf-caption" id="i18n-irfcap">
-      An <strong>impulse response function (IRF)</strong> traces the path of the deviation
-      from equilibrium after a one-off shock. The figures below summarise the response.
+      An <strong>impulse response function (IRF)</strong> traces the path after a shock.
+      The cards show actual peak levels; &Delta; gives the deviation from equilibrium.
     </div>
     <div class="dd-irf-stats" id="dd-irf-stats">
       <div class="dd-irf-stat demand">
-        <div class="lbl" id="i18n-lbl1">Peak inflation</div>
+        <div class="lbl" id="i18n-lbl1">Peak inflation level</div>
         <div class="val" id="irf-peak-pi">–</div>
         <div class="sub" id="irf-peak-pi-t">Period –</div>
       </div>
       <div class="dd-irf-stat supply">
-        <div class="lbl" id="i18n-lbl2">Peak output</div>
+        <div class="lbl" id="i18n-lbl2">Peak output level</div>
         <div class="val" id="irf-peak-y">–</div>
         <div class="sub" id="irf-peak-y-t">Period –</div>
       </div>
       <div class="dd-irf-stat">
-        <div class="lbl" id="i18n-lbl3">Half-life</div>
+        <div class="lbl" id="i18n-lbl3">Realized half-life</div>
         <div class="val" id="irf-halflife">–</div>
-        <div class="sub" id="i18n-sub3">periods to ½</div>
+        <div class="sub" id="i18n-sub3">periods from peak to ½</div>
       </div>
       <div class="dd-irf-stat">
         <div class="lbl" id="i18n-lbl4">Cum. output loss</div>
         <div class="val" id="irf-cumloss">–</div>
-        <div class="sub" id="i18n-sub4">Σ of deviations</div>
+        <div class="sub" id="i18n-sub4">Σ shortfalls below potential</div>
       </div>
     </div>
   </div>
@@ -3775,7 +3930,7 @@ title: {
                         text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Inflation</span>',
                     }, showticklabels:false,
             },
-            height: 700, /*originally 700 */           
+            autosize: true,
             legend: {
                 orientation: 'h',
                 x: 0.5,
@@ -3800,7 +3955,7 @@ title: {
         };
         
             
-        var config = { displayModeBar: false}; // Disable the toolbar
+        var config = { displayModeBar: false, responsive: true}; // Disable the toolbar
         
         
 
@@ -3819,7 +3974,7 @@ var layoutPlot2 = {
   title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Impulse Response Function: Inflation rate</span>' },
   xaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Time</span>' }, showticklabels: true },
   yaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Inflation (%)</span>' }, showticklabels: true },
-  height: 500,
+  autosize: true,
   margin: { l: 50, r: 50, b: 70, t: 100, pad: 4 },
   showlegend: true,
   legend: { orientation: 'h', x: 0.5, y: -0.18, xanchor: 'center', yanchor: 'top' },
@@ -3828,7 +3983,7 @@ var layoutPlot2 = {
 };
 
     
-    var configIRF = { displayModeBar: false };
+    var configIRF = { displayModeBar: false, responsive: true };
     
     // IMPORTANT: use the right layout variable (layoutPlot2), not layoutPlot1
 Plotly.newPlot('plot2-chart', [{ x: [], y: [], type: 'scatter', mode: 'lines' }], layoutPlot2, configIRF);
@@ -3847,7 +4002,7 @@ var layoutPlot3 = {
   title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Impulse Response Function: Output level</span>' },
   xaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Time</span>' }, showticklabels: true },
   yaxis: { title: { text: '<span style="font-variant: small-caps; font-family: Georgia, serif;">Output</span>' }, showticklabels: true },
-  height: 500,
+  autosize: true,
   margin: { l: 50, r: 50, b: 70, t: 100, pad: 4 },
   showlegend: true,
   legend: { orientation: 'h', x: 0.5, y: -0.18, xanchor: 'center', yanchor: 'top' },
@@ -3856,7 +4011,7 @@ var layoutPlot3 = {
   
 };
 
-var configIRF = { displayModeBar: false };
+var configIRF = { displayModeBar: false, responsive: true };
     
     // IMPORTANT: use layoutPlot3 and configIRF (you had layoutPlot1/config)
 Plotly.newPlot('plot3-chart', [{ x: [], y: [], type: 'scatter', mode: 'lines' }], layoutPlot3, configIRF);
@@ -5900,8 +6055,10 @@ document.addEventListener('DOMContentLoaded', function() {
             var startButton = document.getElementById('start-button');
         startButton.addEventListener('click', function() {
             document.getElementById('pre-menu').style.display = 'none';
-            document.getElementById('new-menu').style.display = 'block';
-            ddSetActiveTab('variables');
+            document.getElementById('new-menu').style.display = 'none';
+            document.getElementById('model-content').style.display = 'block';
+            ddSetActiveTab('mechanics');
+            showPlot1();
             });
             
         var startModelButton = document.getElementById('start-model-button');
@@ -6854,31 +7011,92 @@ window.onload = function() {
     return { val: best, idx: idx };
   }
 
+  function realizedHalfLife(gaps, peak) {
+    var amplitude = Math.abs(peak.val);
+    if (!isFinite(amplitude) || amplitude < 1e-9) return NaN;
+    var threshold = amplitude / 2;
+    for (var k = peak.idx + 1; k < gaps.length; k++) {
+      var previous = Math.abs(gaps[k - 1]);
+      var current = Math.abs(gaps[k]);
+      if (current <= threshold) {
+        // Interpolate between simulated periods instead of rounding the
+        // crossing to a whole period.
+        var fraction = (previous === current)
+          ? 1
+          : (previous - threshold) / (previous - current);
+        fraction = Math.max(0, Math.min(1, fraction));
+        return (k - 1 + fraction) - peak.idx;
+      }
+    }
+    return Infinity;
+  }
+
+  function signed(x) {
+    return (x >= 0 ? '+' : '') + fmt(x, 2);
+  }
+
+  function localizeIRFLabels() {
+    var de = window.LANG === 'de';
+    var labels = {
+      'i18n-lbl1': de ? 'Inflationsniveau am Peak' : 'Peak inflation level',
+      'i18n-lbl2': de ? 'Outputniveau am Peak' : 'Peak output level',
+      'i18n-lbl3': de ? 'Realisierte Halbwertszeit' : 'Realized half-life',
+      'i18n-lbl4': de ? 'Kum. Outputverlust' : 'Cum. output loss',
+      'i18n-sub3': de ? 'Perioden vom Peak bis ½' : 'periods from peak to ½',
+      'i18n-sub4': de ? 'Σ Fehlbeträge unter Potenzial' : 'Σ shortfalls below potential'
+    };
+    Object.keys(labels).forEach(function (id) {
+      var node = $(id);
+      if (node) node.textContent = labels[id];
+    });
+    var caption = $('i18n-irfcap');
+    if (caption) {
+      caption.innerHTML = de
+        ? 'Eine <strong>Impuls-Antwort-Funktion (IRF)</strong> zeigt den Pfad nach einem Schock. Die Karten zeigen die tatsächlichen Niveaus am stärksten Ausschlag; &Delta; ist die Abweichung vom Gleichgewicht.'
+        : 'An <strong>impulse response function (IRF)</strong> traces the path after a shock. The cards show actual levels at the largest response; &Delta; is the deviation from equilibrium.';
+    }
+  }
+  window.ddLocalizeIRFLabels = localizeIRFLabels;
+
   window.ddUpdateIRFStats = function (sim) {
     if (!sim) return;
     var pi = sim.piPath, y = sim.yPath;
-    var piStar = (sim.pistar0 !== undefined ? sim.pistar0 : sim.pistar), base = sim.baselineY;
     if (!pi || !y) return;
 
-    var piDev = pi.map(function (v) { return v - piStar; });
-    var yDev  = y.map(function (v) { return v - base; });
+    var piStar0 = (sim.pistar0 !== undefined ? sim.pistar0 : sim.pistar);
+    var piStar1 = (sim.pistar1 !== undefined ? sim.pistar1 : piStar0);
+    var yBar0 = (sim.ybar0 !== undefined ? sim.ybar0 : sim.baselineY);
+    var yBar1 = (sim.ybar1 !== undefined ? sim.ybar1 : yBar0);
+
+    // Compare each simulated level with the equilibrium that applies in that
+    // period. This also handles changes in the inflation target or potential
+    // output without treating the new equilibrium itself as an ongoing shock.
+    var piDev = pi.map(function (v, k) { return v - (k === 0 ? piStar0 : piStar1); });
+    var yDev  = y.map(function (v, k) { return v - (k === 0 ? yBar0 : yBar1); });
 
     var pPi = peakOf(piDev), pY = peakOf(yDev);
+    var peakPiLevel = pi[pPi.idx];
+    var peakYLevel = y[pY.idx];
 
-    // Half-life from decay rate a = 1/(1+gamma*phi)
-    var a = sim.a, half = NaN;
-    if (a > 0 && a < 1) half = Math.log(0.5) / Math.log(a);
+    // Use the simulated inflation path, including persistent/multi-period
+    // shocks, rather than the theoretical one-off-shock decay coefficient.
+    var half = realizedHalfLife(piDev, pPi);
 
-    // Cumulative absolute output deviation (sacrifice-ratio flavour)
+    // A loss is output below the period-specific potential level. Booms are
+    // therefore not incorrectly counted as losses.
     var cum = 0;
-    for (var k = 0; k < yDev.length; k++) cum += Math.abs(yDev[k]);
+    for (var k = 0; k < yDev.length; k++) cum += Math.max(0, -yDev[k]);
 
     var set = function (id, txt) { var e = $(id); if (e) e.textContent = txt; };
-    set('irf-peak-pi',   (pPi.val >= 0 ? '+' : '') + fmt(pPi.val, 2));
-    set('irf-peak-pi-t', (window.T2?window.T2('Period ','Periode '):'Period ') + (pPi.val === 0 ? '–' : pPi.idx));
-    set('irf-peak-y',    (pY.val >= 0 ? '+' : '') + fmt(pY.val, 2));
-    set('irf-peak-y-t',  (window.T2?window.T2('Period ','Periode '):'Period ') + (pY.val === 0 ? '–' : pY.idx));
-    set('irf-halflife',  isFinite(half) ? fmt(half, 1) : '–');
+    localizeIRFLabels();
+    set('irf-peak-pi', fmt(peakPiLevel, 2) + '%');
+    set('irf-peak-pi-t', (window.T2?window.T2('Period ','Periode '):'Period ') +
+      (Math.abs(pPi.val) < 1e-9 ? '–' : pPi.idx) + ' · Δ ' + signed(pPi.val));
+    set('irf-peak-y', fmt(peakYLevel, 2));
+    set('irf-peak-y-t', (window.T2?window.T2('Period ','Periode '):'Period ') +
+      (Math.abs(pY.val) < 1e-9 ? '–' : pY.idx) + ' · Δ ' + signed(pY.val));
+    set('irf-halflife', isFinite(half) ? fmt(half, 1) :
+      (Math.abs(pPi.val) < 1e-9 ? '–' : '>' + Math.max(0, pi.length - 1 - pPi.idx)));
     set('irf-cumloss',   fmt(cum, 2));
   };
 
@@ -7146,10 +7364,198 @@ window.onload = function() {
       if (box && box.style.display !== "none") { try { window.ddShowVar(window.__ddVar); } catch (e) {} }
     }
     if (typeof updatePlots === "function") { try { updatePlots(); } catch (e) {} }
+    if (window.ddLocalizeIRFLabels) { try { window.ddLocalizeIRFLabels(); } catch (e) {} }
     if (window.MathJax && MathJax.typesetPromise) { try { MathJax.typesetPromise(touched); } catch (e) {} }
   }
   window.ddApplyLanguage = ddSetLang;
 
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  function ready(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
+    }
+  }
+
+  ready(function () {
+    var shell = document.getElementById('dd-tool-window');
+    if (!shell) return;
+
+    var directions = ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'];
+    directions.forEach(function (direction) {
+      var handle = document.createElement('div');
+      handle.className = 'dd-resize-handle dd-resize-' + direction;
+      handle.dataset.direction = direction;
+      handle.setAttribute('aria-hidden', 'true');
+      handle.title = 'Drag to resize · Double-click to reset';
+      shell.appendChild(handle);
+    });
+
+    var resizeFrame = 0;
+    function resizeVisiblePlots() {
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(function () {
+        resizeFrame = 0;
+        if (!shell.offsetParent) return;
+
+        var content = shell.querySelector('.graph-layout > .content');
+        var availableHeight = content ? Math.max(300, content.clientHeight - 10) : 500;
+        var plot1Container = document.getElementById('plot1-container');
+        var plot1 = document.getElementById('plot1');
+        var irfContainer = document.getElementById('plot2and3-container');
+        var irfHeight = Math.max(300, Math.min(720, Math.round(availableHeight * .64)));
+
+        if (plot1Container && getComputedStyle(plot1Container).display !== 'none') {
+          plot1Container.style.height = availableHeight + 'px';
+          if (plot1) plot1.style.height = availableHeight + 'px';
+        }
+
+        ['plot2-chart', 'plot3-chart'].forEach(function (id) {
+          var graph = document.getElementById(id);
+          if (graph && irfContainer && getComputedStyle(irfContainer).display !== 'none') {
+            graph.style.height = irfHeight + 'px';
+          }
+        });
+
+        if (window.Plotly && Plotly.Plots && Plotly.Plots.resize) {
+          ['plot1', 'plot2-chart', 'plot3-chart'].forEach(function (id) {
+            var graph = document.getElementById(id);
+            if (graph && graph.offsetParent) {
+              try { Plotly.Plots.resize(graph); } catch (error) {}
+            }
+          });
+        }
+      });
+    }
+    window.ddResizeVisiblePlots = resizeVisiblePlots;
+
+    var active = null;
+    function clamp(value, minimum, maximum) {
+      return Math.min(maximum, Math.max(minimum, value));
+    }
+
+    function beginResize(event) {
+      if (event.button !== undefined && event.button !== 0) return;
+      var handle = event.currentTarget;
+      var parent = shell.parentElement;
+      var rect = shell.getBoundingClientRect();
+      var parentRect = parent.getBoundingClientRect();
+      var parentStyle = getComputedStyle(parent);
+      var paddingLeft = parseFloat(parentStyle.paddingLeft) || 0;
+      var paddingRight = parseFloat(parentStyle.paddingRight) || 0;
+      var paddingTop = parseFloat(parentStyle.paddingTop) || 0;
+      var contentLeft = parentRect.left + paddingLeft;
+      var contentTop = parentRect.top + paddingTop;
+
+      active = {
+        pointerId: event.pointerId,
+        handle: handle,
+        direction: handle.dataset.direction,
+        startX: event.clientX,
+        startY: event.clientY,
+        width: rect.width,
+        height: rect.height,
+        left: rect.left - contentLeft,
+        top: rect.top - contentTop,
+        parentWidth: parent.clientWidth - paddingLeft - paddingRight
+      };
+
+      shell.style.width = rect.width + 'px';
+      shell.style.height = rect.height + 'px';
+      shell.style.marginLeft = active.left + 'px';
+      shell.style.marginRight = '0';
+      shell.style.marginTop = active.top + 'px';
+      shell.style.marginBottom = '0';
+      shell.classList.add('dd-is-resizing');
+      document.body.classList.add('dd-resizing');
+      document.body.style.cursor = getComputedStyle(handle).cursor;
+      try { handle.setPointerCapture(event.pointerId); } catch (error) {}
+      event.preventDefault();
+    }
+
+    function continueResize(event) {
+      if (!active || event.pointerId !== active.pointerId) return;
+      var dx = event.clientX - active.startX;
+      var dy = event.clientY - active.startY;
+      var minWidth = Math.min(700, active.parentWidth);
+      var minHeight = Math.min(560, Math.max(420, window.innerHeight - 28));
+      var width = active.width;
+      var height = active.height;
+      var left = active.left;
+      var top = active.top;
+      var direction = active.direction;
+
+      if (direction.indexOf('e') !== -1) {
+        width = clamp(active.width + dx, minWidth, active.parentWidth - active.left);
+      }
+      if (direction.indexOf('w') !== -1) {
+        left = clamp(active.left + dx, 0, active.left + active.width - minWidth);
+        width = active.width + (active.left - left);
+      }
+      if (direction.indexOf('s') !== -1) {
+        height = clamp(active.height + dy, minHeight, 1600);
+      }
+      if (direction.indexOf('n') !== -1) {
+        top = clamp(active.top + dy, 0, active.top + active.height - minHeight);
+        height = active.height + (active.top - top);
+      }
+
+      shell.style.width = Math.round(width) + 'px';
+      shell.style.height = Math.round(height) + 'px';
+      shell.style.marginLeft = Math.round(left) + 'px';
+      shell.style.marginTop = Math.round(top) + 'px';
+      resizeVisiblePlots();
+      event.preventDefault();
+    }
+
+    function endResize(event) {
+      if (!active || (event.pointerId !== undefined && event.pointerId !== active.pointerId)) return;
+      try { active.handle.releasePointerCapture(active.pointerId); } catch (error) {}
+      active = null;
+      shell.classList.remove('dd-is-resizing');
+      document.body.classList.remove('dd-resizing');
+      document.body.style.cursor = '';
+      resizeVisiblePlots();
+    }
+
+    shell.querySelectorAll('.dd-resize-handle').forEach(function (handle) {
+      handle.addEventListener('pointerdown', beginResize);
+      handle.addEventListener('dblclick', function () {
+        ['width', 'height', 'margin-left', 'margin-right', 'margin-top', 'margin-bottom']
+          .forEach(function (property) { shell.style.removeProperty(property); });
+        resizeVisiblePlots();
+      });
+    });
+    window.addEventListener('pointermove', continueResize, { passive: false });
+    window.addEventListener('pointerup', endResize);
+    window.addEventListener('pointercancel', endResize);
+    window.addEventListener('resize', resizeVisiblePlots);
+
+    if (window.ResizeObserver) {
+      var observer = new ResizeObserver(resizeVisiblePlots);
+      observer.observe(shell);
+    }
+
+    ['start-button', 'graph-button', 'backtomenu-button', 'plotToggle'].forEach(function (id) {
+      var control = document.getElementById(id);
+      if (control) {
+        control.addEventListener(id === 'plotToggle' ? 'change' : 'click', function () {
+          setTimeout(resizeVisiblePlots, 0);
+          setTimeout(resizeVisiblePlots, 180);
+        });
+      }
+    });
+
+    setTimeout(resizeVisiblePlots, 250);
+    setTimeout(resizeVisiblePlots, 900);
+  });
 })();
 </script>
 
