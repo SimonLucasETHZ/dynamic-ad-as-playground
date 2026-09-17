@@ -3115,6 +3115,64 @@ details[open] summary::before {
       text-transform: uppercase;
     }
 
+    .dd-chain-button, .dd-float-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      padding: 6px;
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      color: var(--accent);
+      background: #fff;
+      cursor: pointer;
+    }
+    .dd-chain-button:hover, .dd-float-close:hover { background: #eeecff; }
+    .dd-chain-button:focus-visible, .dd-float-close:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .dd-chain-button svg { width: 19px; height: 19px; }
+    .dd-chain-button .dd-chain-broken { display: none; }
+    .dd-floating-irf .dd-chain-button .dd-chain-linked { display: none; }
+    .dd-floating-irf .dd-chain-button .dd-chain-broken { display: block; }
+    .dd-float-title { display: none; }
+    .dd-float-close { display: none; color: var(--muted); font-size: 20px; }
+
+    .dd-inline-irf-panel[hidden] { display: none !important; }
+    .dd-inline-irf-panel.dd-floating-irf {
+      position: fixed;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      box-shadow: 0 12px 36px rgba(22, 36, 58, .18);
+      overflow: auto;
+    }
+    .dd-floating-irf .dd-inline-irf-toolbar {
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+    .dd-floating-irf.dd-floating-dragging .dd-inline-irf-toolbar { cursor: grabbing; }
+    .dd-floating-irf .dd-float-title {
+      display: block;
+      margin-right: auto;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .dd-floating-irf .dd-float-close { display: inline-flex; }
+    .dd-floating-irf .dd-inline-irf-toolbar-label,
+    .dd-floating-irf .dd-inline-placement { display: none; }
+    .dd-floating-irf.dd-floating-stacked .dd-inline-irf-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(250px, 1fr));
+    }
+
     .dd-inline-placement {
       display: inline-flex;
       padding: 3px;
@@ -3755,6 +3813,7 @@ details[open] summary::before {
 
                     <section id="dd-inline-irf-panel" class="dd-inline-irf-panel" aria-label="Embedded impulse responses">
                       <div class="dd-inline-irf-toolbar">
+                        <span class="dd-float-title" id="dd-float-title">Impulse responses · Drag to move</span>
                         <span class="dd-inline-irf-toolbar-label" id="dd-inline-placement-label">Placement</span>
                         <div class="dd-inline-placement" role="radiogroup" aria-label="Impulse response placement">
                           <input type="radio" name="dd-inline-placement" id="dd-irf-below" value="below" checked>
@@ -3762,6 +3821,13 @@ details[open] summary::before {
                           <input type="radio" name="dd-inline-placement" id="dd-irf-right" value="right">
                           <label for="dd-irf-right" id="dd-irf-right-label">Right</label>
                         </div>
+                        <button type="button" id="dd-chain-irf" class="dd-chain-button" aria-label="Unchain impulse responses" title="Unchain impulse responses" aria-pressed="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <g class="dd-chain-linked"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2"/></g>
+                            <g class="dd-chain-broken"><path d="M15 9l2-2a3 3 0 0 0-4-4l-2 2M9 15l-2 2a3 3 0 0 0 4 4l2-2M3 3l18 18"/></g>
+                          </svg>
+                        </button>
+                        <button type="button" id="dd-float-close" class="dd-float-close" aria-label="Hide impulse responses" title="Hide impulse responses">×</button>
                       </div>
                       <div class="dd-inline-irf-grid">
                         <div id="dd-inline-irf-inflation" class="dd-inline-chart"></div>
@@ -7655,11 +7721,139 @@ window.onload = function() {
     var combinedView = document.getElementById('dd-combined-view');
     var inlineToggle = document.getElementById('dd-show-inline-irf');
     var inlinePanel = document.getElementById('dd-inline-irf-panel');
+    var chainButton = document.getElementById('dd-chain-irf');
+    var floatClose = document.getElementById('dd-float-close');
+    var inlineToolbar = inlinePanel && inlinePanel.querySelector('.dd-inline-irf-toolbar');
+    var inlineDetached = false;
+    var floatingDrag = null;
     var currentInlineSim = window.__ddSim || null;
     var inlineAnimationPeriod = null;
     var inlineAnimationBounds = { inflation: null, output: null };
 
+    function syncInlineVisibility() {
+      var shown = !!(inlineToggle && inlineToggle.checked);
+      if (combinedView) combinedView.classList.toggle('dd-inline-visible', shown && !inlineDetached);
+      if (inlinePanel) {
+        inlinePanel.hidden = !shown;
+        inlinePanel.setAttribute('aria-hidden', shown ? 'false' : 'true');
+      }
+    }
+
+    function syncChainLabels() {
+      var de = window.LANG === 'de';
+      var label = inlineDetached
+        ? (de ? 'Impulsantworten wieder andocken' : 'Chain impulse responses back to the main plot')
+        : (de ? 'Impulsantworten abdocken' : 'Unchain impulse responses');
+      if (chainButton) {
+        chainButton.title = label;
+        chainButton.setAttribute('aria-label', label);
+        chainButton.setAttribute('aria-pressed', inlineDetached ? 'false' : 'true');
+      }
+      var title = document.getElementById('dd-float-title');
+      if (title) title.textContent = de ? 'Impulsantworten · Zum Verschieben ziehen' : 'Impulse responses · Drag to move';
+      if (floatClose) {
+        var closeLabel = de ? 'Impulsantworten ausblenden' : 'Hide impulse responses';
+        floatClose.title = closeLabel;
+        floatClose.setAttribute('aria-label', closeLabel);
+      }
+      if (inlineToolbar) {
+        inlineToolbar.tabIndex = inlineDetached ? 0 : -1;
+        if (inlineDetached) {
+          inlineToolbar.setAttribute('aria-label', de
+            ? 'Fenster verschieben: ziehen oder Pfeiltasten verwenden'
+            : 'Move window: drag or use arrow keys');
+        } else inlineToolbar.removeAttribute('aria-label');
+      }
+    }
+
+    function positionFloatingPanel(left, top) {
+      // Allow the panel beyond the tool and partly beyond the viewport while
+      // keeping enough of its title bar reachable to bring it back.
+      var width = inlinePanel.getBoundingClientRect().width;
+      inlinePanel.style.left = Math.max(96 - width, Math.min(window.innerWidth - 96, left)) + 'px';
+      inlinePanel.style.top = Math.max(0, Math.min(window.innerHeight - 40, top)) + 'px';
+    }
+
+    function toggleInlineDock() {
+      if (!inlinePanel || !inlineToggle || !inlineToggle.checked) return;
+      if (!inlineDetached) {
+        var rect = inlinePanel.getBoundingClientRect();
+        var stacked = combinedView.classList.contains('dd-irf-right') && shell.clientWidth > 1050;
+        inlineDetached = true;
+        inlinePanel.style.width = rect.width + 'px';
+        inlinePanel.style.height = rect.height + 'px';
+        inlinePanel.classList.add('dd-floating-irf');
+        inlinePanel.classList.toggle('dd-floating-stacked', stacked);
+        inlinePanel.setAttribute('role', 'dialog');
+        inlinePanel.setAttribute('aria-modal', 'false');
+        // Move the existing graphs to the page root, outside all tool clipping.
+        document.body.appendChild(inlinePanel);
+        positionFloatingPanel(rect.left, rect.top);
+      } else {
+        inlineDetached = false;
+        floatingDrag = null;
+        inlinePanel.classList.remove('dd-floating-irf', 'dd-floating-stacked', 'dd-floating-dragging');
+        inlinePanel.removeAttribute('role');
+        inlinePanel.removeAttribute('aria-modal');
+        ['width', 'height', 'left', 'top'].forEach(function (property) {
+          inlinePanel.style.removeProperty(property);
+        });
+        combinedView.appendChild(inlinePanel);
+      }
+      syncInlineVisibility();
+      syncChainLabels();
+      resizeVisiblePlots();
+      if (chainButton) chainButton.focus({ preventScroll: true });
+    }
+
+    if (chainButton) chainButton.addEventListener('click', toggleInlineDock);
+    if (floatClose) floatClose.addEventListener('click', function () {
+      inlineToggle.checked = false;
+      inlineToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      inlineToggle.focus({ preventScroll: true });
+    });
+    if (inlineToolbar) {
+      inlineToolbar.addEventListener('pointerdown', function (event) {
+        if (!inlineDetached || event.button !== 0 || event.target.closest('button, input, label')) return;
+        var rect = inlinePanel.getBoundingClientRect();
+        floatingDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
+        inlineToolbar.setPointerCapture(event.pointerId);
+        inlinePanel.classList.add('dd-floating-dragging');
+        event.preventDefault();
+      });
+      inlineToolbar.addEventListener('pointermove', function (event) {
+        if (!floatingDrag || event.pointerId !== floatingDrag.id) return;
+        positionFloatingPanel(floatingDrag.left + event.clientX - floatingDrag.x,
+          floatingDrag.top + event.clientY - floatingDrag.y);
+      });
+      function endFloatingDrag(event) {
+        if (!floatingDrag || event.pointerId !== floatingDrag.id) return;
+        floatingDrag = null;
+        inlinePanel.classList.remove('dd-floating-dragging');
+        if (inlineToolbar.hasPointerCapture(event.pointerId)) inlineToolbar.releasePointerCapture(event.pointerId);
+      }
+      inlineToolbar.addEventListener('pointerup', endFloatingDrag);
+      inlineToolbar.addEventListener('pointercancel', endFloatingDrag);
+      inlineToolbar.addEventListener('lostpointercapture', endFloatingDrag);
+      inlineToolbar.addEventListener('keydown', function (event) {
+        if (!inlineDetached || event.target !== inlineToolbar) return;
+        var delta = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[event.key];
+        if (!delta) return;
+        var rect = inlinePanel.getBoundingClientRect();
+        var step = event.shiftKey ? 40 : 10;
+        positionFloatingPanel(rect.left + delta[0] * step, rect.top + delta[1] * step);
+        event.preventDefault();
+      });
+    }
+    window.addEventListener('resize', function () {
+      if (inlineDetached && !inlinePanel.hidden) {
+        var rect = inlinePanel.getBoundingClientRect();
+        positionFloatingPanel(rect.left, rect.top);
+      }
+    });
+
     function localizeInlineIRF() {
+      syncChainLabels();
       var de = window.LANG === 'de';
       var labels = {
         'dd-show-inline-irf-label': de ? 'Impulsantworten in diesem Fenster anzeigen' : 'Show impulse responses in this window',
@@ -7896,7 +8090,7 @@ window.onload = function() {
           var mainPanel = document.querySelector('.dd-dasdad-panel');
           if (mainPanel) mainPanel.style.height = mainHeight + 'px';
           if (plot1) plot1.style.height = mainHeight + 'px';
-          if (inlinePanel) {
+          if (inlinePanel && !inlineDetached) {
             inlinePanel.style.height = inlineVisible
               ? Math.ceil(inlineOverhead + compactHeight * (effectiveRight ? 2 : 1) +
                   (effectiveRight ? inlineGap : 0)) + 'px'
@@ -7929,8 +8123,7 @@ window.onload = function() {
 
     if (inlineToggle && combinedView && inlinePanel) {
       inlineToggle.addEventListener('change', function () {
-        combinedView.classList.toggle('dd-inline-visible', this.checked);
-        inlinePanel.setAttribute('aria-hidden', this.checked ? 'false' : 'true');
+        syncInlineVisibility();
         if (this.checked) updateInlineIRF(window.__ddSim || currentInlineSim);
         resizeVisiblePlots();
       });
@@ -7945,6 +8138,7 @@ window.onload = function() {
         });
       });
     }
+    syncInlineVisibility();
     localizeInlineIRF();
 
     var active = null;
